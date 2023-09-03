@@ -577,6 +577,8 @@ suffix_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^Suffix_Data) {
 
 /////
 
+/*
+
 rwr_grammar := "
 RWR {
 top = spaces name spaces \"{\" spaces rule+ spaces \"}\" spaces more*
@@ -605,6 +607,10 @@ comment = \"//\" (~\"\n\" any)* \"\n\"
 space += comment
 }
 "
+
+*/
+
+/*
 
 rwr_semobject := "
 
@@ -860,6 +866,10 @@ return ${rws}
 };
 "
 
+*/
+
+rwr_grammar := ""
+rwr_semobject := ""
 rwr_support_js := ""
 
 hard_coded_rwr_grammar_instantiate :: proc(name: string) -> ^zd.Eh {
@@ -926,14 +936,14 @@ concat_instantiate :: proc(name: string) -> ^zd.Eh {
     return zd.make_leaf_with_data (name_with_id, inst, concat_proc)
 }
 
-concat_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst ^Concat_Instance_Data) {
+concat_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^Concat_Instance_Data) {
     switch (msg.port) {
     case "str":
-	free (inst.buffer)
+	delete (inst.buffer)
 	inst.buffer = fmt.aprintf ("%s%s", inst.buffer, msg.datum.(string))
     case "flush":
 	zd.send(eh, "str", inst.buffer)
-	free (inst.buffer)
+	delete (inst.buffer)
 	inst.buffer = ""
     }
 }
@@ -948,14 +958,6 @@ ohmjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    switch (msg.port) {
-    case "str":
-	free (inst.buffer)
-	inst.buffer = fmt.aprintf ("%s%s", inst.buffer, msg.datum.(string))
-    case "flush":
-	zd.send(eh, "str", inst.buffer)
-	free (inst.buffer)
-	inst.buffer = ""
-    }
+    fmt.printf ("ohmjs gets: %v\n", msg.datum.(string))
 }
 
