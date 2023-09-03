@@ -1,4 +1,4 @@
-package coroutines
+package transpiler
 
 import "core:fmt"
 import "core:log"
@@ -46,24 +46,11 @@ main :: proc() {
         init = leaf.stdout_instantiate,
     })
 
-    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "HardCodedGrammar", init = ???.instantiate })
-    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "HardCodedSemantics", init = ???.instantiate })
-    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "HardCodedSupport", init = ???.instantiate })
-    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "1then2", init = ???.instantiate })
-    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "Bang", init = ???.instantiate })
-    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "concat", init = ???.instantiate })
-    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "ohmjs", init = ???.instantiate })
-
     user.components (&leaves)
 
     regstry := reg.make_component_registry(leaves[:], diagram_source_file)
 
-    run (regstry, main_container_name, diagram_source_file, inject0)
-    run (regstry, main_container_name, diagram_source_file, inject1)
-    run (regstry, main_container_name, diagram_source_file, injectperiod)
-    run (regstry, main_container_name, diagram_source_file, injectw)
-    run (regstry, main_container_name, diagram_source_file, injectwperiod)
-    run (regstry, main_container_name, diagram_source_file, inject13)
+    run (regstry, main_container_name, diagram_source_file, inject)
 }
 
 run :: proc (regstry : reg.Component_Registry, main_container_name : string, diagram_source_file : string, injectfn : #type proc (^zd.Eh)) {
@@ -80,50 +67,9 @@ run :: proc (regstry : reg.Component_Registry, main_container_name : string, dia
     zd.print_output_list(main_container)
 }
 
-inject0 :: proc (main_container : ^zd.Eh) {
-    main_container.handler(main_container, zd.make_message("c", '⊥'))
-}
-
-inject1 :: proc (main_container : ^zd.Eh) {
-    main_container.handler(main_container, zd.make_message("c", 'z'))
-    main_container.handler(main_container, zd.make_message("c", '⊥'))
-}
-
-injectperiod :: proc (main_container : ^zd.Eh) {
-    main_container.handler(main_container, zd.make_message("c", '.'))
-    main_container.handler(main_container, zd.make_message("c", '⊥'))
-}
-
-injectw :: proc (main_container : ^zd.Eh) {
-    main_container.handler(main_container, zd.make_message("c", 'ω'))
-    main_container.handler(main_container, zd.make_message("c", cast(rune)10))
-    main_container.handler(main_container, zd.make_message("c", 'U'))
-    main_container.handler(main_container, zd.make_message("c", 'v'))
-    main_container.handler(main_container, zd.make_message("c", '⊥'))
-}
-
-injectwperiod :: proc (main_container : ^zd.Eh) {
-    main_container.handler(main_container, zd.make_message("c", 'ω'))
-    main_container.handler(main_container, zd.make_message("c", cast(rune)3))
-    main_container.handler(main_container, zd.make_message("c", '.'))
-    main_container.handler(main_container, zd.make_message("c", 'p'))
-    main_container.handler(main_container, zd.make_message("c", '⊥'))
-}
-
-
-inject13 :: proc (main_container : ^zd.Eh) {
-    // 1. inject a test message, observe the output
-    main_container.handler(main_container, zd.make_message("c", 'a'))
-    main_container.handler(main_container, zd.make_message("c", 'b'))
-    main_container.handler(main_container, zd.make_message("c", 'c'))
-    main_container.handler(main_container, zd.make_message("c", '.'))
-    main_container.handler(main_container, zd.make_message("c", 'd'))
-    main_container.handler(main_container, zd.make_message("c", 'e'))
-    main_container.handler(main_container, zd.make_message("c", 'f'))
-    main_container.handler(main_container, zd.make_message("c", '!'))
-    main_container.handler(main_container, zd.make_message("c", 'ω'))
-    main_container.handler(main_container, zd.make_message("c", cast(rune)5))
-    main_container.handler(main_container, zd.make_message("c", 'Y'))
-    main_container.handler(main_container, zd.make_message("c", 'z'))
-    main_container.handler(main_container, zd.make_message("c", '⊥'))
+inject :: proc (main_container : ^zd.Eh) {
+    main_container.handler(main_container, zd.make_message("grammar", "TEST { main = \"A\"" }))
+    main_container.handler(main_container, zd.make_message("semantics", "TEST { main [x] = ‛«x»’ }"))
+    main_container.handler(main_container, zd.make_message("support", ""))
+    main_container.handler(main_container, zd.make_message("src", "A"))
 }

@@ -33,6 +33,14 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "hard_coded_ps", init = leaf.hard_coded_ps_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "hard_coded_grepvsh", init = leaf.hard_coded_grepvsh_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "hard_coded_wcl", init = leaf.hard_coded_wcl_instantiate })
+
+    // for ohmjs
+    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "HardCodedGrammar", init = hard_coded_rwr_grammar_instantiate })
+    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "HardCodedSemantics", init = hard_coded_rwr_semantics_instantiate })
+    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "HardCodedSupport", init = hard_coded_rwr_support_instantiate })
+    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "Bang", init = bang_instantiate })
+    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "concat", init = concat_instantiate })
+    reg.append_leaf (&leaves, reg.Leaf_Instantiator { name = "ohmjs", init = ohmjs_instantiate })
 }
 
 

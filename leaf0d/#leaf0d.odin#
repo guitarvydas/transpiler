@@ -948,14 +948,6 @@ ohmjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    switch (msg.port) {
-    case "str":
-	free (inst.buffer)
-	inst.buffer = fmt.aprintf ("%s%s", inst.buffer, msg.datum.(string))
-    case "flush":
-	zd.send(eh, "str", inst.buffer)
-	free (inst.buffer)
-	inst.buffer = ""
-    }
+    fmt.printf ("ohmjs gets: %v\n", msg.datum.(string))
 }
 
