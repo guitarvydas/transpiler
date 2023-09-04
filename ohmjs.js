@@ -65,9 +65,7 @@ function hangOperationOntoAsst (asst, opName, opFileName) {
 	return asst.addOperation (opName, compiledSemantics);
 }
 /////
-function processCST (opName, asst, cst, supportFileName) {
-    let support = fs.readFileSync (supportFileName, 'UTF-8');
-    eval (support); // get support code into 'this' ; there must be a better way to do this, please fix
+function processCST (opName, asst, cst) {
     return (asst (cst) [opName]) ();
 }
 /////
@@ -80,7 +78,6 @@ function main () {
 	let grammarName = argv._[0];
 	let grammarFileName = argv._[1];
 	let rwrFileName = argv._[2];
-	let supportFileName = argv._[3];
 	let src = fs.readFileSync ('/dev/fd/0', 'utf-8');
 
 	let grammarText = fs.readFileSync (grammarFileName, 'utf-8');
@@ -90,7 +87,8 @@ function main () {
 	let cst = patternMatch (src, ast);
 	let emptyAsst = makeASST (ast)
 	let asst = hangOperationOntoAsst (emptyAsst, "rwr", rwrFileName);
-	let walked = processCST ("rwr", asst, cst, supportFileName)
+
+	let walked = processCST ("rwr", asst, cst)
 	console.log (walked);
     } catch (e) {
 	console.error (e.message);

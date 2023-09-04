@@ -7,8 +7,8 @@ transpiler: transpiler.drawio main.odin */*.odin
 	odin run . $(ODIN_FLAGS)
 
 dev:
-	./ohmjs.js "TEST" test.ohm test.sem.js support.js <test.txt
+	./ohmjs.js "RWR" rwr.ohm rwr.rwr <rwr.txt
 
 devsimple:
-	./ohmjs.js "TEST" test.ohm test.sem.js support.js <test.txt
+	./ohmjs.js "TEST" test.ohm test.sem.js <test.txt
 
