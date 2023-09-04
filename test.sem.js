@@ -3,6 +3,7 @@
 	var s = _k.walk ();
 	console.log ("in test.sem.js/main...");
 	console.log (s);
+	return s;
     },
 
     _terminal: function () { return this.sourceString; },

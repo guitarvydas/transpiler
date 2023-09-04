@@ -41,7 +41,7 @@ function makeAST (grammarName, grammarText) {
 }
 /////
 function patternMatch (src, ast) {
-    // return triplet [success, cst, error if any]
+    // return cst or throw error if any
     try {
 	matchResult = ast.match (src);
     } catch (e) {
@@ -56,6 +56,19 @@ function patternMatch (src, ast) {
 /////
 function makeASST (ast) {
     return ast.createSemantics ();
+}
+/////
+function hangOperationOntoAsst (asst, opName, opFileName) {
+	semanticsFunctionsAsString = fs.readFileSync (opFileName, 'utf-8');
+	let evalableSemanticsFunctionsString = '(' + semanticsFunctionsAsString + ')';
+	compiledSemantics = eval (evalableSemanticsFunctionsString);
+	return asst.addOperation ("walk", compiledSemantics);
+}
+/////
+function processCST (opName, asst, cst, supportFileName) {
+    let support = fs.readFileSync (supportFileName, 'UTF-8');
+    eval (support); // get support code into 'this' ; there must be a better way to do this, please fix
+    return (asst (cst) [opName]) ();
 }
 /////
 
@@ -75,8 +88,10 @@ function main () {
 
 	let ast = makeAST (grammarName, grammarText);
 	let cst = patternMatch (src, ast);
-	let asst = makeASST (ast)
-	console.log ("OK");
+	let emptyAsst = makeASST (ast)
+	let asst = hangOperationOntoAsst (emptyAsst, "walk", rwrFileName);
+	let walked = processCST ("walk", asst, cst, supportFileName)
+	console.log (walked);
     } catch (e) {
 	console.error (e.message);
 	process.exit (1);
