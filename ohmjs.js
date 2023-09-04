@@ -44,8 +44,23 @@ function patternMatch (src, grammarName, grammarText) {
     } else { 
 	return [true, ohmGrammarObject, ""];
     }
-	
 }
+
+function applySemantics (ohmGrammarObject, rwrFileName, supportFileName) {
+    let semanticsFunctionsAsString;
+    let evalableSemanticsFunctions;
+    let ohmSemanticsObject;
+    try {
+	semanticsFunctionsAsString = fs.readFileSync (rwrFileName, 'utf-8');
+	console.log (semanticsFunctionsAsString);
+	// let evalableSemanticsFunctions = '(' + semanticsFunctionsAsString + ')';
+	// let ohmSemanticsObject = ohmGrammarObject.createSemantics ();
+    } catch (e) {
+	console.error (e.message);
+	process.exit (1);
+    }
+}
+
 
 /////
 
@@ -57,7 +72,7 @@ function main () {
 	let grammarName = argv._[0];
 	let grammarFileName = argv._[1];
 	let rwrFileName = argv._[2];
-	let supportFilename = argv._[3];
+	let supportFileName = argv._[3];
 	let src = fs.readFileSync ('/dev/fd/0', 'utf-8');
 
 	let grammar = fs.readFileSync (grammarFileName, 'utf-8');
@@ -69,7 +84,7 @@ function main () {
 	let ohmGrammarObject = r [1]
 	let errormessage = r [2]
 	if (success) {
-	    console.log ("OK");
+	    r = applySemantics (ohmGrammarObject, rwrFileName, supportFileName);
 	    process.exit (0);
 	} else {
 	    console.error (errormessage);

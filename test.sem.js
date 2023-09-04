@@ -1,5 +1,5 @@
 {
-    main : function (_k) {
+    main : function (_k, _nl) {
 	var s = _k.walk ();
 	console.log ("in test.sem.js/main...");
 	console.log (s);
