@@ -53,6 +53,11 @@ function patternMatch (src, ast) {
 	return matchResult;
     }
 }
+/////
+function makeASST (ast) {
+    return ast.createSemantics ();
+}
+/////
 
 function main () {
     // top level command, prints on stdout and stderr (if error) then exits with 0 or 1 (OK, or not OK, resp.)
@@ -70,7 +75,8 @@ function main () {
 
 	let ast = makeAST (grammarName, grammarText);
 	let cst = patternMatch (src, ast);
-	console.log ("pattern matched OK");
+	let asst = makeASST (ast)
+	console.log ("OK");
     } catch (e) {
 	console.error (e.message);
 	process.exit (1);
