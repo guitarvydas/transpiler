@@ -66,7 +66,7 @@ run :: proc (regstry : reg.Component_Registry, main_container_name : string, dia
 
 inject :: proc (main_container : ^zd.Eh) {
     main_container.handler(main_container, zd.make_message("grammar", "TEST { main = \"A\" }" ))
-    main_container.handler(main_container, zd.make_message("semantics", "TEST { main [x] = ‛«x»’ }"))
-    main_container.handler(main_container, zd.make_message("support", ""))
+//    main_container.handler(main_container, zd.make_message("semantics", "TEST { main [x] = ‛«x»’ }"))
+//    main_container.handler(main_container, zd.make_message("support", ""))
     main_container.handler(main_container, zd.make_message("src", "A"))
 }

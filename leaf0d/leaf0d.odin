@@ -958,6 +958,11 @@ ohmjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    fmt.printf ("ohmjs gets: %v\n", msg.datum.(string))
+    switch (msg.port) {
+    case "args":
+	fmt.printf ("ohmjs gets grammar: %v\n", msg.datum.(string))
+    case "stdin":
+	fmt.printf ("ohmjs gets stdin: %v\n", msg.datum.(string))
+    }
 }
 
