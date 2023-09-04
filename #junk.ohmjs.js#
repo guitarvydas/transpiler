@@ -17,7 +17,7 @@ function makeAST (grammarName, grammarText) {
     // an AST is an Abstract Syntax Tree, which encodes ALL possible matches
     // in true OO fashion, the AST is further embellished with various methods and
     //  private data, then returned as an internal object
-    // returns ast or throws error if any
+    // returns a triplet [success, ast, error if any]
     //
     // OhmJS converts the text for the grammar into an internal data structure,
     //  that internal data structure is needed for later operations
@@ -34,25 +34,61 @@ function makeAST (grammarName, grammarText) {
     try {
 	grammars = ohm.grammars (grammarText);
 	ast = grammars [grammarName];
-	return ast
+	return [true, ast, undefined]
     } catch (e) {
-	throw (e);
+	return [false, undefined, e];
     }
 }
-/////
+
 function patternMatch (src, ast) {
-    // return triplet [success, cst, error if any]
+    // return a triplet { success, CST object, error message if any }
+    //
+    let matchResult;
     try {
-	matchResult = ast.match (src);
-    } catch (e) {
-	throw (e);
+	matchResult = ohmGrammarObject.match (src);
+    } catch (err) {
+	return [false, undefined, err.message];
     }
     if (matchResult.failed ()) {
-	throw (Error (matchResult.message));
+	return [false, ohmGrammarObject, matchResult.message];
     } else { 
-	return matchResult;
+	console.log ("*** grammar object ***");
+	console.log (ohmGrammarObject);
+	console.log ("*** ***");
+
+	console.log ("*** match result ***");
+	console.log (matchResult);
+	console.log ("*** ***");
+	return [true, ohmGrammarObject, ""];
     }
 }
+
+function applySemantics (ohmGrammarObject, rwrFileName, supportFileName) {
+    let semanticsFunctionsAsString;
+    let evalableSemanticsFunctions;
+    let ohmSemanticsObject;
+    let compiledSemantics;
+    try {
+	semanticsFunctionsAsString = fs.readFileSync (rwrFileName, 'utf-8');
+	let ohmSemanticsObject = ohmGrammarObject.createSemantics ();
+
+	let evalableSemanticsFunctionsString = '(' + semanticsFunctionsAsString + ')';
+	compiledSemantics = eval (evalableSemanticsFunctionsString);
+	ohmSemanticsObject.addOperation ("walk", compiledSemantics);
+
+	console.log ("*** semantics object ***");
+	console.log (ohmSemanticsObject);
+	console.log ("*** ***");
+
+    } catch (e) {
+	console.error (e.message);
+	process.exit (1);
+    }
+}
+
+
+/////
+
 
 function main () {
     // top level command, prints on stdout and stderr (if error) then exits with 0 or 1 (OK, or not OK, resp.)
@@ -68,9 +104,25 @@ function main () {
 	let grammarText = fs.readFileSync (grammarFileName, 'utf-8');
 	let rwr = fs.readFileSync (rwrFileName, 'utf-8');
 
-	let ast = makeAST (grammarName, grammarText);
-	let cst = patternMatch (src, ast);
-	console.log ("pattern matched OK");
+	let r;
+	[success, ast, e] = makeAST (grammarName, grammarText);
+	if (!success) {
+	    console.error (e.message);
+	    process.exit (1);
+	} else {
+	    r = patternMatch (src, grammarName, grammar);
+	    let success = r [0]
+	    let ohmGrammarObject = r [1]
+	    let errormessage = r [2]
+	    if (success) {
+		r = applySemantics (ohmGrammarObject, rwrFileName, supportFileName);
+		process.exit (0);
+	    } else {
+		console.error (errormessage);
+		process.exit (1);
+	    }
+	} else {
+	    return [
     } catch (e) {
 	console.error (e.message);
 	process.exit (1);
