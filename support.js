@@ -1,10 +1,6 @@
 var traceDepth = 0;
 var tracing = false;
 
-function debugme () {
-    console.log ("debugme");
-}
-
 function _ruleInit () {
 }
 

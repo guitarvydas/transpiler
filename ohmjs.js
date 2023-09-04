@@ -58,11 +58,66 @@ function makeASST (ast) {
     return ast.createSemantics ();
 }
 /////
+var _traceDepth = 0;
+var _tracing = false;
+
+function _ruleInit () {
+}
+
+function _traceSpaces () {
+    var s = '';
+    var n = _traceDepth;
+    while (n > 0) {
+        s += ' ';
+        n -= 1;
+    }
+    s += `[${_traceDepth.toString ()}]`;
+    return s;
+}
+
+function _ruleEnter (ruleName) {
+    if (_tracing) {
+        _traceDepth += 1;
+        var s = _traceSpaces ();
+        s += 'enter: ';
+        s += ruleName.toString ();
+        console.log (s);
+    }
+}
+
+function _ruleExit (ruleName) {
+    if (_tracing) {
+        var s = _traceSpaces ();
+        _traceDepth -= 1;
+        s += 'exit: ';
+        s += ruleName.toString ();
+        console.log (s);
+    }
+}
+
+function extractFormals (s) {
+    var s0 = s
+        .replace (/\n/g,',')
+        .replace (/[A-Za-z0-9_]+ = /g,'')
+        .replace (/\._[^;]+;/g,'')
+        .replace (/,/,'')
+	.replace (/_/g,'')
+    ;
+    return s0;
+}
+
+// helper functions
+var ruleName = "???";
+function setRuleName (s) { ruleName = s; return "";}
+function getRuleName () { return ruleName; }
+
+
+
 function hangOperationOntoAsst (asst, opName, opFileName) {
-	semanticsFunctionsAsString = fs.readFileSync (opFileName, 'utf-8');
-	let evalableSemanticsFunctionsString = '(' + semanticsFunctionsAsString + ')';
-	compiledSemantics = eval (evalableSemanticsFunctionsString);
-	return asst.addOperation (opName, compiledSemantics);
+    semanticsFunctionsAsNamespaceString = fs.readFileSync (opFileName, 'utf-8');
+    let evalableSemanticsFunctionsString = '(' + semanticsFunctionsAsNamespaceString + ')';
+    compiledSemantics = eval (evalableSemanticsFunctionsString);
+    return asst.addOperation (opName, compiledSemantics);
 }
 /////
 function processCST (opName, asst, cst) {
@@ -79,6 +134,8 @@ function main () {
 	let grammarFileName = argv._[1];
 	let rwrFileName = argv._[2];
 	let src = fs.readFileSync ('/dev/fd/0', 'utf-8');
+	let supportFileName = argv._[3];
+
 
 	let grammarText = fs.readFileSync (grammarFileName, 'utf-8');
 	let rwr = fs.readFileSync (rwrFileName, 'utf-8');
@@ -90,6 +147,7 @@ function main () {
 
 	let walked = processCST ("rwr", asst, cst)
 	console.log (walked);
+	
     } catch (e) {
 	console.error (e.message);
 	process.exit (1);

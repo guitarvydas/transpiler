@@ -10,5 +10,5 @@ dev:
 	./ohmjs.js "RWR" rwr.ohm rwr.rwr <rwr.txt
 
 devsimple:
-	./ohmjs.js "TEST" test.ohm test.sem.js <test.txt
+	./ohmjs.js "TEST" test.ohm test.sem.js  <test.txt
 
