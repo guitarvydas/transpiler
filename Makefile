@@ -9,3 +9,6 @@ transpiler: transpiler.drawio main.odin */*.odin
 dev:
 	./ohmjs.js "TEST" test.ohm test.sem.js support.js <test.txt
 
+devsimple:
+	./ohmjs.js "TEST" test.ohm test.sem.js support.js <test.txt
+

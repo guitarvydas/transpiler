@@ -62,7 +62,7 @@ function hangOperationOntoAsst (asst, opName, opFileName) {
 	semanticsFunctionsAsString = fs.readFileSync (opFileName, 'utf-8');
 	let evalableSemanticsFunctionsString = '(' + semanticsFunctionsAsString + ')';
 	compiledSemantics = eval (evalableSemanticsFunctionsString);
-	return asst.addOperation ("walk", compiledSemantics);
+	return asst.addOperation (opName, compiledSemantics);
 }
 /////
 function processCST (opName, asst, cst, supportFileName) {
@@ -89,8 +89,8 @@ function main () {
 	let ast = makeAST (grammarName, grammarText);
 	let cst = patternMatch (src, ast);
 	let emptyAsst = makeASST (ast)
-	let asst = hangOperationOntoAsst (emptyAsst, "walk", rwrFileName);
-	let walked = processCST ("walk", asst, cst, supportFileName)
+	let asst = hangOperationOntoAsst (emptyAsst, "rwr", rwrFileName);
+	let walked = processCST ("rwr", asst, cst, supportFileName)
 	console.log (walked);
     } catch (e) {
 	console.error (e.message);
