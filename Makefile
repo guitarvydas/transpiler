@@ -9,6 +9,9 @@ transpiler: transpiler.drawio main.odin */*.odin
 abcc:
 	./ohmjs.js "ABC" abc/abc.ohm abc/abc.sem.js <abc/abc.abc
 
+abci:
+	./ohmjs.js "ABC" abc/abc.ohm abc/abc.sem.interp.js <abc/abc.abc
+
 dev:
 	./ohmjs.js "RWR" rwr.ohm rwr.rwr <rwr.txt
 
