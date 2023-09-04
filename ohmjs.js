@@ -59,7 +59,7 @@ function makeASST (ast) {
 }
 /////
 var _traceDepth = 0;
-var _tracing = false;
+var _tracing = true;
 
 function _ruleInit () {
 }
