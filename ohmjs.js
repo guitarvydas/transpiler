@@ -26,11 +26,11 @@ function patternMatch (src, grammarName, grammarText) {
     let ohmGrammarObject = undefined;
     let emessage = '';
     try {
-	grammars = ohmlang.grammars (grammarText);
+	grammars = ohm.grammars (grammarText);
 	ohmGrammarObject = grammars [grammarName];
     } catch (err) {
 	emessage = err.message;
-	return [false, undefined, undefined, `\nerror in grammar ${emessage}`];
+	return [false, undefined, `\nerror in grammar ${emessage}`];
     }
 
     let matchResult;
