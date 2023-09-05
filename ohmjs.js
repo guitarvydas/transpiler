@@ -59,7 +59,7 @@ function makeASST (ast) {
 }
 /////
 var _traceDepth = 0;
-var _tracing = true;
+var _tracing = false;
 
 function _ruleInit () {
 }
@@ -99,9 +99,9 @@ function extractFormals (s) {
     var s0 = s
         .replace (/\n/g,',')
         .replace (/[A-Za-z0-9_]+ = /g,'')
-        .replace (/\._[^;]+;/g,'')
+        .replace (/\.[^;]+;/g,'')
         .replace (/,/,'')
-	.replace (/_/g,'')
+	.replace (/var /g,'')
     ;
     return s0;
 }
@@ -116,8 +116,12 @@ function getRuleName () { return ruleName; }
 function hangOperationOntoAsst (asst, opName, opFileName) {
     semanticsFunctionsAsNamespaceString = fs.readFileSync (opFileName, 'utf-8');
     let evalableSemanticsFunctionsString = '(' + semanticsFunctionsAsNamespaceString + ')';
-    compiledSemantics = eval (evalableSemanticsFunctionsString);
-    return asst.addOperation (opName, compiledSemantics);
+    try {
+	compiledSemantics = eval (evalableSemanticsFunctionsString);
+	return asst.addOperation (opName, compiledSemantics);
+    } catch (e) {
+	throw Error (`while loading operation ${opName}: ${evalableSemanticsFunctionsString}: ${e.message}`);
+    }
 }
 /////
 function processCST (opName, asst, cst) {

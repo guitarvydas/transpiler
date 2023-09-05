@@ -1,8 +1,8 @@
 RWR {
 top [ws1 name ws2 lb ws4 rule+ ws5 rb ws3 more*] = ‛{
-«rule»
+«rule»«more»
     _terminal: function () { return this.sourceString; },
-    _iter: function (...children) { return children.map(c => c._rwr ()); },
+    _iter: function (...children) { return children.map(c => c.rwr ()); },
     spaces: function (x) { return this.sourceString; },
     space: function (x) { return this.sourceString; }
 }
@@ -11,205 +11,33 @@ more [name ws2 lb ws4 rule* ws5 rb ws3] = ‛
 «rule»
 `
 
-    rule_up : function (_lhs,_ws1,_keq,_ws2,_rws) { 
-        _ruleEnter ("rule_up");
-
-        var lhs = _lhs._rwr ();
-        var ws1 = _ws1._rwr ();
-        var keq = _keq._rwr ();
-        var ws2 = _ws2._rwr ();
-        var rws = _rws._rwr ();
-        var _result = `${lhs}
-_ruleExit ("${getRuleName ()}");
-return ${rws}
+rule_up [lhs ws1 keq ws2 rws] = 
+‛«lhs»
+_ruleExit ("«getRuleName ()»");
+return «rws»
 },
-`; 
-        _ruleExit ("rule_up");
-        return _result; 
-    },
-    ////
+’ 
     
-    // RuleLHS [name lb @Params rb] = [[«name}: function («extractFormals(Params)}) {\n_ruleEnter ("«name}");«setRuleName (name)}«Params}
-    // ]]
-    RuleLHS_nodown : function (_name,_lb,_Params,_rb) { 
-        _ruleEnter ("RuleLHS_nodown");
+RuleLHS_nodown [name lb Params* rb] = ‛«name»: function («extractFormals(Params)») {\n_ruleEnter ("«name»");«setRuleName (name)»«Params»’
 
-        var name = _name._rwr ();
-        var lb = _lb._rwr ();
-        var Params = _Params._rwr ().join ('');
-        var rb = _rb._rwr ();
-        var _result = `«name}: function («extractFormals(Params)}) {\n_ruleEnter ("«name}");«setRuleName (name)}«Params}
-`; 
-        _ruleExit ("RuleLHS_nodown");
-        return _result; 
-    },
-    
-    RuleLHS_down : function (_name,_lb,_Params,_rb, _ws1, _downstring, _ws2) { 
-        _ruleEnter ("RuleLHS_down");
+RuleLHS_down [name lb Params* rb ws1 downstring ws2] = ‛
+        `«name»: function («extractFormals(Params)») {\n_ruleEnter ("«name»");«setRuleName (name)»\nvar _0 = «_downstring.rwr ()»;\n«Params»
+`
+rewriteString [sb cs* se ws] = ‛return \‛«cs»\’;’
 
-        var name = _name._rwr ();
-        var lb = _lb._rwr ();
-        var Params = _Params._rwr ().join ('');
-        var rb = _rb._rwr ();
-        var _result = `«name}: function («extractFormals(Params)}) {\n_ruleEnter ("«name}");«setRuleName (name)}\nvar _0 = «_downstring._rwr ()};\n«Params}
-`; 
-        _ruleExit ("RuleLHS_down");
-        return _result; 
-    },
+downString [lq cs* rq] = ‛«cs»’
 
-    ////
+char_eval [lb name rb] = ‛«name»’
+char_raw [c] = ‛«c»’
+char_newline [kbs kn] = ‛\n’
+char_esc [kbs c] = ‛«c»’
+name [c cs*] = ‛«c»«cs»’
+nameRest [c] = ‛«c»’
 
+ Param_plus [name k] = ‛\nvar «name» = _«name».rwr ().join ('');’
+ Param_star [name k] = ‛\nvar «name» = _«name».rwr ().join ('');’
+ Param_opt [name k] = ‛\nvar «name» = _«name».rwr ().join ('');’
+ Param_flat [name] = ‛\nvar «name» = _«name».rwr ();’
 
-    // rewriteString [sb @cs se ws] = [[return \`«cs}\`;]]
-    rewriteString : function (_sb,_cs,_se,_ws) { 
-        _ruleEnter ("rewriteString");
-
-        var sb = _sb._rwr ();
-        var cs = _cs._rwr ().join ('');
-        var se = _se._rwr ();
-        var ws = _ws._rwr ();
-        var _result = `\`«cs}\`;`; 
-        _ruleExit ("rewriteString");
-        return _result; 
-    },
-
-    downString : function (_sb,_cs,_se) { 
-        _ruleEnter ("downString");
-
-        var sb = _sb._rwr ();
-        var cs = _cs._rwr ().join ('');
-        var se = _se._rwr ();
-        var _result = `\`«cs}\``; 
-        _ruleExit ("downString");
-        return _result; 
-    },
-
-
-    ////
-    // char_eval [lb name rb] = [[\$\{«name}\}]]
-    // char_raw [c] = [[«c}]]
-    char_eval : function (_lb,_cs,_rb) { 
-        _ruleEnter ("char_eval");
-
-        var lb = _lb._rwr ();
-        var name = _cs._rwr ().join ('');
-        var rb = _rb._rwr ();
-        var _result = `\$\{«name}\}`; 
-        _ruleExit ("char_eval");
-        return _result; 
-    },
-    
-    char_newline : function (_slash, _c) { 
-        _ruleEnter ("char_newline");
-
-        var slash = _slash._rwr ();
-        var c = _c._rwr ();
-        var _result = `\n`; 
-        _ruleExit ("char_newline");
-        return _result; 
-    },
-    char_esc : function (_slash, _c) { 
-        _ruleEnter ("char_esc");
-
-        var slash = _slash._rwr ();
-        var c = _c._rwr ();
-        var _result = `«c}`; 
-        _ruleExit ("char_esc");
-        return _result; 
-    },
-    char_raw : function (_c) { 
-        _ruleEnter ("char_raw");
-
-        var c = _c._rwr ();
-        var _result = `«c}`; 
-        _ruleExit ("char_raw");
-        return _result; 
-    },
-    ////
-    
-    // name [c @cs] = [[«c}«cs}]]
-    // nameRest [c] = [[«c}]]
-
-    name : function (_c,_cs) { 
-        _ruleEnter ("name");
-
-        var c = _c._rwr ();
-        var cs = _cs._rwr ().join ('');
-        var _result = `«c}«cs}`; 
-        _ruleExit ("name");
-        return _result; 
-    },
-    
-    nameFirst : function (_c) { 
-        _ruleEnter ("nameFirst");
-
-        var c = _c._rwr ();
-        var _result = `«c}`; 
-        _ruleExit ("nameFirst");
-        return _result; 
-    },
-
-    nameRest : function (_c) { 
-        _ruleEnter ("nameRest");
-
-        var c = _c._rwr ();
-        var _result = `«c}`; 
-        _ruleExit ("nameRest");
-        return _result; 
-    },
-
-    ////
-
-
-    // Param_plus [name k] = [[\nvar «name} = _«name}._rwr ().join ('');]]
-    // Param_star [name k] = [[\nvar «name} = _«name}._rwr ().join ('');]]
-    // Param_opt [name k] = [[\nvar «name} = _«name}._rwr ().join ('');]]
-    // Param_flat [name] = [[\nvar «name} = _«name}._rwr ();]]
-
-
-    Param_plus : function (_name,_k) { 
-        _ruleEnter ("Param_plus");
-
-        var name = _name._rwr ();
-        var k = _k._rwr ();
-        var _result = `\n«name} = «name}._rwr ().join ('');`; 
-        _ruleExit ("Param_plus");
-        return _result; 
-    },
-    
-    Param_star : function (_name,_k) { 
-        _ruleEnter ("Param_star");
-
-        var name = _name._rwr ();
-        var k = _k._rwr ();
-        var _result = `\n«name} = «name}._rwr ().join ('');`; 
-        _ruleExit ("Param_star");
-        return _result; 
-    },
-    
-    Param_opt : function (_name,_k) { 
-        _ruleEnter ("Param_opt");
-
-        var name = _name._rwr ();
-        var k = _k._rwr ();
-        var _result = `\n«name} = «name}._rwr ().join ('');`; 
-        _ruleExit ("Param_opt");
-        return _result; 
-    },
-    
-    Param_flat : function (_name) { 
-        _ruleEnter ("Param_flat");
-
-        var name = _name._rwr ();
-        var _result = `\n«name} = «name}._rwr ();`; 
-        _ruleExit ("Param_flat");
-        return _result; 
-    },
-    
-    ////
-
-    _terminal: function () { return this.sourceString; },
-    _iter: function (...children) { return children.map(c => c._rwr ()); },
-    spaces: function (x) { return this.sourceString; },
-    space: function (x) { return this.sourceString; }
-};
+ comment [kslsl c* nl] = ‛’
+}
