@@ -1,0 +1,85 @@
+// listConstants semantics
+      var listConstants_semantics = listConstants_grammar.createSemantics();
+
+      listConstants_semantics.addOperation(
+	  'listConstants',
+	  {
+	      Program: function(tree) {return toSpaceDelimitedList(tree.listConstants())},
+	      Form: function(item) {return item.listConstants()},
+	      SList: function(lis) {return lis.listConstants();},
+	      QuotedSexp: function(_lp,_q,form,_rp) {return form.listConstants()},
+	      BackQuotedSexp: function(_, form) {throw "can't happen";},
+	      CommaSexp: function(_, form) {throw "can't happen";},
+	      DottedList: function(_lp, items, _dot, lastItem, _rp) { throw "this solution does not support dotted list (except when quoted)"},
+	      NullTerminatedList: function(_lp, items, _rp) {
+		  return "(" + toSpaceDelimitedList(items.listConstants()) + ")"},
+	      ListItem: function(item) {return item.listConstants()},
+	      Atom: function(a) {return a.listConstants()},
+	      Syntactic_Atom: function(a) { return a.listConstants();},
+
+              QuotedSList: function(slist) { return slist.listConstants(); },
+              QuotedNullTerminatedList: function(_lp,qitem,_rp) { return "(@newList@ " + toSpaceDelimitedList(qitem.listConstants()) + ")"; },
+	      QuotedDottedList: function(_lp, items, _dot, lastItem, _rp) {
+		  return "(@newDottedList@ " + toSpaceDelimitedList(items.listConstants()) + " " + lastItem.listConstants() + ")"},
+              QListItem: function(item) { return item.listConstants(); },
+              QAtom: function(a) { return a.listConstants(); },
+              QAtomicNonSymbol: function(a) { return a.listConstants(); },
+              QAtomicSymbol: function(a) { return '"' + a.listConstants() + '"'; },
+
+	      lexical_QUOTE: function(_sp1,_q,_sp2) {return "";},
+
+	      lexical_atom: function(a) {return a.listConstants(); },
+	      lexical_boolean: function(b) {return this.sourceString},
+	      lexical_integer: function(ns) {return toPackedString(ns.listConstants());},
+	      lexical_numchar: function(c) {return c.listConstants()},
+	      lexical_string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.listConstants()) + "\""},
+	      lexical_symbol: function(c, cs) {return c.listConstants() + toPackedString(cs.listConstants());},
+	      lexical_letchar: function(c) {return c.listConstants()},
+	      lexical_lc: function(c) {return c.listConstants()},
+	      lexical_uc: function(c) {return c.listConstants()},
+
+	      _terminal: function() { return this.primitiveValue; }
+	  }
+      );
+      
+listConstants_semantics.addOperation(
+ 'toCL',
+ {
+     Program: function(form){return "(:Program " + form.toCL() + ")";},
+     Form: function(slistOrAtom) {return "(:Form " + slistOrAtom.toCL() + ")";},
+     SList: function(l) {return "(:SList " + l.toCL() + ")";},
+     QuotedSexp: function(_lp,_q,form,_rp) {return "(:QuotedSexp " + form.toCL() + ")";},
+     QuotedForm: function(slistOrAtom) {return "(:QuotedForm " + slistOrAtom.toCL() + ")";},
+     BackQuotedSexp: function(_q,form) {return "(:BackQuotedSexp " + form.toCL() + ")";},
+     CommaSexp: function(_comma,form) {return "(:CommaSexp " + form.toCL() + ")";},
+     DottedList: function(_lp,items,_dot,lastItem,_rp) {return "(:DottedList " + items.toCL() + lastItem.toCL() + ")";},
+     NullTerminatedList: function(_lp,items,_rp) {return "(:NullTerminatedList " + items.toCL() + ")"; },
+     ListItem: function(atomOrSlist) {return "(:ListItem " + atomOrSlist.toCL() + ")";},
+     Atom: function(atom) {return "(:Atom " + atom.toCL() + ")";},
+     Syntactic_Atom: function(atom) {return ":Syntactic_Atom " + atom.toCL() + ")";},
+     
+     QuotedSList: function (x) { return "(:QuotedSList " + x.toCL(); },
+     QuotedNullTerminatedList: function(_lp,ql,_rp){return "(:QuotedNullTerminatedList " + ql.toCL() + ")";},
+     QuotedDottedList: function(_lp,qitems,_dot,qLastItem,_rp){return "(:QuotedDottedList " + qitems.toCL() + qLastItem.toCL() + ")";},
+     QListItem: function(q){return "(:QListItem " + q.toCL() + ")";},
+     QAtom: function(q) {return "(:QAtom [[" + this.sourceString + "]] )";},
+     //QAtom: function(q) {return "(:QAtom " + q.toCL() + ")";},
+     QAtomicNonSymbol: function(q) {return "(:QAtomicNonSymbol " + q.toCL() + ")";},
+     QAtomicSymbol: function(q) {return "(:QAtomicSymbol " + q.toCL() + ")";},
+
+     lexical_QUOTE: function(_sp1,_q,_sp2) {return "(:lexical_QUOTE)";},
+
+     lexical_atom: function(latom) { return "(:lexical_atom [[" + this.sourceString + "]] )";},
+     //lexical_atom: function(latom) { return "(:lexical_atom " + latom.toCL() + ")";},
+     lexical_boolean: function(b) {return "(:lexical_boolean " + this.sourceString + ")";},
+     lexical_integer: function(ns) {return "(:lexical_integer " + ns.toCL() + ")";},
+     lexical_numchar: function(n) {return "(:lexical_numchar " + n.toCL() + ")";},
+     lexical_string: function(_q1,cs,_q2) {return "(:lexical_string " + cs.toCL() + ")";},
+     lexical_symbol: function(c1,cs) {return "(:lexical_symbol " + c1.toCL() + cs.toCL() + ")";},
+     lexical_letchar: function(c) {return "(:lexical_letchar " + c.toCL() + ")";},
+     lexical_lc: function(c) {return "(:lexical_lc " + c.toCL() + ")";},
+     lexical_uc: function(c) {return "(:lexical_uc " + c.toCL() + ")";},
+
+     _terminal: function() { return "(:_terminal " + this.primitiveValue + ")"; }
+ });
+
