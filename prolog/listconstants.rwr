@@ -36,4 +36,3 @@
     _terminal: function() { return this.sourceString; },
     _iter: function (...children) { return children.map(c => c.rwr ()); }
 }
-);

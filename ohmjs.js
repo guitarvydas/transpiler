@@ -34,6 +34,7 @@ function makeAST (grammarName, grammarText) {
     try {
 	grammars = ohm.grammars (grammarText);
 	ast = grammars [grammarName];
+	if (ast === undefined) { throw (Error (`can't find grammar ${grammarName}`)); }
 	return ast
     } catch (e) {
 	throw (e);
