@@ -4,8 +4,6 @@
 const fs = require ('fs');
 const ohm = require ('ohm-js');
 
-    
-
 var grammarText = String.raw`
 Scm {
   Program = Form+
@@ -33,6 +31,7 @@ Scm {
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
+
 `;
 
 

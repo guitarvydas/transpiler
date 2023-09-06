@@ -1,4 +1,3 @@
-var grammarText = String.raw`
 Scm {
   Program = Form+
   Form = SList | Atom
@@ -25,5 +24,4 @@ Scm {
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
-
 `;
