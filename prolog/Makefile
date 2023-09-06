@@ -8,15 +8,16 @@ scheme:
 	mit-scheme --batch-mode <scm6a.scm
 
 dev:
-	rm -f unbq.scm
+	rm -f unbq.scm unbq.js
 	make unbq.scm
 	cat unbq.scm
 
 unbq.scm : unbq.js ${SRC}
 	./unbq.js <${SRC} >unbq.scm
 
-unbq.js: unbq1.js scm.ohm.inc unbq3.js
-	cat unbq1.js scm.ohm.inc unbq3.js >unbq.js
+unbq.js: front.js scm.ohm.inc unbq3.js
+	cat front.js scm.ohm.inc unbq3.js >unbq.js
+	chmod a+x unbq.js
 
 process:
 	./pre.js <scm6a.scm >1.scm
