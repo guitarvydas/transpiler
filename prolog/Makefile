@@ -7,7 +7,9 @@ scheme:
 	@echo 'the answer should be (((x . 30) (y . 0)) ((x . 20) (y . 0)) ((x . 10) (y . 0)))'
 	mit-scheme --batch-mode <scm6a.scm
 
-dev: unbq.scm ${SRC}
+dev:
+	rm -f unbq.scm
+	make unbq.scm
 	cat unbq.scm
 
 unbq.scm : unbq.js ${SRC}
