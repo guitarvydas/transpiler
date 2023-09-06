@@ -1,4 +1,4 @@
-Scm2JSListConstants {
+ScmListConstants {
   Program = Form+
   Form = QuotedSexp | SList | Atom
   SList = DottedList | NullTerminatedList
