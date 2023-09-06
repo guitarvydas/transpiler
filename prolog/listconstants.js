@@ -1,3 +1,5 @@
+// (quote (...)) —> new List(...)
+
 _ = {
     toSpaceDelimitedList: function (a) { return a.join(' '); },
     toPackedString: function (a) { return a.join(''); }

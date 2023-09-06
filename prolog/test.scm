@@ -1,5 +1,6 @@
 x
 (x y z)
+(quote (p q r))
 `a
 `,a
 `(a)

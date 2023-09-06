@@ -8,16 +8,13 @@ scheme:
 	mit-scheme --batch-mode <scm6a.scm
 
 dev:
-	rm -f unbq.scm unbq.js scm.ohm.inc
-	make unbq.scm
-	cp -f unbq.scm result
-	cat result
-
-listconstants:
-	../ohmjs.js "ScmListConstants" listconstants.ohm listconstants.js <unbq.scm
-
-unbq.scm : unbq.js ${SRC}
+	rm -f unbq.scm unbq.js scm.ohm.inc lc.scm
+	make scm.ohm.inc
+	make unbq.js
 	./unbq.js <${SRC} >unbq.scm
+	../ohmjs.js "ScmListConstants" listconstants.ohm listconstants.js <unbq.scm >lc.scm
+	cp -f lc.scm result
+	cat result
 
 unbq.js: front.js scm.ohm.inc unbq3.js
 	cat front.js scm.ohm.inc unbq3.js >unbq.js
@@ -26,7 +23,3 @@ unbq.js: front.js scm.ohm.inc unbq3.js
 scm.ohm.inc: scm.ohm 1 3
 	cat 1 scm.ohm 3 >scm.ohm.inc
 
-process:
-	./pre.js <scm6a.scm >1.scm
-
-	./post.js <??.scm >???.scm
