@@ -15,6 +15,9 @@ dev:
 unbq.scm : unbq.js ${SRC}
 	./unbq.js <${SRC} >unbq.scm
 
+unbq.js: unbq1.js scm.ohm.inc unbq3.js
+	cat unbq1.js scm.ohm.inc unbq3.js >unbq.js
+
 process:
 	./pre.js <scm6a.scm >1.scm
 
