@@ -1,8 +1,10 @@
+
+var grammarText = String.raw`
 Scm {
   Program = Form+
   Form = SList | Atom
   QuotedSexp = "'" Form
-  BackQuotedSexp = "`" Form
+  BackQuotedSexp = "\x60" Form
   CommaSexp = "," Form
   SList = DottedList | NullTerminatedList
   DottedList = "(" ListItem+ lexical_DOT ListItem ")"
@@ -24,3 +26,4 @@ Scm {
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
+`;

@@ -1,5 +1,5 @@
-#SRC=test.scm
-SRC=scm6a.scm
+SRC=test.scm
+#SRC=scm6a.scm
 
 all: dev
 
@@ -7,11 +7,11 @@ scheme:
 	@echo 'the answer should be (((x . 30) (y . 0)) ((x . 20) (y . 0)) ((x . 10) (y . 0)))'
 	mit-scheme --batch-mode <scm6a.scm
 
-dev: 1.scm ${SRC}
-	cat 1.scm
+dev: unbq.scm ${SRC}
+	cat unbq.scm
 
-1.scm : unbq.js ${SRC}
-	./unbq.js <${SRC} >1.scm
+unbq.scm : unbq.js ${SRC}
+	./unbq.js <${SRC} >unbq.scm
 
 process:
 	./pre.js <scm6a.scm >1.scm
