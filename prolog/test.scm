@@ -1,3 +1,7 @@
-(a b c)
+x
+(x y z)
+`a
+`,a
+`(a)
 `(a b c)
-`(a b c ,d e)
+`(a ,b c)

@@ -2,7 +2,7 @@
 
 var identity_sem =
     {
-	Program: function(tree) {return toSpaceDelimitedList(tree.identity())},
+	Program: function(tree) {return toNewlineDelimitedList(tree.identity())},
 	Form: function(item) {return item.identity()},
 	QuotedSexp: function(_, form) {return "'" + form.identity()},
 	BackQuotedSexp: function(_, form) {return "`" + form.identity()},
@@ -95,8 +95,9 @@ function unbq (s) {
     }
 
     
-    function toSpaceDelimitedList (a) { return a.join(' '); }
-    function toPackedString (a) { return a.join(''); }
+function toNewlineDelimitedList (a) { return a.join(' XXX '); }
+function toSpaceDelimitedList (a) { return a.join(' '); }
+function toPackedString (a) { return a.join(''); }
 
     // the command-line code
 

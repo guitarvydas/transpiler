@@ -10,6 +10,10 @@ scheme:
 dev:
 	rm -f unbq.scm unbq.js scm.ohm.inc
 	make unbq.scm
+	cp -f unbq.scm result
+	cat result
+
+listconstants:
 	../ohmjs.js "ScmListConstants" listconstants.ohm listconstants.js <unbq.scm
 
 unbq.scm : unbq.js ${SRC}
