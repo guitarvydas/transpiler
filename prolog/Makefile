@@ -38,5 +38,8 @@ scm.ohm.inc: scm.ohm 1 3
 	cat 1 scm.ohm 3 >scm.ohm.inc
 
 regression:
+	rm -f unbq.scm unbq.js scm.ohm.inc lc.scm
+	make scm.ohm.inc
+	make unbq.js
 	./unbq.js <pre.scm >unbq.scm
 	diff unbq.scm gold-unbq.scm

@@ -12,22 +12,22 @@ Scm {
   BackQuotedSexp = "\x60" Form
   CommaSexp = "," Form
   SList = DottedList | NullTerminatedList
-  DottedList = "(" ListItem+ lexical_DOT ListItem ")"
+  DottedList = "(" ListItem+ DOT ListItem ")"
   NullTerminatedList =   "(" ListItem* ")"
   ListItem = (Atom | SList)
-  Atom = lexical_atom | Syntactic_Atom
+  Atom = atom | Syntactic_Atom
   Syntactic_Atom = QuotedSexp | BackQuotedSexp | CommaSexp
 
-  lexical_atom = lexical_integer | lexical_symbol | lexical_string | lexical_boolean
-  lexical_boolean = "#f" | "#t"
-  lexical_integer = lexical_numchar+
-  lexical_numchar = "0".."9"
-  lexical_string = "\"" (~"\"" any)+ "\""
-  lexical_symbol = lexical_letchar (lexical_letchar | lexical_numchar)*
-  lexical_letchar = lexical_lc | lexical_uc | "+" | "*" | "!" | "?"  | "_" | "-" | "="
-  lexical_lc = "a".."z"
-  lexical_uc = "A".."Z"
-  lexical_DOT = space* "." space*
+  atom = integer | symbol | string | boolean
+  boolean = "#f" | "#t"
+  integer = numchar+
+  numchar = "0".."9"
+  string = "\"" (~"\"" any)+ "\""
+  symbol = letchar (letchar | numchar)*
+  letchar = lc | uc | "+" | "*" | "!" | "?"  | "_" | "-" | "="
+  lc = "a".."z"
+  uc = "A".."Z"
+  DOT = space* "." space*
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
@@ -49,15 +49,15 @@ var identity_sem =
 	    return "(" + toSpaceDelimitedList(items.identity()) + ")"},
 	ListItem: function(item) {return item.identity()},
 	Atom: function(a) {return a.identity()},
-	lexical_integer: function(ns) {return toPackedString(ns.identity());},
-	lexical_symbol: function(c, cs) {return c.identity() + toPackedString(cs.identity());},
-	lexical_string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.identity()) + "\""},
-	lexical_letchar: function(c) {return c.identity()},
-	lexical_numchar: function(c) {return c.identity()},
-	lexical_lc: function(c) {return c.identity()},
-	lexical_uc: function(c) {return c.identity()},
+	integer: function(ns) {return toPackedString(ns.identity());},
+	symbol: function(c, cs) {return c.identity() + toPackedString(cs.identity());},
+	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.identity()) + "\""},
+	letchar: function(c) {return c.identity()},
+	numchar: function(c) {return c.identity()},
+	lc: function(c) {return c.identity()},
+	uc: function(c) {return c.identity()},
 
-	lexical_boolean: function(b) {return this.sourceString},
+	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
 	_iter: function (...children) { return children.map(c => c.identity ()); }
     };
@@ -78,15 +78,15 @@ var unbq_sem =
 	    return "(" + toSpaceDelimitedList(items.unbackquote()) + ")"},
 	ListItem: function(item) {return item.unbackquote()},
 	Atom: function(a) {return a.unbackquote()},
-	lexical_integer: function(ns) {return toPackedString(ns.unbackquote());},
-	lexical_symbol: function(c, cs) {return c.unbackquote() + toPackedString(cs.unbackquote());},
-	lexical_string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.unbackquote()) + "\""},
-	lexical_letchar: function(c) {return c.unbackquote()},
-	lexical_numchar: function(c) {return c.unbackquote()},
-	lexical_lc: function(c) {return c.unbackquote()},
-	lexical_uc: function(c) {return c.unbackquote()},
+	integer: function(ns) {return toPackedString(ns.unbackquote());},
+	symbol: function(c, cs) {return c.unbackquote() + toPackedString(cs.unbackquote());},
+	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.unbackquote()) + "\""},
+	letchar: function(c) {return c.unbackquote()},
+	numchar: function(c) {return c.unbackquote()},
+	lc: function(c) {return c.unbackquote()},
+	uc: function(c) {return c.unbackquote()},
 
-	lexical_boolean: function(b) {return this.sourceString},
+	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
 	_iter: function (...children) { return children.map(c => c.unbackquote ()); }
     };
@@ -105,15 +105,15 @@ var inbq_sem =
 	    return "(list " + toSpaceDelimitedList(items.inbackquote()) + ")"},
 	ListItem: function(item) {return item.inbackquote()},
 	Atom: function(a) {return a.inbackquote()},
-	lexical_integer: function(ns) {return toPackedString(ns.inbackquote());},
-	lexical_symbol: function(c, cs) {return "(quote " + c.inbackquote() + toPackedString(cs.inbackquote()) + ")";},
-	lexical_string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.inbackquote()) + "\""},
-	lexical_letchar: function(c) {return c.inbackquote()},
-	lexical_numchar: function(c) {return c.inbackquote()},
-	lexical_lc: function(c) {return c.inbackquote()},
-	lexical_uc: function(c) {return c.inbackquote()},
+	integer: function(ns) {return toPackedString(ns.inbackquote());},
+	symbol: function(c, cs) {return "(quote " + c.inbackquote() + toPackedString(cs.inbackquote()) + ")";},
+	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.inbackquote()) + "\""},
+	letchar: function(c) {return c.inbackquote()},
+	numchar: function(c) {return c.inbackquote()},
+	lc: function(c) {return c.inbackquote()},
+	uc: function(c) {return c.inbackquote()},
 
-	lexical_boolean: function(b) {return this.sourceString},
+	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
 	_iter: function (...children) { return children.map(c => c.inbackquote ()); }
     };
