@@ -16,9 +16,9 @@ jsprolog:
 	./unbq.js <pre.scm >unbq.scm
 	../ohmjs.js "ScmListConstants" listconstants.ohm listconstants.js <unbq.scm >lc.scm
 	../ohmjs.js "Scm2JS" scm2js.ohm scm2js.js <lc.scm >js0.scm
-	./post.js <js0.scm >js.scm
-	cp -f js.scm result
-	cat result
+	./post.js <js0.scm >scm6a.js
+	cat support.js scm6a.js > prolog.js
+	node prolog.js
 
 dev:
 	rm -f unbq.scm unbq.js scm.ohm.inc lc.scm
