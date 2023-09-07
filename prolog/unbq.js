@@ -23,9 +23,7 @@ Scm {
   numchar = "0".."9"
   string = "\"" (~"\"" any)+ "\""
   symbol = letchar (letchar | numchar)*
-  letchar = lc | uc | "+" | "*" | "!" | "?"  | "_" | "-" | "="
-  lc = "a".."z"
-  uc = "A".."Z"
+  letchar = letter | "+" | "*" | "!" | "?"  | "_" | "-" | "="
   DOT = space* "." space*
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
@@ -53,8 +51,6 @@ var identity_sem =
 	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.identity()) + "\""},
 	letchar: function(c) {return c.identity()},
 	numchar: function(c) {return c.identity()},
-	lc: function(c) {return c.identity()},
-	uc: function(c) {return c.identity()},
 
 	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
@@ -82,8 +78,6 @@ var unbq_sem =
 	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.unbackquote()) + "\""},
 	letchar: function(c) {return c.unbackquote()},
 	numchar: function(c) {return c.unbackquote()},
-	lc: function(c) {return c.unbackquote()},
-	uc: function(c) {return c.unbackquote()},
 
 	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
@@ -109,8 +103,6 @@ var inbq_sem =
 	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.inbackquote()) + "\""},
 	letchar: function(c) {return c.inbackquote()},
 	numchar: function(c) {return c.inbackquote()},
-	lc: function(c) {return c.inbackquote()},
-	uc: function(c) {return c.inbackquote()},
 
 	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },

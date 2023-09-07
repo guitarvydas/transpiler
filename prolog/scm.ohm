@@ -16,9 +16,7 @@ Scm {
   numchar = "0".."9"
   string = "\"" (~"\"" any)+ "\""
   symbol = letchar (letchar | numchar)*
-  letchar = lc | uc | "+" | "*" | "!" | "?"  | "_" | "-" | "="
-  lc = "a".."z"
-  uc = "A".."Z"
+  letchar = letter | "+" | "*" | "!" | "?"  | "_" | "-" | "="
   DOT = space* "." space*
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
