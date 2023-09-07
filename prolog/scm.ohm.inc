@@ -13,10 +13,9 @@ Scm {
 
   atom = integer | symbol | string | boolean
   boolean = "#f" | "#t"
-  integer = numchar+
-  numchar = "0".."9"
+  integer = digit+
   string = "\"" (~"\"" any)+ "\""
-  symbol = letchar (letchar | numchar)*
+  symbol = letchar (letchar | digit)*
   letchar = letter | "+" | "*" | "!" | "?"  | "_" | "-" | "="
   DOT = space* "." space*
   semiColonComment = ";" (~"\n" any)* "\n"

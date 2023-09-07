@@ -18,7 +18,6 @@ var identity_sem =
 	symbol: function(c, cs) {return c.identity() + toPackedString(cs.identity());},
 	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.identity()) + "\""},
 	letchar: function(c) {return c.identity()},
-	numchar: function(c) {return c.identity()},
 
 	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
@@ -45,7 +44,6 @@ var unbq_sem =
 	symbol: function(c, cs) {return c.unbackquote() + toPackedString(cs.unbackquote());},
 	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.unbackquote()) + "\""},
 	letchar: function(c) {return c.unbackquote()},
-	numchar: function(c) {return c.unbackquote()},
 
 	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
@@ -70,7 +68,6 @@ var inbq_sem =
 	symbol: function(c, cs) {return "(quote " + c.inbackquote() + toPackedString(cs.inbackquote()) + ")";},
 	string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.inbackquote()) + "\""},
 	letchar: function(c) {return c.inbackquote()},
-	numchar: function(c) {return c.inbackquote()},
 
 	boolean: function(b) {return this.sourceString},
 	_terminal: function() { return this.sourceString; },
