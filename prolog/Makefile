@@ -1,4 +1,5 @@
-SRC=test.scm
+#SRC=test.scm
+SRC=test2.scm
 #SRC=scm6a.scm
 
 all: dev
@@ -13,7 +14,8 @@ dev:
 	make unbq.js
 	./unbq.js <${SRC} >unbq.scm
 	../ohmjs.js "ScmListConstants" listconstants.ohm listconstants.js <unbq.scm >lc.scm
-	cp -f lc.scm result
+	../ohmjs.js "Scm2JS" scm2js.ohm scm2js.js <lc.scm >js.scm
+	cp -f js.scm result
 	cat result
 
 unbq.js: front.js scm.ohm.inc unbq3.js
