@@ -29,32 +29,32 @@ _ = {
     //
     CondExpression: function(c){ return c.rwr(); },
     CondExpressionWithElse : function(_begin,_cond,firstClause,moreClauses,elseClause,_end) {
-        return "(function(){<br>" + firstClause.rwr() + _.toSpaceDelimitedList(moreClauses.rwr()) + elseClause.rwr() + "<br>})()" ; },
+        return "(function(){\n" + firstClause.rwr() + _.toSpaceDelimitedList(moreClauses.rwr()) + elseClause.rwr() + "\n})()" ; },
     CondExpressionWithoutElse : function(_begin,_cond,firstClause,moreClauses,_end) {
-        return "(function(){<br>"+ firstClause.rwr() + _.toSpaceDelimitedList(moreClauses.rwr()) + " else " + "{<br>return null;<br>}" + "<br>})()" ; },
+        return "(function(){\n"+ firstClause.rwr() + _.toSpaceDelimitedList(moreClauses.rwr()) + " else " + "{\nreturn null;\n}" + "\n})()" ; },
 
     FirstCondClause: function(c) { return "if " + c.rwr(); },
     MoreCondClause: function(c) { return " else if " + c.rwr(); },
-    CondClause: function(_begin,ctest,block,_end) {return "(" + ctest.rwr() + ") {<br>" +  block.rwr() + "<br>}"; },
+    CondClause: function(_begin,ctest,block,_end) {return "(" + ctest.rwr() + ") {\n" +  block.rwr() + "\n}"; },
 
     CondTest: function(f) { return f.rwr(); },
-    CondElseClause: function(_begin,_else,block,_end){ return "else {<br>" + block.rwr() + "}<br>"; },
+    CondElseClause: function(_begin,_else,block,_end){ return "else {\n" + block.rwr() + "}\n"; },
 
     CondStatementBlock: function(sb) { return sb.rwr(); },
 
     StatementBlock: function(atomOrSequential) { return atomOrSequential.rwr(); },
     SequentialStatement: function(midStatements, lastStatement) {
 	return _.toSpaceDelimitedList(midStatements.rwr()) + lastStatement.rwr()},
-    MidStatement: function(s,_lookahead) { if (s._node.numChildren() > 0) {return s.rwr() + ";<br>" ;} else {return "";}},
-    LastStatement: function(s) { return "return " + s.rwr() + ";<br>" ;},
+    MidStatement: function(s,_lookahead) { if (s._node.numChildren() > 0) {return s.rwr() + ";\n" ;} else {return "";}},
+    LastStatement: function(s) { return "return " + s.rwr() + ";\n" ;},
     Statement: function(f) { return f.rwr() ;},
 
     LetExpression: function(e) { return e.rwr(); },
     LetSequential: function(_begin,_letstar,bindings,body,_end) {
 	throw "NIY: let*";
-	return "(function(" + bindings.rwr() + ") {<br>"+ body.rwr() + "<br>})()"},
+	return "(function(" + bindings.rwr() + ") {\n"+ body.rwr() + "\n})()"},
     LetParallel: function(_begin,_let,bindings,body,_end) {
-	return "(function(" + bindings.rwr() + ") {<br>"+ body.rwr() + "<br>})()"},
+	return "(function(" + bindings.rwr() + ") {\n"+ body.rwr() + "\n})()"},
 
     LetBindings: function(_begin,bindings,_end) { return bindings.rwr(); },
     Binding: function(_begin,v,e,_end) { return v.rwr() + "=" + e.rwr(); },
@@ -63,11 +63,11 @@ _ = {
 
     
     IfThenElseExpression: function(_begin,_if,e,thenPart,elsePart,_end) {
-        return "(function(){<br>if (" + e.rwr() + ") {<br>return " + thenPart.rwr() + ";<br>} else {<br>return " + elsePart.rwr() + ";<br>}<br>})()";
+        return "(function(){\nif (" + e.rwr() + ") {\nreturn " + thenPart.rwr() + ";\n} else {\nreturn " + elsePart.rwr() + ";\n}\n})()";
     },
 
     IfThenExpression: function(_begin,_if,e,thenPart,_end) {
-        return "(function(){<br>if (" + e.rwr() + ") {<br>return " + thenPart.rwr() + ";<br>} else {<br>" + "  return null;" + "<br>}<br>})()";
+        return "(function(){\nif (" + e.rwr() + ") {\nreturn " + thenPart.rwr() + ";\n} else {\n" + "  return null;" + "\n}\n})()";
     },
 
     ThenPart: function(b) { return b.rwr(); },
@@ -87,11 +87,11 @@ _ = {
     FunctionCall: function(_lp,id,actuals,_end) {return id.rwr() + "(" + actuals.rwr() + ")";},
 
     GlobalFunctionDefinition: function(_begin,_define,_begin2,id,formals,_end2,body,_end) {
-	return "function " + id.rwr() + "(" + formals.rwr() + ")" + " {<br>" + body.rwr() + "};<br>"; },
+	return "function " + id.rwr() + "(" + formals.rwr() + ")" + " {\n" + body.rwr() + "};\n"; },
 
     GlobalVariableDefinition: function(_begin,_define,id,form,_end) {
-	return "let " + id.rwr() + " = " + form.rwr() + ";<br>";},
-    TopLevelFunctionCall: function(fn) {return fn.rwr() + ";<br>";},
+	return "let " + id.rwr() + " = " + form.rwr() + ";\n";},
+    TopLevelFunctionCall: function(fn) {return fn.rwr() + ";\n";},
     
 
 
