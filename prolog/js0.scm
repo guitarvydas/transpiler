@@ -69,7 +69,7 @@ return back6(l,g,r,e,n,c,whole_db);
 clear_r(c);
 return prove6(c,cdr(g),r,e,n,c,whole_db);
 
-}  else if (eq_Q_("r!",car(g))) {
+}  else if (eq_Q_(r!,car(g))) {
 return prove6(l,cddr(g),r,e,n,cadr(g),whole_db);
 
 }  else if (null_Q_(r)) {
@@ -94,7 +94,7 @@ return (function(a=copy(car(r),n)) {
 return (function(e_A_=unify(car(a),car(g),e)) {
 return (function(){
 if (e_A_) {
-return prove6(link(l,g,r,e,n,c),AppendInefficient3(cdr(a),list("r!",l),cdr(g)),whole_db,e_A_,_plus(1,n),l,whole_db);
+return prove6(link(l,g,r,e,n,c),AppendInefficient3(cdr(a),list(r!,l),cdr(g)),whole_db,e_A_,_plus(1,n),l,whole_db);
 } else {
 return back6(l,g,r,e,n,c,whole_db);
 }
@@ -320,5 +320,4 @@ return error("call_foreign called with unknown operator",func);
  display_result();
  newline();
  newline();
-
 
