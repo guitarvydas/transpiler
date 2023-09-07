@@ -8,8 +8,7 @@ Scm {
   DottedList = "(" ListItem+ DOT ListItem ")"
   NullTerminatedList =   "(" ListItem* ")"
   ListItem = (Atom | SList)
-  Atom = atom | Syntactic_Atom
-  Syntactic_Atom = QuotedSexp | BackQuotedSexp | CommaSexp
+  Atom = atom | QuotedSexp | BackQuotedSexp | CommaSexp
 
   atom = integer | symbol | string | boolean
   boolean = "#f" | "#t"
