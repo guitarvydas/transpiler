@@ -1,11 +1,15 @@
 #SRC=test.scm
 #SRC=test2.scm
-SRC=scm6a.scm
+SRC=prolog.scm
 
 all: vcomma
 
 vcomma:
-	../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >scm.vc
+	../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >prolog.vc
+
+emptylist:
+	../ohmjs.js "RWR" rwr.ohm rwr.js <emptylist.rwr >emptylist.js
+	../ohmjs.js "EmptyList" emptylist.ohm emptylist.js
 
 scheme:
 	@echo 'the answer should be (((x . 30) (y . 0)) ((x . 20) (y . 0)) ((x . 10) (y . 0)))'
