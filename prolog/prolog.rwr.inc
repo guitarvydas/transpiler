@@ -1,4 +1,3 @@
-Prolog {
   Sexprs [Sexpr+] = ‛«Sexpr»’
   Sexpr_list [lp Sexpr+ rp] = ‛«lp»«Sexpr»«rp»’
   Sexpr_quoted [q Sexpr] = ‛«q»«Sexpr»’
@@ -10,4 +9,3 @@ Prolog {
   // symchar [c] = ‛«c»’
   
   semiColonComment [ksemi cs* nl] = ‛’
-}
