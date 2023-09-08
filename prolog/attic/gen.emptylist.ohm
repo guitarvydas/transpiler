@@ -21,9 +21,8 @@ Prolog {
 
 
 EmptyList <: Prolog {
-  Sexpr :=
+  Sexpr := ELSexpr
+  ELSexpr =
     | "'" "(" ")" -- empty
-    | "(" Sexpr* ")" -- list
-    | "'" Sexpr -- quoted
-    | Symbol -- symbol
+    | Sexpr
 }

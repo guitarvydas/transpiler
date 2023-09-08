@@ -18,3 +18,9 @@ Prolog {
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
+
+
+EmptyList <: Prolog {
+  Sexpr +=
+    "'" "(" ")" -- empty
+}
