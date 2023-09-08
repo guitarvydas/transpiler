@@ -13,7 +13,7 @@ Scm {
 
   separator = "(" | ")" | "'" | "," | "@" | "`" | ";" | " . "
   vcomma = "₊"
-  Symbol = symchar+
+  Symbol = symchar+ vcomma?
   symchar = ~vcomma ~separator any
   
   semiColonComment = ";" (~"\n" any)* "\n"
