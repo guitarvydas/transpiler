@@ -1,0 +1,11 @@
+VirtualComma {
+  input = char+
+  char =
+    | space -- space
+    | separator -- separator
+    | any &space -- needsVcomma
+    | any -- doesNotNeedVcomma
+  separator = "(" | ")" | "'" | "," | "@" | "`" | ";" | " . "
+  semiColonComment = ";" (~"\n" any)* "\n"
+  space += semiColonComment
+}

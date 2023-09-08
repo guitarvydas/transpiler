@@ -20,3 +20,5 @@ Scm {
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
+
+// DOT is screwy

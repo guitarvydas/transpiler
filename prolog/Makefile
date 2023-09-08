@@ -2,7 +2,10 @@
 #SRC=test2.scm
 SRC=scm6a.scm
 
-all: regression
+all: vcomma
+
+vcomma:
+	../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >scm.vc
 
 scheme:
 	@echo 'the answer should be (((x . 30) (y . 0)) ((x . 20) (y . 0)) ((x . 10) (y . 0)))'
