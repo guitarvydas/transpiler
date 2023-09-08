@@ -1,9 +1,9 @@
-include (`prolog.scm.inc')
+include(`prolog.ohm.inc')
 
-EmptyList :< Prolog {
+EmptyList <: Prolog {
   Sexpr :=
     | "'" "(" ")" -- empty
-    | "(" Sexpr+ ")" -- list
+    | "(" Sexpr* ")" -- list
     | "'" Sexpr -- quoted
     | Symbol -- symbol
 }

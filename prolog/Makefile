@@ -8,6 +8,7 @@ vcomma:
 	../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >prolog.vc
 
 emptylist:
+	m4 <emptylist.rwr.m4 >emptylist.rwr
 	../ohmjs.js "RWR" rwr.ohm rwr.js <emptylist.rwr >emptylist.js
 	../ohmjs.js "EmptyList" emptylist.ohm emptylist.js
 

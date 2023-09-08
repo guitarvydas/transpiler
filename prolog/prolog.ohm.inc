@@ -1,15 +1,20 @@
 Prolog {
   Sexprs = Sexpr+
   Sexpr =
-    | "(" Sexpr+ ")" -- list
+    | "(" Sexpr* ")" -- list
     | "'" Sexpr -- quoted
+    | string -- string
+    | number -- number
     | Symbol -- symbol
 
-  separator = "(" | ")" | "'" | "," | "@" | "`" | ";" | " . "
+  separator = "(" | ")" | "'" | "," | "@" | "\x60" | ";" | " . "
   vcomma = "₊"
   Symbol = symchar+ vcomma?
-  symchar = ~vcomma ~separator any
+  symchar = ~vcomma ~separator ~space any
   
+  string = dq (~dq any)* dq
+  dq = "\""
+  number = digit+
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }

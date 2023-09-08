@@ -1,5 +1,3 @@
-;; begin prolog-6a.scm
-
 ;; utility functions
 (define₊ (first₊ x) (car₊ x))
 (define₊ (rest₊ x) (cdr₊ x))
@@ -54,16 +52,6 @@
 ;; r == rules (factbase)
 (define₊ (prove6₊ l₊ g₊ r₊ e₊ n₊ c₊ whole-db)
   
-;;   (newline) (display "prove6") (newline)
-;; ;  (display "l = ") (display l) (newline)
-;;   (display "g = ") (display g) (newline)
-;;   (display "r = ") (display r) (newline)
-;;   (display "e = ") (display e) (newline)
-;; ;  (display "n = ") (display n) (newline)
-;; ;  (display "c = ") (display c) (newline)
-;; ;  (display "w = ") (display whole-db) (newline)
-;;   (newline)
-  
   (cond₊
     ((null?₊ g)
       (let₊ ((next_result₊ (print-frame₊ e)))
@@ -107,7 +95,7 @@
 (define₊ (var?₊ x)
   (and₊ (pair?₊ x)
        (string?₊ (car₊ x))
-       (string=?₊ "?"₊ (car₊ x))))
+       (string=?₊ "?" (car₊ x))))
 
 ;; manually rewritten named let
 (define₊ (lookup_loop₊ e₊ id₊ tm)
@@ -215,16 +203,16 @@
     ((some₊ 10))
     ((some₊ 20))
     ((some₊ 30))
-    ((eq₊ ("?"₊ X) ("?"₊ X)))
-    ((neq₊ ("?"₊ X) ("?"₊ Y))
-     (eq₊ ("?"₊ X) ("?"₊ Y)) !₊ fail)
-    ((neq₊ ("?"₊ X) ("?"₊ Y)))
+    ((eq₊ ("?" X) ("?" X)))
+    ((neq₊ ("?" X) ("?" Y))
+     (eq₊ ("?" X) ("?" Y)) !₊ fail)
+    ((neq₊ ("?" X) ("?" Y)))
    ))
 
-(define₊ goals₊ '((some₊ ("?"₊ X))
-		  (some₊ ("?"₊ Y))
-		  (neq₊ ("?"₊ X) ("?"₊ Y))
-		  (eq₊ ("?"₊ X) ("@"₊ "add"₊ ("?"₊ X) ("?"₊ Y)))))
+(define₊ goals₊ '((some₊ ("?" X))
+		  (some₊ ("?" Y))
+		  (neq₊ ("?" X) ("?" Y))
+		  (eq₊ ("?" X) ("@" "add" ("?" X) ("?" Y)))))
 
 
 (define₊ (resolveArgs₊ a₊ bindings)
@@ -243,31 +231,27 @@
 (define₊ (foreign?₊ expr)
   (and₊ (pair?₊ expr)
        (string?₊ (car₊ expr))
-       (string=?₊ "@"₊ (car₊ expr))))
+       (string=?₊ "@" (car₊ expr))))
 
 (define₊ (call-foreign₊ expr₊ bindings)
   (let₊ ((func₊ (cadr₊ expr))
 	(args₊ (cddr₊ expr)))
 
-    (cond₊ ((string=?₊ "unity"₊ func)
+    (cond₊ ((string=?₊ "unity" func)
 	   (car₊ args))
 
-	  ((string=?₊ "add"₊ func)
+	  ((string=?₊ "add" func)
 	   (let₊ ((resolved-args₊ (resolveArgs₊ args₊ bindings)))
-	     ; (display "add bindings ") (display bindings) (newline)
-	     ; (display "add args ") (display args) (newline)
-	     ; (display "add resolved-args ") (display resolved-args) (newline)
-	     ; (newline)
 	     (+₊ (car₊ resolved-args) (cadr₊ resolved-args))))
 
-	  ((string=?₊ "display"₊ func)
+	  ((string=?₊ "display" func)
 	   (let₊ ((a₊ (value₊ (car₊ args) bindings)))
 	     (display₊ a)))
 	  
-	  ((string=?₊ "newline"₊ func)
+	  ((string=?₊ "newline" func)
 	   (newline))
 	  
-	  (else₊ (error₊ "call-foreign₊ called₊ with₊ unknown₊ operator"₊ func)))))
+	  (else₊ (error₊ "call-foreign₊ called₊ with₊ unknown₊ operator" func)))))
 
 ; 9-slide PROVE
 (clear_result)
@@ -277,6 +261,4 @@
 (display_result)
 (newline)  
 (newline)
-
-;; end prolog-6a.scm
 

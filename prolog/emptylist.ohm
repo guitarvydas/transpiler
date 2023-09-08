@@ -1,9 +1,29 @@
-include (`prolog.scm.inc')
+Prolog {
+  Sexprs = Sexpr+
+  Sexpr =
+    | "(" Sexpr* ")" -- list
+    | "'" Sexpr -- quoted
+    | string -- string
+    | number -- number
+    | Symbol -- symbol
 
-EmptyList :< Prolog {
+  separator = "(" | ")" | "'" | "," | "@" | "\x60" | ";" | " . "
+  vcomma = "₊"
+  Symbol = symchar+ vcomma?
+  symchar = ~vcomma ~separator ~space any
+  
+  string = dq (~dq any)* dq
+  dq = "\""
+  number = digit+
+  semiColonComment = ";" (~"\n" any)* "\n"
+  space += semiColonComment
+}
+
+
+EmptyList <: Prolog {
   Sexpr :=
     | "'" "(" ")" -- empty
-    | "(" Sexpr+ ")" -- list
+    | "(" Sexpr* ")" -- list
     | "'" Sexpr -- quoted
     | Symbol -- symbol
 }

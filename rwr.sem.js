@@ -1,5 +1,4 @@
 {
-
     top : function (_ws1,_name,_ws2,_lb,_ws4,_rule,_ws5,_rb,_ws3,_more) { 
         _ruleEnter ("top");
 
@@ -209,7 +208,7 @@ return ${rws}
 
         var name = _name.rwr ();
         var k = _k.rwr ();
-        var _result = `\nvar ${name} = _${name}.rwr ().join ('');`; 
+        var _result = `\n${name} = ${name}.rwr ().join ('');`; 
         _ruleExit ("Param_plus");
         return _result; 
     },
@@ -219,7 +218,7 @@ return ${rws}
 
         var name = _name.rwr ();
         var k = _k.rwr ();
-        var _result = `\nvar ${name} = _${name}.rwr ().join ('');`; 
+        var _result = `\n${name} = ${name}.rwr ().join ('');`; 
         _ruleExit ("Param_star");
         return _result; 
     },
@@ -229,7 +228,7 @@ return ${rws}
 
         var name = _name.rwr ();
         var k = _k.rwr ();
-        var _result = `\nvar ${name} = _${name}.rwr ().join ('');`; 
+        var _result = `\n${name} = ${name}.rwr ().join ('');`; 
         _ruleExit ("Param_opt");
         return _result; 
     },
@@ -238,7 +237,7 @@ return ${rws}
         _ruleEnter ("Param_flat");
 
         var name = _name.rwr ();
-        var _result = `\nvar ${name} = _${name}.rwr ();`; 
+        var _result = `\n${name} = ${name}.rwr ();`; 
         _ruleExit ("Param_flat");
         return _result; 
     },
@@ -250,3 +249,4 @@ return ${rws}
     spaces: function (x) { return this.sourceString; },
     space: function (x) { return this.sourceString; }
 }
+

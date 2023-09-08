@@ -5,7 +5,7 @@ VirtualComma {
     | separator -- separator
     | any &space -- needsVcomma
     | any -- doesNotNeedVcomma
-  separator = "(" | ")" | "'" | "," | "@" | "`" | ";" | " . "
+  separator = "(" | ")" | "'" | "\"" | "," | "@" | "`" | ";" | " . "
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
