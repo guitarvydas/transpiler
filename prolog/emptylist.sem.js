@@ -63,14 +63,21 @@ nl = nl.rwr ();
 _ruleExit ("semiColonComment");
 return ``;
 },
-Sexpr_empty: function (q,lp,rp) {
-_ruleEnter ("Sexpr_empty");
+ELSexpr_empty: function (q,lp,rp) {
+_ruleEnter ("ELSexpr_empty");
 q = q.rwr ();
 lp = lp.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_empty");
+_ruleExit ("ELSexpr_empty");
 return `(emptylist)`;
+},
+ELSexpr_sexpr: function (sexpr) {
+_ruleEnter ("ELSexpr_sexpr");
+sexpr = sexpr.rwr ();
+
+_ruleExit ("ELSexpr_sexpr");
+return `${sexpr}`;
 },
 
     _terminal: function () { return this.sourceString; },

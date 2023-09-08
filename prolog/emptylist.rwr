@@ -13,5 +13,6 @@ EmptyList {
   number [ds+] = ‛«ds»’
   semiColonComment [ksemi cs* nl] = ‛’
 
-  Sexpr_empty [q lp rp] = ‛(emptylist)’
+  ELSexpr_empty [q lp rp] = ‛(emptylist)’
+  ELSexpr_sexpr [sexpr] = ‛«sexpr»’
 }

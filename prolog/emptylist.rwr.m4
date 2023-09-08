@@ -1,4 +1,5 @@
 EmptyList {
 include(`prolog.rwr.inc')
-  Sexpr_empty [q lp rp] = ‛(emptylist)’
+  ELSexpr_empty [q lp rp] = ‛(emptylist)’
+  ELSexpr_sexpr [sexpr] = ‛«sexpr»’
 }
