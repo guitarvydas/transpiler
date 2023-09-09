@@ -4,7 +4,8 @@ Constants <: Prolog {
   Sexpr += "(" sym<"quote"> CSexpr ")" -- beginconstantlist
 
   CSexpr = 
-    | "(" CSexpr* ")" -- constantlist
+    | "(" ")" -- constantnil
+    | "(" CSexpr+ ")" -- constantlist
     | string -- constantstring
     | integer -- constantinteger
     | Symbol -- constantsymbol

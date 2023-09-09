@@ -1,0 +1,20 @@
+character rewrites:
+-				_
+
+atom rewrites:
+#t				true
+#f				false
+pair?				isPair
+r!				rBang
+foreign?			isForeign
+var?				isVar
+null?				isEmptyList
+e*				eStar
+
+list rewrites:
+(define (fn ...1) ...2)		function fn (...1) { ...2 }
+(eqv? ...1 ...2)		(...1 === ...2)
+(string=? ...1 ...2)		(...1 === ...2)
+(eq? ...1 ...2)			(...1 == ...2)
+(+ ...1 ...2)			(...1 + ...2)
+(fn ...)			fn (...)
