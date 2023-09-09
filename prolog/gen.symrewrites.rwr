@@ -1,4 +1,4 @@
-Constants {
+SymRewrites {
   Sexprs [Sexpr+] = ‛«Sexpr»’
   Sexpr_list [lp Sexpr+ rp] = ‛«lp»«Sexpr»«rp»’
   Sexpr_quoted [q Sexpr] = ‛«q»«Sexpr»’
@@ -14,13 +14,16 @@ Constants {
   semiColonComment [ksemi cs* nl] = ‛’
 
 
-  Sexpr_beginconstantlist [lp q sexpr rp] = ‛«sexpr»’
-
-  CSexpr_constantnil [lp rp] = ‛(constant-nilₓ)’
-  CSexpr_constantlist [lp Sexprs* rp] = ‛(constant-listₓ «Sexprs»)’
-  CSexpr_constantstring [k] = ‛(constant-stringₓ «k»)’
-  CSexpr_constantinteger [k] = ‛(constant-integerₓ "«k»")’
-  CSexpr_constantsymbol [k] = ‛(constant-symbolₓ "«k»")’
+  Symbol [x] = ‛«x»’
+  Symbol_true [k] = ‛trueₓ’
+  Symbol_false [k] = ‛falseₓ’
+  Symbol_isPair [k] = ‛isPairₓ’
+  Symbol_rBang [k] = ‛rBangₓ’
+  Symbol_isForeign [k] = ‛isForeignₓ’
+  Symbol_isVar [k] = ‛isVarₓ’
+  Symbol_isEmptyList [k] = ‛isEmptyListₓ’
+  Symbol_eStar [k] = ‛eStarₓ’
+  Symbol_other [c+ vcomma?] = ‛«c»«vcomma»’
 
   sym [s vcomma?] = ‛«s»«vcomma»’
 }
