@@ -1,23 +1,22 @@
 var grammarText = String.raw`
 Scm {
-  Program = Form+
-  Form = SList | Atom
-  QuotedSexp = "'" Form
-  BackQuotedSexp = "\x60" Form
-  CommaSexp = "," Form
-  SList = DottedList | NullTerminatedList
-  DottedList = "(" ListItem+ DOT ListItem ")"
-  NullTerminatedList =   "(" ListItem* ")"
-  ListItem = (Atom | SList)
-  Atom = atom | QuotedSexp | BackQuotedSexp | CommaSexp
+  Sexprs = Sexpr+
+  Sexpr =
+    | "(" Sexpr+ ")" -- list
+    | "'" "(" Sexpr+ ")" -- quotedList
+    | "`" "(" Sexpr+ ")" -- backQuotedList
+    | "'" Sexpr -- quoted
+    | "," Sexpr -- comma
+    | "`" Sexpr -- backquote
+    | "@" Sexpr -- at
+    | " . " Sexpr -- dotted
+    | Symbol -- symbol
 
-  atom = integer | symbol | string | boolean
-  boolean = "#f" | "#t"
-  integer = digit+
-  string = "\"" (~"\"" any)+ "\""
-  symbol = letchar (letchar | digit)*
-  letchar = letter | "+" | "*" | "!" | "?"  | "_" | "-" | "="
-  DOT = space* "." space*
+  separator = "(" | ")" | "'" | "," | "@" | "`" | ";" | " . "
+  vcomma = "₊"
+  Symbol = symchar+ vcomma?
+  symchar = ~vcomma ~separator any
+  
   semiColonComment = ";" (~"\n" any)* "\n"
   space += semiColonComment
 }
