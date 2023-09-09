@@ -1,0 +1,36 @@
+Prolog {
+  Sexprs = Sexpr+
+  Sexpr =
+    | "(" Sexpr* ")" -- list
+    | "'" Sexpr -- quoted
+    | string -- string
+    | number -- number
+    | Symbol -- symbol
+
+  separator = "(" | ")" | "'" | "," | "@" | "\x60" | ";" | " . "
+  vcomma = "₊"
+  Symbol = symchar+ vcomma?
+  symchar = ~vcomma ~separator ~space any
+  
+  string = dq (~dq any)* dq
+  dq = "\""
+  number = digit+ vcomma?
+  semiColonComment = ";" (~"\n" any)* "\n"
+  space += semiColonComment
+}
+
+
+SymRewrites <: Prolog {
+  Symbol :=
+    | sym<"#t"> vcomma? -- true
+    | sym<"#f"> vcomma? -- false
+    | sym<"pair?"> vcomma? -- isPair
+    | sym<"r!"> vcomma? -- rBang
+    | sym<"foreign?"> vcomma? -- isForeign
+    | sym<"var?"> vcomma? -- isVar
+    | sym<"null?"> vcomma? -- isEmptyList
+    | sym<"e*"> vcomma? -- eStar
+    | symchar+ vcomma? -- other
+
+  sym<s> = s vcomma?
+}
