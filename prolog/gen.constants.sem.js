@@ -80,7 +80,7 @@ lp = lp.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("CSexpr_constantnil");
-return `(constant-nil)`;
+return `(constant-nilₓ)`;
 },
 CSexpr_constantlist: function (lp,Sexprs,rp) {
 _ruleEnter ("CSexpr_constantlist");
@@ -89,28 +89,28 @@ Sexprs = Sexprs.rwr ().join ('');
 rp = rp.rwr ();
 
 _ruleExit ("CSexpr_constantlist");
-return `(constant-list ${Sexprs})`;
+return `(constant-listₓ ${Sexprs})`;
 },
 CSexpr_constantstring: function (k) {
 _ruleEnter ("CSexpr_constantstring");
 k = k.rwr ();
 
 _ruleExit ("CSexpr_constantstring");
-return `(constant-string ${k})`;
+return `(constant-stringₓ ${k})`;
 },
 CSexpr_constantinteger: function (k) {
 _ruleEnter ("CSexpr_constantinteger");
 k = k.rwr ();
 
 _ruleExit ("CSexpr_constantinteger");
-return `(constant-integer "${k}")`;
+return `(constant-integerₓ "${k}")`;
 },
 CSexpr_constantsymbol: function (k) {
 _ruleEnter ("CSexpr_constantsymbol");
 k = k.rwr ();
 
 _ruleExit ("CSexpr_constantsymbol");
-return `(constant-symbol "${k}")`;
+return `(constant-symbolₓ "${k}")`;
 },
 sym: function (s,vcomma) {
 _ruleEnter ("sym");

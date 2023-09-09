@@ -71,69 +71,61 @@ x = x.rwr ();
 _ruleExit ("Symbol");
 return `${x}`;
 },
-Symbol_true: function (k,vcomma) {
+Symbol_true: function (k) {
 _ruleEnter ("Symbol_true");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_true");
-return `true₊`;
+return `trueₓ`;
 },
-Symbol_false: function (k,vcomma) {
+Symbol_false: function (k) {
 _ruleEnter ("Symbol_false");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_false");
-return `false₊`;
+return `falseₓ`;
 },
-Symbol_isPair: function (k,vcomma) {
+Symbol_isPair: function (k) {
 _ruleEnter ("Symbol_isPair");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_isPair");
-return `isPair₊`;
+return `isPairₓ`;
 },
-Symbol_rBang: function (k,vcomma) {
+Symbol_rBang: function (k) {
 _ruleEnter ("Symbol_rBang");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_rBang");
-return `rBang₊`;
+return `rBangₓ`;
 },
-Symbol_isForeign: function (k,vcomma) {
+Symbol_isForeign: function (k) {
 _ruleEnter ("Symbol_isForeign");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_isForeign");
-return `isForeign₊`;
+return `isForeignₓ`;
 },
-Symbol_isVar: function (k,vcomma) {
+Symbol_isVar: function (k) {
 _ruleEnter ("Symbol_isVar");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_isVar");
-return `isVar₊`;
+return `isVarₓ`;
 },
-Symbol_isEmptyList: function (k,vcomma) {
+Symbol_isEmptyList: function (k) {
 _ruleEnter ("Symbol_isEmptyList");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_isEmptyList");
-return `isEmptyList₊`;
+return `isEmptyListₓ`;
 },
-Symbol_eStar: function (k,vcomma) {
+Symbol_eStar: function (k) {
 _ruleEnter ("Symbol_eStar");
 k = k.rwr ();
-vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_eStar");
-return `eStar₊`;
+return `eStarₓ`;
 },
 Symbol_other: function (c,vcomma) {
 _ruleEnter ("Symbol_other");
@@ -141,7 +133,7 @@ c = c.rwr ().join ('');
 vcomma = vcomma.rwr ().join ('');
 
 _ruleExit ("Symbol_other");
-return `${c}₊`;
+return `${c}${vcomma}`;
 },
 sym: function (s,vcomma) {
 _ruleEnter ("sym");

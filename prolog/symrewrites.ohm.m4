@@ -2,14 +2,14 @@ include(`prolog.ohm.inc')
 
 SymRewrites <: Prolog {
   Symbol :=
-    | sym<"#t"> vcomma? -- true
-    | sym<"#f"> vcomma? -- false
-    | sym<"pair?"> vcomma? -- isPair
-    | sym<"r!"> vcomma? -- rBang
-    | sym<"foreign?"> vcomma? -- isForeign
-    | sym<"var?"> vcomma? -- isVar
-    | sym<"null?"> vcomma? -- isEmptyList
-    | sym<"e*"> vcomma? -- eStar
+    | sym<"#t"> -- true
+    | sym<"#f"> -- false
+    | sym<"pair?"> -- isPair
+    | sym<"r!"> -- rBang
+    | sym<"foreign?"> -- isForeign
+    | sym<"var?"> -- isVar
+    | sym<"null?"> -- isEmptyList
+    | sym<"e*"> -- eStar
     | symchar+ vcomma? -- other
 
   sym<s> = s vcomma?
