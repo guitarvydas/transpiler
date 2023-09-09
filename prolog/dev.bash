@@ -12,13 +12,25 @@ m4 <constants.rwr.m4 >gen.constants.rwr
 ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.constants.rwr >gen.constants.sem.js
 ../ohmjs.js "Constants" gen.constants.ohm gen.constants.sem.js <gen.prolog.unquote >gen.prolog.constants
 
+
+###
 # JS emitter
+###
+
+# character rewrites
 ./characterrewrites.js <gen.prolog.constants >gen.prolog.characterrewrites.js
 
+# symbol rewrites
 m4 <symrewrites.ohm.m4 >gen.symrewrites.ohm
 m4 <symrewrites.rwr.m4 >gen.symrewrites.rwr
 ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.symrewrites.rwr >gen.symrewrites.sem.js
 ../ohmjs.js "SymRewrites" gen.symrewrites.ohm gen.symrewrites.sem.js <gen.prolog.characterrewrites.js >gen.prolog.symrewrites.js
-echo 'output in gen.prolog.symrewrites.js'
+
+# list rewrites
+m4 <listrewrites.ohm.m4 >gen.listrewrites.ohm
+m4 <listrewrites.rwr.m4 >gen.listrewrites.rwr
+../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.listrewrites.rwr >gen.listrewrites.sem.js
+../ohmjs.js "ListRewrites" gen.listrewrites.ohm gen.listrewrites.sem.js <gen.prolog.symrewrites.js >gen.prolog.listrewrites.js
+echo 'output in gen.prolog.listrewrites.js'
 
 

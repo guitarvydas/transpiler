@@ -1,0 +1,44 @@
+Prolog {
+  Sexprs = Sexpr+
+  Sexpr =
+    | "(" Sexpr* ")" -- list
+    | "'" Sexpr -- quoted
+    | string -- string
+    | number -- number
+    | Symbol -- symbol
+
+  separator = "(" | ")" | "'" | "," | "@" | "\x60" | ";" | " . "
+  vcomma = "ₓ"
+  Symbol = symchar+ vcomma?
+  symchar = ~vcomma ~separator ~space any
+  
+  string = dq (~dq any)* dq
+  dq = "\""
+  number = digit+ vcomma?
+  semiColonComment = ";" (~"\n" any)* "\n"
+  space += semiColonComment
+}
+
+
+ListRewrites <: Prolog {
+  Sexpr +=
+    | "(" sym<"define"> "(" Symbol Formals ")" Sexpr+ ")" -- define
+    | "(" sym<"let"> "(" Binding ")"   Sexpr ")"-- let
+    | "(" sym<"if"> Test Then Else ")"-- if
+    | "(" sym<"eqv?"> Sexpr Sexpr ")" -- eqv
+    | "(" sym<"string=?"> Sexpr Sexpr ")" -- stringeq
+    | "(" sym<"eq?"> Sexpr Sexpr ")" -- eq
+    | "(" sym<"+"> Sexpr Sexpr ")" -- add
+    | "(" sym<"and"> Sexpr Sexpr ")" -- and
+    | "(" sym<"not"> Sexpr ")" -- not
+
+  Binding = "(" Symbol Sexpr ")" Binding?
+  Test = Sexpr
+  Then = Sexpr
+  Else = Sexpr
+
+  Formals = Formal*
+  Formal = Symbol
+  
+  sym<s> = s vcomma?
+}
