@@ -64,53 +64,76 @@ nl = nl.rwr ();
 _ruleExit ("semiColonComment");
 return ``;
 },
-Sexpr_beginconstantlist: function (lp,q,sexpr,rp) {
-_ruleEnter ("Sexpr_beginconstantlist");
-lp = lp.rwr ();
-q = q.rwr ();
-sexpr = sexpr.rwr ();
-rp = rp.rwr ();
+Symbol: function (x) {
+_ruleEnter ("Symbol");
+x = x.rwr ();
 
-_ruleExit ("Sexpr_beginconstantlist");
-return `${sexpr}`;
+_ruleExit ("Symbol");
+return `${x}`;
 },
-CSexpr_constantnil: function (lp,rp) {
-_ruleEnter ("CSexpr_constantnil");
-lp = lp.rwr ();
-rp = rp.rwr ();
-
-_ruleExit ("CSexpr_constantnil");
-return `(constant-nilₓ)`;
-},
-CSexpr_constantlist: function (lp,Sexprs,rp) {
-_ruleEnter ("CSexpr_constantlist");
-lp = lp.rwr ();
-Sexprs = Sexprs.rwr ().join ('');
-rp = rp.rwr ();
-
-_ruleExit ("CSexpr_constantlist");
-return `(constant-listₓ ${Sexprs})`;
-},
-CSexpr_constantstring: function (k) {
-_ruleEnter ("CSexpr_constantstring");
+Symbol_true: function (k) {
+_ruleEnter ("Symbol_true");
 k = k.rwr ();
 
-_ruleExit ("CSexpr_constantstring");
-return `(constant-stringₓ ${k})`;
+_ruleExit ("Symbol_true");
+return `trueₓ`;
 },
-CSexpr_constantinteger: function (k) {
-_ruleEnter ("CSexpr_constantinteger");
+Symbol_false: function (k) {
+_ruleEnter ("Symbol_false");
 k = k.rwr ();
 
-_ruleExit ("CSexpr_constantinteger");
-return `(constant-integerₓ "${k}")`;
+_ruleExit ("Symbol_false");
+return `falseₓ`;
 },
-CSexpr_constantsymbol: function (k) {
-_ruleEnter ("CSexpr_constantsymbol");
+Symbol_isPair: function (k) {
+_ruleEnter ("Symbol_isPair");
 k = k.rwr ();
 
-_ruleExit ("CSexpr_constantsymbol");
-return `(constant-symbolₓ "${k}")`;
+_ruleExit ("Symbol_isPair");
+return `isPairₓ`;
+},
+Symbol_rBang: function (k) {
+_ruleEnter ("Symbol_rBang");
+k = k.rwr ();
+
+_ruleExit ("Symbol_rBang");
+return `rBangₓ`;
+},
+Symbol_isForeign: function (k) {
+_ruleEnter ("Symbol_isForeign");
+k = k.rwr ();
+
+_ruleExit ("Symbol_isForeign");
+return `isForeignₓ`;
+},
+Symbol_isVar: function (k) {
+_ruleEnter ("Symbol_isVar");
+k = k.rwr ();
+
+_ruleExit ("Symbol_isVar");
+return `isVarₓ`;
+},
+Symbol_isEmptyList: function (k) {
+_ruleEnter ("Symbol_isEmptyList");
+k = k.rwr ();
+
+_ruleExit ("Symbol_isEmptyList");
+return `isEmptyListₓ`;
+},
+Symbol_eStar: function (k) {
+_ruleEnter ("Symbol_eStar");
+k = k.rwr ();
+
+_ruleExit ("Symbol_eStar");
+return `eStarₓ`;
+},
+Symbol_other: function (c,vcomma) {
+_ruleEnter ("Symbol_other");
+c = c.rwr ().join ('');
+vcomma = vcomma.rwr ().join ('');
+
+_ruleExit ("Symbol_other");
+return `${c}${vcomma}`;
 },
 sym: function (s,vcomma) {
 _ruleEnter ("sym");

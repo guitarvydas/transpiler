@@ -8,7 +8,7 @@ Prolog {
     | Symbol -- symbol
 
   separator = "(" | ")" | "'" | "," | "@" | "\x60" | ";" | " . "
-  vcomma = "₊"
+  vcomma = "ₓ"
   Symbol = symchar+ vcomma?
   symchar = ~vcomma ~separator ~space any
   

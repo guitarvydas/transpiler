@@ -8,7 +8,7 @@ Prolog {
     | Symbol -- symbol
 
   separator = "(" | ")" | "'" | "," | "@" | "\x60" | ";" | " . "
-  vcomma = "ₓ"
+  vcomma = "₊"
   Symbol = symchar+ vcomma?
   symchar = ~vcomma ~separator ~space any
   
@@ -20,16 +20,8 @@ Prolog {
 }
 
 
-Constants <: Prolog {
-  Sexpr += "(" sym<"quote"> CSexpr ")" -- beginconstantlist
-
-  CSexpr = 
-    | "(" ")" -- constantnil
-    | "(" CSexpr+ ")" -- constantlist
-    | string -- constantstring
-    | integer -- constantinteger
-    | Symbol -- constantsymbol
-
-  integer = number
-  sym<s> = s vcomma?
+CharacterRewrites <: Prolog {
+  symchar := 
+    | ~vcomma ~separator ~space "-" -- dash
+    | ~vcomma ~separator ~space any -- other
 }

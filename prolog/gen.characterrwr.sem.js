@@ -64,61 +64,19 @@ nl = nl.rwr ();
 _ruleExit ("semiColonComment");
 return ``;
 },
-Sexpr_beginconstantlist: function (lp,q,sexpr,rp) {
-_ruleEnter ("Sexpr_beginconstantlist");
-lp = lp.rwr ();
-q = q.rwr ();
-sexpr = sexpr.rwr ();
-rp = rp.rwr ();
+symchar_dash: function (dash) {
+_ruleEnter ("symchar_dash");
+dash = dash.rwr ();
 
-_ruleExit ("Sexpr_beginconstantlist");
-return `${sexpr}`;
+_ruleExit ("symchar_dash");
+return `_`;
 },
-CSexpr_constantnil: function (lp,rp) {
-_ruleEnter ("CSexpr_constantnil");
-lp = lp.rwr ();
-rp = rp.rwr ();
+symchar_other: function (c) {
+_ruleEnter ("symchar_other");
+c = c.rwr ();
 
-_ruleExit ("CSexpr_constantnil");
-return `(constant-nilₓ)`;
-},
-CSexpr_constantlist: function (lp,Sexprs,rp) {
-_ruleEnter ("CSexpr_constantlist");
-lp = lp.rwr ();
-Sexprs = Sexprs.rwr ().join ('');
-rp = rp.rwr ();
-
-_ruleExit ("CSexpr_constantlist");
-return `(constant-listₓ ${Sexprs})`;
-},
-CSexpr_constantstring: function (k) {
-_ruleEnter ("CSexpr_constantstring");
-k = k.rwr ();
-
-_ruleExit ("CSexpr_constantstring");
-return `(constant-stringₓ ${k})`;
-},
-CSexpr_constantinteger: function (k) {
-_ruleEnter ("CSexpr_constantinteger");
-k = k.rwr ();
-
-_ruleExit ("CSexpr_constantinteger");
-return `(constant-integerₓ "${k}")`;
-},
-CSexpr_constantsymbol: function (k) {
-_ruleEnter ("CSexpr_constantsymbol");
-k = k.rwr ();
-
-_ruleExit ("CSexpr_constantsymbol");
-return `(constant-symbolₓ "${k}")`;
-},
-sym: function (s,vcomma) {
-_ruleEnter ("sym");
-s = s.rwr ();
-vcomma = vcomma.rwr ().join ('');
-
-_ruleExit ("sym");
-return `${s}${vcomma}`;
+_ruleExit ("symchar_other");
+return `${c}`;
 },
 
     _terminal: function () { return this.sourceString; },
