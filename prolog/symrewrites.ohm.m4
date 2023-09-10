@@ -9,6 +9,7 @@ SymRewrites <: Prolog {
     | sym<"foreign?"> -- isForeign
     | sym<"var?"> -- isVar
     | sym<"null?"> -- isEmptyList
+    | sym<"set!"> -- mutate
     | sym<"e*"> -- eStar
     | symchar+ vcomma? -- other
 

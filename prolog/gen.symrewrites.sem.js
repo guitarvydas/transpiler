@@ -120,6 +120,13 @@ k = k.rwr ();
 _ruleExit ("Symbol_isEmptyList");
 return `isEmptyListₓ`;
 },
+Symbol_mutate: function (k) {
+_ruleEnter ("Symbol_mutate");
+k = k.rwr ();
+
+_ruleExit ("Symbol_mutate");
+return `mutateₓ`;
+},
 Symbol_eStar: function (k) {
 _ruleEnter ("Symbol_eStar");
 k = k.rwr ();

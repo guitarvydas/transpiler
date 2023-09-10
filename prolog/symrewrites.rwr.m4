@@ -9,6 +9,7 @@ include(`prolog.rwr.inc')
   Symbol_isForeign [k] = ‛isForeignₓ’
   Symbol_isVar [k] = ‛isVarₓ’
   Symbol_isEmptyList [k] = ‛isEmptyListₓ’
+  Symbol_mutate [k] = ‛mutateₓ’
   Symbol_eStar [k] = ‛eStarₓ’
   Symbol_other [c+ vcomma?] = ‛«c»«vcomma»’
 

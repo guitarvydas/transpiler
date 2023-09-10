@@ -1,6 +1,7 @@
 #!/bin/bash
-set -x
-../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <prolog.scm >gen.prolog.vc
+#SRC=test.scm
+SRC=prolog.scm
+../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >gen.prolog.vc
 
 m4 <unquote.ohm.m4 >gen.unquote.ohm
 m4 <unquote.rwr.m4 >gen.unquote.rwr

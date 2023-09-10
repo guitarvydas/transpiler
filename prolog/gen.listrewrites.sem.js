@@ -64,80 +64,93 @@ nl = nl.rwr ();
 _ruleExit ("semiColonComment");
 return ``;
 },
-Sexpr_define: function (lp,k,lp2,name,formals,rp2,body,rp) {
-_ruleEnter ("Sexpr_define");
+ControlFlowSexpr_define: function (lp,k,lp2,name,formals,rp2,body,rp) {
+_ruleEnter ("ControlFlowSexpr_define");
 lp = lp.rwr ();
 k = k.rwr ();
 lp2 = lp2.rwr ();
 name = name.rwr ();
 formals = formals.rwr ();
 rp2 = rp2.rwr ();
-body = body.rwr ().join ('');
+body = body.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_define");
-return `function ${name} (${formals}) {
-${body}
+_ruleExit ("ControlFlowSexpr_define");
+return `
+function ${name} (${formals}) {${body}
 }
 `;
 },
-Sexpr_eqv: function (lp,k,arg1,arg2,rp) {
-_ruleEnter ("Sexpr_eqv");
+ControlFlowSexpr_definevar: function (lp,k,name,e,rp) {
+_ruleEnter ("ControlFlowSexpr_definevar");
+lp = lp.rwr ();
+k = k.rwr ();
+name = name.rwr ();
+e = e.rwr ();
+rp = rp.rwr ();
+
+_ruleExit ("ControlFlowSexpr_definevar");
+return `
+var ${name} = ${e};
+`;
+},
+OperationSexpr_eqv: function (lp,k,arg1,arg2,rp) {
+_ruleEnter ("OperationSexpr_eqv");
 lp = lp.rwr ();
 k = k.rwr ();
 arg1 = arg1.rwr ();
 arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_eqv");
+_ruleExit ("OperationSexpr_eqv");
 return `(${arg1} === ${arg2})`;
 },
-Sexpr_stringeq: function (lp,k,arg1,arg2,rp) {
-_ruleEnter ("Sexpr_stringeq");
+OperationSexpr_stringeq: function (lp,k,arg1,arg2,rp) {
+_ruleEnter ("OperationSexpr_stringeq");
 lp = lp.rwr ();
 k = k.rwr ();
 arg1 = arg1.rwr ();
 arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_stringeq");
+_ruleExit ("OperationSexpr_stringeq");
 return `(${arg1} == ${arg2})`;
 },
-Sexpr_eq: function (lp,k,arg1,arg2,rp) {
-_ruleEnter ("Sexpr_eq");
+OperationSexpr_eq: function (lp,k,arg1,arg2,rp) {
+_ruleEnter ("OperationSexpr_eq");
 lp = lp.rwr ();
 k = k.rwr ();
 arg1 = arg1.rwr ();
 arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_eq");
+_ruleExit ("OperationSexpr_eq");
 return `(${arg1} === ${arg2})`;
 },
-Sexpr_add: function (lp,k,arg1,arg2,rp) {
-_ruleEnter ("Sexpr_add");
+OperationSexpr_add: function (lp,k,arg1,arg2,rp) {
+_ruleEnter ("OperationSexpr_add");
 lp = lp.rwr ();
 k = k.rwr ();
 arg1 = arg1.rwr ();
 arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_add");
+_ruleExit ("OperationSexpr_add");
 return `(${arg1} + ${arg2})`;
 },
-Sexpr_and: function (lp,k,arg1,arg2,rp) {
-_ruleEnter ("Sexpr_and");
+OperationSexpr_and: function (lp,k,arg1,arg2,rp) {
+_ruleEnter ("OperationSexpr_and");
 lp = lp.rwr ();
 k = k.rwr ();
 arg1 = arg1.rwr ();
 arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_and");
+_ruleExit ("OperationSexpr_and");
 return `(${arg1} && ${arg2})`;
 },
-Sexpr_let: function (lp,k,lp2,binding,rp2,body,rp) {
-_ruleEnter ("Sexpr_let");
+ControlFlowSexpr_let: function (lp,k,lp2,binding,rp2,body,rp) {
+_ruleEnter ("ControlFlowSexpr_let");
 lp = lp.rwr ();
 k = k.rwr ();
 lp2 = lp2.rwr ();
@@ -146,11 +159,12 @@ rp2 = rp2.rwr ();
 body = body.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_let");
-return `${binding}${body}`;
+_ruleExit ("ControlFlowSexpr_let");
+return `
+${binding}${body}`;
 },
-Sexpr_if: function (lp,k,test,thn,els,rp) {
-_ruleEnter ("Sexpr_if");
+ControlFlowSexpr_if: function (lp,k,test,thn,els,rp) {
+_ruleEnter ("ControlFlowSexpr_if");
 lp = lp.rwr ();
 k = k.rwr ();
 test = test.rwr ();
@@ -158,22 +172,20 @@ thn = thn.rwr ();
 els = els.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_if");
-return `if (${test}) {
-${thn};
-} else {
-${els};
-}
-`;
+_ruleExit ("ControlFlowSexpr_if");
+return `
+if (${test}) {${thn}
+} else {${els}
+}`;
 },
-Sexpr_not: function (lp,k,arg1,rp) {
-_ruleEnter ("Sexpr_not");
+OperationSexpr_not: function (lp,k,arg1,rp) {
+_ruleEnter ("OperationSexpr_not");
 lp = lp.rwr ();
 k = k.rwr ();
 arg1 = arg1.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("Sexpr_not");
+_ruleExit ("OperationSexpr_not");
 return `!${arg1}`;
 },
 Binding: function (lp,target,src,rp,recursive) {
@@ -185,8 +197,78 @@ rp = rp.rwr ();
 recursive = recursive.rwr ().join ('');
 
 _ruleExit ("Binding");
-return `let ${target} = ${src};
-${recursive}`;
+return `let ${target} = ${src};${recursive}`;
+},
+ControlFlowSexpr_cond: function (lp,k,clauses,rp) {
+_ruleEnter ("ControlFlowSexpr_cond");
+lp = lp.rwr ();
+k = k.rwr ();
+clauses = clauses.rwr ();
+rp = rp.rwr ();
+
+_ruleExit ("ControlFlowSexpr_cond");
+return `
+${clauses}
+`;
+},
+CondClauses: function (lp,test,body,rp,more) {
+_ruleEnter ("CondClauses");
+lp = lp.rwr ();
+test = test.rwr ();
+body = body.rwr ();
+rp = rp.rwr ();
+more = more.rwr ().join ('');
+
+_ruleExit ("CondClauses");
+return `${test}${body}${more}`;
+},
+CondTest: function (e) {
+_ruleEnter ("CondTest");
+e = e.rwr ();
+
+_ruleExit ("CondTest");
+return `if ${e} `;
+},
+CondConsequent: function (b) {
+_ruleEnter ("CondConsequent");
+b = b.rwr ();
+
+_ruleExit ("CondConsequent");
+return `{${b}
+}`;
+},
+RemainingCondClauses_else: function (lp,els,body,rp) {
+_ruleEnter ("RemainingCondClauses_else");
+lp = lp.rwr ();
+els = els.rwr ();
+body = body.rwr ();
+rp = rp.rwr ();
+
+_ruleExit ("RemainingCondClauses_else");
+return ` else${body}`;
+},
+RemainingCondClauses_more: function (clause) {
+_ruleEnter ("RemainingCondClauses_more");
+clause = clause.rwr ();
+
+_ruleExit ("RemainingCondClauses_more");
+return ` else ${clause}`;
+},
+Body: function (sexpr,recursive) {
+_ruleEnter ("Body");
+sexpr = sexpr.rwr ();
+recursive = recursive.rwr ().join ('');
+
+_ruleExit ("Body");
+return `${sexpr}${recursive}`;
+},
+StatementOperationSexpr: function (x) {
+_ruleEnter ("StatementOperationSexpr");
+x = x.rwr ();
+
+_ruleExit ("StatementOperationSexpr");
+return `
+${x};`;
 },
 Formals: function (f) {
 _ruleEnter ("Formals");
@@ -201,6 +283,31 @@ sym = sym.rwr ();
 
 _ruleExit ("Formal");
 return `${sym},`;
+},
+OperationSexpr_operator: function (lp,operator,operand,rp) {
+_ruleEnter ("OperationSexpr_operator");
+lp = lp.rwr ();
+operator = operator.rwr ();
+operand = operand.rwr ().join ('');
+rp = rp.rwr ();
+
+_ruleExit ("OperationSexpr_operator");
+return `${operator} (${operand})`;
+},
+Operand: function (x) {
+_ruleEnter ("Operand");
+x = x.rwr ();
+
+_ruleExit ("Operand");
+return `${x},`;
+},
+ControlFlowAtom: function (a) {
+_ruleEnter ("ControlFlowAtom");
+a = a.rwr ();
+
+_ruleExit ("ControlFlowAtom");
+return `
+${a};`;
 },
 sym: function (s,vcomma) {
 _ruleEnter ("sym");
