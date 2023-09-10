@@ -1,5 +1,5 @@
 Prolog {
-  Sexprs = Sexpr+
+  Program = Sexpr+
   Sexpr =
     | "(" Sexpr* ")" -- list
     | "'" Sexpr -- quoted

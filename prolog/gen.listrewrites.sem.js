@@ -1,9 +1,9 @@
 {
-Sexprs: function (Sexpr) {
-_ruleEnter ("Sexprs");
+Program: function (Sexpr) {
+_ruleEnter ("Program");
 Sexpr = Sexpr.rwr ().join ('');
 
-_ruleExit ("Sexprs");
+_ruleExit ("Program");
 return `${Sexpr}`;
 },
 Sexpr_list: function (lp,Sexpr,rp) {
@@ -64,8 +64,8 @@ nl = nl.rwr ();
 _ruleExit ("semiColonComment");
 return ``;
 },
-ControlFlowSexpr_define: function (lp,k,lp2,name,formals,rp2,body,rp) {
-_ruleEnter ("ControlFlowSexpr_define");
+DefineSexpr_define: function (lp,k,lp2,name,formals,rp2,body,rp) {
+_ruleEnter ("DefineSexpr_define");
 lp = lp.rwr ();
 k = k.rwr ();
 lp2 = lp2.rwr ();
@@ -75,21 +75,21 @@ rp2 = rp2.rwr ();
 body = body.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("ControlFlowSexpr_define");
+_ruleExit ("DefineSexpr_define");
 return `
 function ${name} (${formals}) {${body}
 }
 `;
 },
-ControlFlowSexpr_definevar: function (lp,k,name,e,rp) {
-_ruleEnter ("ControlFlowSexpr_definevar");
+DefineSexpr_definevar: function (lp,k,name,e,rp) {
+_ruleEnter ("DefineSexpr_definevar");
 lp = lp.rwr ();
 k = k.rwr ();
 name = name.rwr ();
 e = e.rwr ();
 rp = rp.rwr ();
 
-_ruleExit ("ControlFlowSexpr_definevar");
+_ruleExit ("DefineSexpr_definevar");
 return `
 var ${name} = ${e};
 `;

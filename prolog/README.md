@@ -1,3 +1,8 @@
+TODO:
+- function isForeign returns boolean AND
+- Program == Defines Main
+
+
 character rewrites:
 -				_
 

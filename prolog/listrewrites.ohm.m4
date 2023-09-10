@@ -1,13 +1,15 @@
 include(`prolog.ohm.inc')
 
 ListRewrites <: Prolog {
-  Sexpr += ControlFlowSexpr | OperationSexpr
-  StatementSexpr = ControlFlowSexpr | StatementOperationSexpr | ControlFlowAtom
+  Sexpr += DefineSexpr | ControlFlowSexpr | OperationSexpr
+  StatementSexpr = DefineSexpr | ControlFlowSexpr | StatementOperationSexpr | ControlFlowAtom
+
+  DefineSexpr = 
+    | "(" sym<"define"> "(" Symbol Formals ")" Body ")" -- define
+    | "(" sym<"define"> Symbol Sexpr ")" -- definevar
 
   ControlFlowSexpr = 
     | "(" sym<"cond"> CondClauses ")" -- cond
-    | "(" sym<"define"> "(" Symbol Formals ")" Body ")" -- define
-    | "(" sym<"define"> Symbol Sexpr ")" -- definevar
     | "(" sym<"let"> "(" Binding ")" Body ")"-- let
     | "(" sym<"if"> Test Then Else ")"-- if
 

@@ -1,8 +1,9 @@
 SymRewrites {
 include(`prolog.rwr.inc')
 
-  ControlFlowSexpr_define [lp k lp2 name formals rp2 body rp] = ‛\nfunction «name» («formals») {«body»\n}\n’
-  ControlFlowSexpr_definevar [lp k name e rp] = ‛\nvar «name» = «e»;\n’
+  DefineSexpr_define [lp k lp2 name formals rp2 body rp] = ‛\nfunction «name» («formals») {«body»\n}\n’
+  DefineSexpr_definevar [lp k name e rp] = ‛\nvar «name» = «e»;\n’
+
   OperationSexpr_eqv [lp k arg1 arg2 rp] = ‛(«arg1» === «arg2»)’
   OperationSexpr_stringeq [lp k arg1 arg2 rp] = ‛(«arg1» == «arg2»)’
   OperationSexpr_eq [lp k arg1 arg2 rp] = ‛(«arg1» === «arg2»)’

@@ -1,5 +1,5 @@
 Constants {
-  Sexprs [Sexpr+] = ‛«Sexpr»’
+  Program [Sexpr+] = ‛«Sexpr»’
   Sexpr_list [lp Sexpr+ rp] = ‛«lp»«Sexpr»«rp»’
   Sexpr_quoted [q Sexpr] = ‛«q»«Sexpr»’
   Sexpr_symbol [Symbol] = ‛«Symbol»’
