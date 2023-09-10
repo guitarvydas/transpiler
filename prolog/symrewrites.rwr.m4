@@ -10,6 +10,7 @@ include(`prolog.rwr.inc')
   Symbol_isVar [k] = ‛isVarₓ’
   Symbol_isEmptyList [k] = ‛isEmptyListₓ’
   Symbol_mutate [k] = ‛mutateₓ’
+  Symbol_mutate_car [k] = ‛mutate_carₓ’
   Symbol_eStar [k] = ‛eStarₓ’
   Symbol_other [c+ vcomma?] = ‛«c»«vcomma»’
 

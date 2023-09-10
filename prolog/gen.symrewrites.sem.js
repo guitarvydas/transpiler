@@ -127,6 +127,13 @@ k = k.rwr ();
 _ruleExit ("Symbol_mutate");
 return `mutateₓ`;
 },
+Symbol_mutate_car: function (k) {
+_ruleEnter ("Symbol_mutate_car");
+k = k.rwr ();
+
+_ruleExit ("Symbol_mutate_car");
+return `mutate_carₓ`;
+},
 Symbol_eStar: function (k) {
 _ruleEnter ("Symbol_eStar");
 k = k.rwr ();

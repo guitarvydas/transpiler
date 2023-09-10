@@ -10,6 +10,7 @@ SymRewrites <: Prolog {
     | sym<"var?"> -- isVar
     | sym<"null?"> -- isEmptyList
     | sym<"set!"> -- mutate
+    | sym<"set_car!"> -- mutate_car
     | sym<"e*"> -- eStar
     | symchar+ vcomma? -- other
 

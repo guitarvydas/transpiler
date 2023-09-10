@@ -111,7 +111,7 @@ arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("OperationSexpr_eqv");
-return `(${arg1} === ${arg2})`;
+return `${arg1} === ${arg2}`;
 },
 OperationSexpr_stringeq: function (lp,k,arg1,arg2,rp) {
 _ruleEnter ("OperationSexpr_stringeq");
@@ -122,7 +122,7 @@ arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("OperationSexpr_stringeq");
-return `(${arg1} == ${arg2})`;
+return `${arg1} == ${arg2}`;
 },
 OperationSexpr_eq: function (lp,k,arg1,arg2,rp) {
 _ruleEnter ("OperationSexpr_eq");
@@ -133,7 +133,7 @@ arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("OperationSexpr_eq");
-return `(${arg1} === ${arg2})`;
+return `${arg1} === ${arg2}`;
 },
 OperationSexpr_add: function (lp,k,arg1,arg2,rp) {
 _ruleEnter ("OperationSexpr_add");
@@ -144,7 +144,7 @@ arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("OperationSexpr_add");
-return `(${arg1} + ${arg2})`;
+return `${arg1} + ${arg2}`;
 },
 OperationSexpr_and: function (lp,k,andarg1,arg2,rp) {
 _ruleEnter ("OperationSexpr_and");
@@ -155,7 +155,7 @@ arg2 = arg2.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("OperationSexpr_and");
-return `(${andarg1}${arg2})`;
+return `${andarg1}${arg2}`;
 },
 ControlFlowSexpr_let: function (lp,k,lp2,binding,rp2,body,rp) {
 _ruleEnter ("ControlFlowSexpr_let");
@@ -235,7 +235,7 @@ _ruleEnter ("CondTest");
 e = e.rwr ();
 
 _ruleExit ("CondTest");
-return `if ${e} `;
+return `if (${e}) `;
 },
 CondConsequent: function (b) {
 _ruleEnter ("CondConsequent");

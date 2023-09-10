@@ -56,7 +56,7 @@ function L_c (x) {
 }
 
 function clear_r (x) {
-    mutate_car (cddr (x), constant_list (constant_nil ()));
+    set_car! (cddr (x), constant_list (constant_nil ()));
 }
 
 function back6 (l, g, r, e, n, c, whole_db) {

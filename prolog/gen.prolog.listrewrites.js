@@ -56,20 +56,20 @@ cadrₓ ( cddddrₓ ( xₓ,),);
 }
 
 function clear_rₓ ( xₓ,) {
-set_car!ₓ ( cddrₓ ( xₓ,), constant_listₓ ( constant_nilₓ (),),);
+mutate_carₓ ( cddrₓ ( xₓ,), constant_listₓ ( constant_nilₓ (),),);
 }
 
 function back6ₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ, whole_dbₓ,) {
 if (isPairₓ ( gₓ,) && isPairₓ ( rₓ,)) {
 prove6ₓ ( lₓ, gₓ, cdrₓ ( rₓ,), eₓ, nₓ, cₓ, whole_dbₓ,);
-} else if isPairₓ ( lₓ,) {
+} else if (isPairₓ ( lₓ,)) {
 prove6ₓ ( L_lₓ ( lₓ,), L_gₓ ( lₓ,), cdrₓ ( L_rₓ ( lₓ,),), L_eₓ ( lₓ,), L_nₓ ( lₓ,), L_cₓ ( lₓ,), whole_dbₓ,);
 }
 
 }
 
 function prove6ₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ, whole_dbₓ,) {
-if isEmptyListₓ ( gₓ,) {
+if (isEmptyListₓ ( gₓ,)) {
 let next_resultₓ = print_frameₓ ( eₓ,);
 append_to_resultₓ ( next_resultₓ,);
 back6ₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ, whole_dbₓ,);
@@ -78,23 +78,23 @@ clear_rₓ ( cₓ,);
 prove6ₓ ( cₓ, cdrₓ ( gₓ,), rₓ, eₓ, nₓ, cₓ, whole_dbₓ,);
 } else if (constant_symbolₓ ( "r!ₓ",) === carₓ ( gₓ,)) {
 prove6ₓ ( lₓ, cddrₓ ( gₓ,), rₓ, eₓ, nₓ, cadrₓ ( gₓ,), whole_dbₓ,);
-} else if isEmptyListₓ ( rₓ,) {
+} else if (isEmptyListₓ ( rₓ,)) {
 if (isEmptyListₓ ( lₓ,)) {
 trueₓ;
 } else {
 back6ₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ, whole_dbₓ,);
 }
-} else if isForeignₓ ( carₓ ( gₓ,),) {
+} else if (isForeignₓ ( carₓ ( gₓ,),)) {
 call_foreignₓ ( carₓ ( gₓ,), eₓ,);
 prove6ₓ ( lₓ, cdrₓ ( gₓ,), rₓ, eₓ, nₓ, cₓ, whole_dbₓ,);
-} else if isForeignₓ ( carₓ ( rₓ,),) {
+} else if (isForeignₓ ( carₓ ( rₓ,),)) {
 call_foreignₓ ( carₓ ( rₓ,), eₓ,);
 prove6ₓ ( lₓ, gₓ, cdrₓ ( rₓ,), eₓ, nₓ, cₓ, whole_dbₓ,);
 } else{
 let aₓ = copyₓ ( carₓ ( rₓ,), nₓ,);
 let eStarₓ = unifyₓ ( carₓ ( aₓ,), carₓ ( gₓ,), eₓ,);
 if (eStarₓ) {
-prove6ₓ ( linkₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ,), append3ₓ ( cdrₓ ( aₓ,), listₓ ( constant_symbolₓ ( "r!ₓ",), lₓ,), cdrₓ ( gₓ,),), whole_dbₓ, eStarₓ, (1ₓ + nₓ), lₓ, whole_dbₓ,);
+prove6ₓ ( linkₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ,), append3ₓ ( cdrₓ ( aₓ,), listₓ ( constant_symbolₓ ( "r!ₓ",), lₓ,), cdrₓ ( gₓ,),), whole_dbₓ, eStarₓ, 1ₓ + nₓ, lₓ, whole_dbₓ,);
 } else {
 back6ₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ, whole_dbₓ,);
 }
@@ -109,13 +109,13 @@ var nameₓ = cadrₓ;
 var timeₓ = cddrₓ;
 
 function isVarₓ ( xₓ,) {
-andₓ ( isPairₓ ( xₓ,), string?ₓ ( carₓ ( xₓ,),), ("?ₓ" == carₓ ( xₓ,)),);
+andₓ ( isPairₓ ( xₓ,), string?ₓ ( carₓ ( xₓ,),), "?ₓ" == carₓ ( xₓ,),);
 }
 
 function lookup_loopₓ ( eₓ, idₓ, tmₓ,) {
-if !isPairₓ ( caarₓ ( eₓ,),) {
+if (!isPairₓ ( caarₓ ( eₓ,),)) {
 falseₓ;
-} else if ((idₓ === nameₓ ( caarₓ ( eₓ,),)) && (tmₓ === timeₓ ( caarₓ ( eₓ,),))) {
+} else if (idₓ === nameₓ ( caarₓ ( eₓ,),) && tmₓ === timeₓ ( caarₓ ( eₓ,),)) {
 carₓ ( eₓ,);
 } else{
 lookup_loopₓ ( cdrₓ ( eₓ,), idₓ, tmₓ,);
@@ -129,9 +129,9 @@ lookup_loopₓ ( eₓ, idₓ, tmₓ,);
 }
 
 function valueₓ ( xₓ, eₓ,) {
-if isForeignₓ ( xₓ,) {
+if (isForeignₓ ( xₓ,)) {
 call_foreignₓ ( xₓ, eₓ,);
-} else if isVarₓ ( xₓ,) {
+} else if (isVarₓ ( xₓ,)) {
 let vₓ = lookupₓ ( xₓ, eₓ,);
 if (vₓ) {
 valueₓ ( cadrₓ ( vₓ,), eₓ,);
@@ -145,9 +145,9 @@ xₓ;
 }
 
 function copyₓ ( xₓ, nₓ,) {
-if !isPairₓ ( xₓ,) {
+if (!isPairₓ ( xₓ,)) {
 xₓ;
-} else if isVarₓ ( xₓ,) {
+} else if (isVarₓ ( xₓ,)) {
 append2ₓ ( xₓ, nₓ,);
 } else{
 consₓ ( copyₓ ( carₓ ( xₓ,), nₓ,), copyₓ ( cdrₓ ( xₓ,), nₓ,),);
@@ -163,23 +163,23 @@ function unifyₓ ( x1ₓ, y1ₓ, eₓ,) {
 let xₓ = valueₓ ( x1ₓ, eₓ,);let yₓ = valueₓ ( y1ₓ, eₓ,);
 if (xₓ === yₓ) {
 eₓ;
-} else if isVarₓ ( xₓ,) {
+} else if (isVarₓ ( xₓ,)) {
 bindₓ ( xₓ, yₓ, eₓ,);
-} else if isVarₓ ( yₓ,) {
+} else if (isVarₓ ( yₓ,)) {
 bindₓ ( yₓ, xₓ, eₓ,);
-} else if orₓ ( !isPairₓ ( xₓ,), !isPairₓ ( yₓ,),) {
+} else if (orₓ ( !isPairₓ ( xₓ,), !isPairₓ ( yₓ,),)) {
 falseₓ;
 } else{
 let eStarₓ = unifyₓ ( carₓ ( xₓ,), carₓ ( yₓ,), eₓ,);
-(eStarₓ && unifyₓ ( cdrₓ ( xₓ,), cdrₓ ( yₓ,), eStarₓ,));
+eStarₓ && unifyₓ ( cdrₓ ( xₓ,), cdrₓ ( yₓ,), eStarₓ,);
 }
 
 }
 
 function resolveₓ ( xₓ, eₓ,) {
-if !isPairₓ ( xₓ,) {
+if (!isPairₓ ( xₓ,)) {
 xₓ;
-} else if isVarₓ ( xₓ,) {
+} else if (isVarₓ ( xₓ,)) {
 let vₓ = valueₓ ( xₓ, eₓ,);
 if (isVarₓ ( vₓ,)) {
 vₓ;
@@ -213,9 +213,9 @@ cdrₓ ( eeₓ,);
 }
 
 function print_frame_helperₓ ( eeₓ, all_bindingsₓ, accumulatorₓ,) {
-if has_bindings_Q_ₓ ( eeₓ,) {
+if (has_bindings_Q_ₓ ( eeₓ,)) {
 let var_nameₓ = get_var_name_from_bindingₓ ( eeₓ,);let binding_valueₓ = get_binding_value_from_bindingₓ ( eeₓ, all_bindingsₓ,);let remaining_bindingsₓ = get_rest_of_bindingsₓ ( eeₓ,);
-if no_timestamp_binding_Q_ₓ ( eeₓ,) {
+if (no_timestamp_binding_Q_ₓ ( eeₓ,)) {
 print_frame_helperₓ ( remaining_bindingsₓ, all_bindingsₓ, consₓ ( consₓ ( var_nameₓ, binding_valueₓ,), accumulatorₓ,),);
 } else{
 print_frame_helperₓ ( remaining_bindingsₓ, all_bindingsₓ, accumulatorₓ,);
@@ -241,7 +241,7 @@ resolveArgsHelperₓ ( aₓ, constant_nilₓ (), bindingsₓ,);
 }
 
 function resolveArgsHelperₓ ( argsₓ, accumulatorₓ, bindingsₓ,) {
-if isEmptyListₓ ( argsₓ,) {
+if (isEmptyListₓ ( argsₓ,)) {
 accumulatorₓ;
 } else{
 resolveArgsHelperₓ ( cdrₓ ( argsₓ,), append2ₓ ( accumulatorₓ, listₓ ( valueₓ ( carₓ ( argsₓ,), bindingsₓ,),),), bindingsₓ,);
@@ -250,7 +250,7 @@ resolveArgsHelperₓ ( cdrₓ ( argsₓ,), append2ₓ ( accumulatorₓ, listₓ 
 }
 
 function isForeignₓ ( exprₓ,) {
-andₓ ( isPairₓ ( exprₓ,), string?ₓ ( carₓ ( exprₓ,),), ("@ₓ" == carₓ ( exprₓ,)),);
+andₓ ( isPairₓ ( exprₓ,), string?ₓ ( carₓ ( exprₓ,),), "@ₓ" == carₓ ( exprₓ,),);
 }
 
 function call_foreignₓ ( exprₓ, bindingsₓ,) {
@@ -259,7 +259,7 @@ if ("unityₓ" == funcₓ) {
 carₓ ( argsₓ,);
 } else if ("addₓ" == funcₓ) {
 let resolved_argsₓ = resolveArgsₓ ( argsₓ, bindingsₓ,);
-(carₓ ( resolved_argsₓ,) + cadrₓ ( resolved_argsₓ,));
+carₓ ( resolved_argsₓ,) + cadrₓ ( resolved_argsₓ,);
 } else if ("displayₓ" == funcₓ) {
 let aₓ = valueₓ ( carₓ ( argsₓ,), bindingsₓ,);
 displayₓ ( aₓ,);
