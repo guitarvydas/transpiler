@@ -64,6 +64,14 @@ nl = nl.rwr ();
 _ruleExit ("semiColonComment");
 return ``;
 },
+Program: function (defines,mainbody) {
+_ruleEnter ("Program");
+defines = defines.rwr ().join ('');
+mainbody = mainbody.rwr ();
+
+_ruleExit ("Program");
+return `${defines}${mainbody}`;
+},
 DefineSexpr_define: function (lp,k,lp2,name,formals,rp2,body,rp) {
 _ruleEnter ("DefineSexpr_define");
 lp = lp.rwr ();
@@ -282,7 +290,7 @@ _ruleEnter ("Formal");
 sym = sym.rwr ();
 
 _ruleExit ("Formal");
-return `${sym},`;
+return ` ${sym},`;
 },
 OperationSexpr_operator: function (lp,operator,operand,rp) {
 _ruleEnter ("OperationSexpr_operator");
@@ -299,7 +307,7 @@ _ruleEnter ("Operand");
 x = x.rwr ();
 
 _ruleExit ("Operand");
-return `${x},`;
+return ` ${x},`;
 },
 ControlFlowAtom: function (a) {
 _ruleEnter ("ControlFlowAtom");

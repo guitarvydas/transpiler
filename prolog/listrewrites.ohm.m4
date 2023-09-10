@@ -1,6 +1,9 @@
 include(`prolog.ohm.inc')
 
 ListRewrites <: Prolog {
+
+  Program := DefineSexpr+ MainBody
+
   Sexpr += DefineSexpr | ControlFlowSexpr | OperationSexpr
   StatementSexpr = DefineSexpr | ControlFlowSexpr | StatementOperationSexpr | ControlFlowAtom
 
@@ -30,6 +33,7 @@ ListRewrites <: Prolog {
   Else = StatementSexpr
 
   Body = StatementSexpr Body?
+  MainBody = Body
   
   CondClauses = "(" CondTest CondConsequent ")" RemainingCondClauses?
   CondTest = Sexpr

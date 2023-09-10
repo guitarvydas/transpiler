@@ -1,6 +1,8 @@
 SymRewrites {
 include(`prolog.rwr.inc')
 
+  Program [defines+ mainbody] = ‛«defines»«mainbody»’
+
   DefineSexpr_define [lp k lp2 name formals rp2 body rp] = ‛\nfunction «name» («formals») {«body»\n}\n’
   DefineSexpr_definevar [lp k name e rp] = ‛\nvar «name» = «e»;\n’
 
@@ -30,10 +32,10 @@ include(`prolog.rwr.inc')
   StatementOperationSexpr [x] = ‛\n«x»;’
 
   Formals [f*] = ‛«f»’
-  Formal [sym] = ‛«sym»,’
+  Formal [sym] = ‛ «sym»,’
   
   OperationSexpr_operator [lp operator operand* rp] = ‛«operator» («operand»)’
-  Operand [x] = ‛«x»,’
+  Operand [x] = ‛ «x»,’
   
   ControlFlowAtom [a] = ‛\n«a»;’
   
