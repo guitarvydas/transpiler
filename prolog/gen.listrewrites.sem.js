@@ -167,8 +167,7 @@ body = body.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("ControlFlowSexpr_let");
-return `
-${binding}${body}`;
+return `${binding}${body}`;
 },
 ControlFlowSexpr_if: function (lp,k,test,thn,els,rp) {
 _ruleEnter ("ControlFlowSexpr_if");
@@ -204,7 +203,8 @@ rp = rp.rwr ();
 recursive = recursive.rwr ().join ('');
 
 _ruleExit ("Binding");
-return `let ${target} = ${src};${recursive}`;
+return `
+let ${target} = ${src};${recursive}`;
 },
 ControlFlowSexpr_cond: function (lp,k,clauses,rp) {
 _ruleEnter ("ControlFlowSexpr_cond");
@@ -252,7 +252,7 @@ body = body.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("RemainingCondClauses_else");
-return ` else${body}`;
+return ` else ${body}`;
 },
 RemainingCondClauses_more: function (clause) {
 _ruleEnter ("RemainingCondClauses_more");

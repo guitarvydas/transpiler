@@ -90,7 +90,7 @@ prove6 (l, cdr (g), r, e, n, c, whole_db);
 } else if (isForeign (car (r))) {
 call_foreign (car (r), e);
 prove6 (l, g, cdr (r), e, n, c, whole_db);
-} else{
+} else {
 let a = copy (car (r), n);
 let eStar = unify (car (a), car (g), e);
 if (eStar) {
@@ -117,14 +117,15 @@ if (!isPair (caar (e))) {
 false;
 } else if ((id === name (caar (e))) && (tm === time (caar (e)))) {
 car (e);
-} else{
+} else {
 lookup_loop (cdr (e), id, tm);
 }
 
 }
 
 function lookup (v, e) {
-let id = name (v);let tm = time (v);
+let id = name (v);
+let tm = time (v);
 lookup_loop (e, id, tm);
 }
 
@@ -138,7 +139,7 @@ value (cadr (v), e);
 } else {
 x;
 }
-} else{
+} else {
 x;
 }
 
@@ -149,7 +150,7 @@ if (!isPair (x)) {
 x;
 } else if (isVar (x)) {
 append2 (x, n);
-} else{
+} else {
 cons (copy (car (x), n), copy (cdr (x), n));
 }
 
@@ -160,7 +161,8 @@ cons (list (x, y), e);
 }
 
 function unify (x1, y1, e) {
-let x = value (x1, e);let y = value (y1, e);
+let x = value (x1, e);
+let y = value (y1, e);
 if (x === y) {
 e;
 } else if (isVar (x)) {
@@ -169,7 +171,7 @@ bind (x, y, e);
 bind (y, x, e);
 } else if (or (!isPair (x), !isPair (y))) {
 false;
-} else{
+} else {
 let eStar = unify (car (x), car (y), e);
 (eStar) && (unify (cdr (x), cdr (y), eStar));
 }
@@ -186,7 +188,7 @@ v;
 } else {
 resolve (v, e);
 }
-} else{
+} else {
 cons (resolve (car (x), e), resolve (cdr (x), e));
 }
 
@@ -214,14 +216,16 @@ cdr (ee);
 
 function print_frame_helper (ee, all_bindings, accumulator) {
 if (has_bindings_Q_ (ee)) {
-let var_name = get_var_name_from_binding (ee);let binding_value = get_binding_value_from_binding (ee, all_bindings);let remaining_bindings = get_rest_of_bindings (ee);
+let var_name = get_var_name_from_binding (ee);
+let binding_value = get_binding_value_from_binding (ee, all_bindings);
+let remaining_bindings = get_rest_of_bindings (ee);
 if (no_timestamp_binding_Q_ (ee)) {
 print_frame_helper (remaining_bindings, all_bindings, cons (cons (var_name, binding_value), accumulator));
-} else{
+} else {
 print_frame_helper (remaining_bindings, all_bindings, accumulator);
 }
 
-} else{
+} else {
 accumulator;
 }
 
@@ -243,7 +247,7 @@ resolveArgsHelper (a, constant_nil (), bindings);
 function resolveArgsHelper (args, accumulator, bindings) {
 if (isEmptyList (args)) {
 accumulator;
-} else{
+} else {
 resolveArgsHelper (cdr (args), append2 (accumulator, list (value (car (args), bindings))), bindings);
 }
 
@@ -254,7 +258,8 @@ function isForeign (expr) {
 }
 
 function call_foreign (expr, bindings) {
-let func = cadr (expr);let args = cddr (expr);
+let func = cadr (expr);
+let args = cddr (expr);
 if ("unity" == func) {
 car (args);
 } else if ("add" == func) {
@@ -265,7 +270,7 @@ let a = value (car (args), bindings);
 display (a);
 } else if ("newline" == func) {
 newline ();
-} else{
+} else {
 error ("call_foreign called with unknown operator", func);
 }
 

@@ -12,20 +12,20 @@ include(`prolog.rwr.inc')
   OperationSexpr_add [lp k arg1 arg2 rp] = ‛«arg1» + «arg2»’
   OperationSexpr_and [lp k andarg rp] = ‛«andarg»’
 
-  ControlFlowSexpr_let [lp k lp2 binding rp2 body rp] = ‛\n«binding»«body»’
+  ControlFlowSexpr_let [lp k lp2 binding rp2 body rp] = ‛«binding»«body»’
 
   ControlFlowSexpr_if [lp k test thn els rp] = ‛\nif («test») {«thn»\n} else {«els»\n}’
   
   OperationSexpr_not [lp k arg1 rp] = ‛!«arg1»’
 
 
-  Binding [lp target src rp recursive?] = ‛let «target» = «src»;«recursive»’
+  Binding [lp target src rp recursive?] = ‛\nlet «target» = «src»;«recursive»’
 
   ControlFlowSexpr_cond [lp k clauses rp] = ‛\n«clauses»\n’
   CondClauses [lp test body rp more?] = ‛«test»«body»«more»’
   CondTest [e]= ‛if («e») ’
   CondConsequent [b] = ‛{«b»\n}’
-  RemainingCondClauses_else [lp els body rp] = ‛ else«body»’
+  RemainingCondClauses_else [lp els body rp] = ‛ else «body»’
   RemainingCondClauses_more [clause] = ‛ else «clause»’
   
   AndSexpr_rec [sexpr rec] = ‛(«sexpr») && «rec»’
