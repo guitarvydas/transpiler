@@ -1,9 +1,9 @@
 {
-Sexprs: function (Sexpr) {
-_ruleEnter ("Sexprs");
+Program: function (Sexpr) {
+_ruleEnter ("Program");
 Sexpr = Sexpr.rwr ().join ('');
 
-_ruleExit ("Sexprs");
+_ruleExit ("Program");
 return `${Sexpr}`;
 },
 Sexpr_list: function (lp,Sexpr,rp) {

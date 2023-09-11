@@ -1,9 +1,9 @@
 {
-Sexprs: function (Sexpr) {
-_ruleEnter ("Sexprs");
+Program: function (Sexpr) {
+_ruleEnter ("Program");
 Sexpr = Sexpr.rwr ().join ('');
 
-_ruleExit ("Sexprs");
+_ruleExit ("Program");
 return `${Sexpr}`;
 },
 Sexpr_list: function (lp,Sexpr,rp) {
@@ -92,6 +92,13 @@ k = k.rwr ();
 _ruleExit ("Symbol_isPair");
 return `isPairₓ`;
 },
+Symbol_isString: function (k) {
+_ruleEnter ("Symbol_isString");
+k = k.rwr ();
+
+_ruleExit ("Symbol_isString");
+return `isStringₓ`;
+},
 Symbol_rBang: function (k) {
 _ruleEnter ("Symbol_rBang");
 k = k.rwr ();
@@ -119,6 +126,20 @@ k = k.rwr ();
 
 _ruleExit ("Symbol_isEmptyList");
 return `isEmptyListₓ`;
+},
+Symbol_mutate: function (k) {
+_ruleEnter ("Symbol_mutate");
+k = k.rwr ();
+
+_ruleExit ("Symbol_mutate");
+return `mutateₓ`;
+},
+Symbol_mutate_car: function (k) {
+_ruleEnter ("Symbol_mutate_car");
+k = k.rwr ();
+
+_ruleExit ("Symbol_mutate_car");
+return `mutate_carₓ`;
 },
 Symbol_eStar: function (k) {
 _ruleEnter ("Symbol_eStar");

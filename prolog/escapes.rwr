@@ -1,0 +1,16 @@
+Escapes {
+  text [c+] = ‛«c»’
+  char_string [ldq cs* rdq] = ‛«ldq»«cs»«rdq»’
+  char_comment [ksemi cs* nl] = ‛«ksemi»«cs»«nl»’
+  char_any [c] = ‛«c»’
+
+  stringchar_space [c] = ‛&nbsp;’
+  stringchar_newline [c] = ‛&#10;’
+  stringchar_tab [c] = ‛&#9;’
+  stringchar_lt [c] = ‛&lt;’
+  stringchar_gt [c] = ‛&gt;’
+  stringchar_amp [c] = ‛&amp;’
+  stringchar_quot [c] = ‛&quot;’
+  stringchar_squote [c] = ‛&39;’
+  
+}
