@@ -146,16 +146,15 @@ rp = rp.rwr ();
 _ruleExit ("OperationSexpr_add");
 return `${arg1} + ${arg2}`;
 },
-OperationSexpr_and: function (lp,k,andarg1,arg2,rp) {
+OperationSexpr_and: function (lp,k,andarg,rp) {
 _ruleEnter ("OperationSexpr_and");
 lp = lp.rwr ();
 k = k.rwr ();
-andarg1 = andarg1.rwr ();
-arg2 = arg2.rwr ();
+andarg = andarg.rwr ();
 rp = rp.rwr ();
 
 _ruleExit ("OperationSexpr_and");
-return `${andarg1}${arg2}`;
+return `${andarg}`;
 },
 ControlFlowSexpr_let: function (lp,k,lp2,binding,rp2,body,rp) {
 _ruleEnter ("ControlFlowSexpr_let");
@@ -262,12 +261,20 @@ clause = clause.rwr ();
 _ruleExit ("RemainingCondClauses_more");
 return ` else ${clause}`;
 },
-AndSexpr: function (sexpr) {
-_ruleEnter ("AndSexpr");
+AndSexpr_rec: function (sexpr,rec) {
+_ruleEnter ("AndSexpr_rec");
+sexpr = sexpr.rwr ();
+rec = rec.rwr ();
+
+_ruleExit ("AndSexpr_rec");
+return `(${sexpr}) && ${rec}`;
+},
+AndSexpr_bottom: function (sexpr) {
+_ruleEnter ("AndSexpr_bottom");
 sexpr = sexpr.rwr ();
 
-_ruleExit ("AndSexpr");
-return `${sexpr} && `;
+_ruleExit ("AndSexpr_bottom");
+return `(${sexpr})`;
 },
 Body: function (sexpr,recursive) {
 _ruleEnter ("Body");

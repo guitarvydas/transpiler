@@ -34,6 +34,7 @@ m4 <listrewrites.rwr.m4 >gen.listrewrites.rwr
 ../ohmjs.js "ListRewrites" gen.listrewrites.ohm gen.listrewrites.sem.js <gen.prolog.symrewrites.js >gen.prolog.listrewrites.js
 
 ./cleanup.js <gen.prolog.listrewrites.js >gen.prolog.js
-echo 'output in gen.prolog.js'
+cp gen.prolog.js out.js
+echo 'output in out.js'
 
 

@@ -10,7 +10,7 @@ include(`prolog.rwr.inc')
   OperationSexpr_stringeq [lp k arg1 arg2 rp] = ‛«arg1» == «arg2»’
   OperationSexpr_eq [lp k arg1 arg2 rp] = ‛«arg1» === «arg2»’
   OperationSexpr_add [lp k arg1 arg2 rp] = ‛«arg1» + «arg2»’
-  OperationSexpr_and [lp k andarg1 arg2 rp] = ‛«andarg1»«arg2»’
+  OperationSexpr_and [lp k andarg rp] = ‛«andarg»’
 
   ControlFlowSexpr_let [lp k lp2 binding rp2 body rp] = ‛\n«binding»«body»’
 
@@ -28,7 +28,8 @@ include(`prolog.rwr.inc')
   RemainingCondClauses_else [lp els body rp] = ‛ else«body»’
   RemainingCondClauses_more [clause] = ‛ else «clause»’
   
-  AndSexpr [sexpr] = ‛«sexpr» && ’
+  AndSexpr_rec [sexpr rec] = ‛(«sexpr») && «rec»’
+  AndSexpr_bottom [sexpr] = ‛(«sexpr»)’
 
   Body [sexpr recursive?] = ‛«sexpr»«recursive»’
   StatementOperationSexpr [x] = ‛\n«x»;’

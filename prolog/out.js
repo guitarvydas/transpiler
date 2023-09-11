@@ -1,324 +1,281 @@
-function first(x) {
-    return car(x);
-};
-function rest(x) {
-    return cdr(x);
-};
-function AppendInefficient(list1,list2) {
-    return (function(){
-	if (null_Q_(list1)) {
-	    return list2;
+
+function first (x) {
+    car (x);
+}
+
+function rest (x) {
+    cdr (x);
+}
+
+function append2 (list1, list2) {
+    if (isEmptyList (list1)) {
+	list2;
+    } else {
+	cons (car (list1), append2 (cdr (list1), list2));
+    }
+}
+
+function append3 (list1, list2, list3) {
+    append2 (list1, append2 (list2, list3));
+}
+
+var result_ = constant_nil ();
+
+function clear_result () {
+    mutate (result_, constant_nil ());
+}
+
+function append_to_result (lis) {
+    mutate (result_, cons (lis, result_));
+}
+
+function get_result () {
+    result_;
+}
+
+function display_result () {
+    display (get_result ());
+}
+
+var link = list;
+
+var L_l = car;
+
+var L_g = cadr;
+
+var L_r = caddr;
+
+var L_e = cadddr;
+
+function L_n (x) {
+    car (cddddr (x));
+}
+
+function L_c (x) {
+    cadr (cddddr (x));
+}
+
+function clear_r (x) {
+    mutate_car (cddr (x), constant_list (constant_nil ()));
+}
+
+function back6 (l, g, r, e, n, c, whole_db) {
+    if ((isPair (g)) && (isPair (r))) {
+	prove6 (l, g, cdr (r), e, n, c, whole_db);
+    } else if (isPair (l)) {
+	prove6 (L_l (l), L_g (l), cdr (L_r (l)), L_e (l), L_n (l), L_c (l), whole_db);
+    }
+
+}
+
+function prove6 (l, g, r, e, n, c, whole_db) {
+    if (isEmptyList (g)) {
+	let next_result = print_frame (e);
+	append_to_result (next_result);
+	back6 (l, g, r, e, n, c, whole_db);
+    } else if (constant_symbol ("!") === car (g)) {
+	clear_r (c);
+	prove6 (c, cdr (g), r, e, n, c, whole_db);
+    } else if (constant_symbol ("r!") === car (g)) {
+	prove6 (l, cddr (g), r, e, n, cadr (g), whole_db);
+    } else if (isEmptyList (r)) {
+	if (isEmptyList (l)) {
+	    true;
 	} else {
-	    return cons(car(list1),AppendInefficient(cdr(list1),list2));
+	    back6 (l, g, r, e, n, c, whole_db);
 	}
-    })();
-};
-function AppendInefficient3(list1,list2,list3) {
-    return AppendInefficient(list1,AppendInefficient(list2,list3));
-};
-let result_ = list();
-function clear_result() {
-    return (result_ = list());
-};
-function append_to_result(lis) {
-    return (result_ = cons(lis,result_));
-};
-function get_result() {
-    return result_;
-};
-function display_result() {
-    return display(get_result());
-};
-let link = list;
-let L_l = car;
-let L_g = cadr;
-let L_r = caddr;
-let L_e = cadddr;
-function L_n(x) {
-    return car(cddddr(x));
-};
-function L_c(x) {
-    return cadr(cddddr(x));
-};
-function clear_r(x) {
-    return set_car_B_(cddr(x),list(list()));
-};
-function back6(l,g,r,e,n,c,whole_db) {
-    return (function(){
-	if (pair_Q_(g) && pair_Q_(r)) {
-	    return prove6(l,g,cdr(r),e,n,c,whole_db);
-
-	} else if (pair_Q_(l)) {
-	    return prove6(L_l(l),L_g(l),cdr(L_r(l)),L_e(l),L_n(l),L_c(l),whole_db);
-
+    } else if (isForeign (car (g))) {
+	call_foreign (car (g), e);
+	prove6 (l, cdr (g), r, e, n, c, whole_db);
+    } else if (isForeign (car (r))) {
+	call_foreign (car (r), e);
+	prove6 (l, g, cdr (r), e, n, c, whole_db);
+    } else{
+	let a = copy (car (r), n);
+	let eStar = unify (car (a), car (g), e);
+	if (eStar) {
+	    prove6 (link (l, g, r, e, n, c), append3 (cdr (a), list (constant_symbol ("r!"), l), cdr (g)), whole_db, eStar, 1 + n, l, whole_db);
 	} else {
-	    return null;
+	    back6 (l, g, r, e, n, c, whole_db);
 	}
-    })();
-};
-function prove6(l,g,r,e,n,c,whole_db) {
-    return (function(){
-	if (null_Q_(g)) {
-	    (function(next_result=print_frame(e)) {
-		return append_to_result(next_result);
+    }
 
-	    })();
-	    return back6(l,g,r,e,n,c,whole_db);
+}
 
-	} else if (eq_Q_("!",car(g))) {
-	    clear_r(c);
-	    return prove6(c,cdr(g),r,e,n,c,whole_db);
+var empty = constant_list (constant_list (constant_symbol ("bottom")));
 
-	}  else if (eq_Q_("r!",car(g))) {
-	    return prove6(l,cddr(g),r,e,n,cadr(g),whole_db);
+var name = cadr;
 
-	}  else if (null_Q_(r)) {
-	    return (function(){
-		if (null_Q_(l)) {
-		    return true;
-		} else {
-		    return back6(l,g,r,e,n,c,whole_db);
-		}
-	    })();
+var time = cddr;
 
-	}  else if (foreign_Q_(car(g))) {
-	    call_foreign(car(g),e);
-	    return prove6(l,cdr(g),r,e,n,c,whole_db);
+function isVar (x) {
+    (isPair (x)) && (string? (car (x))) && ("?" == car (x));
+}
 
-	}  else if (foreign_Q_(car(r))) {
-	    call_foreign(car(r),e);
-	    return prove6(l,g,cdr(r),e,n,c,whole_db);
+function lookup_loop (e, id, tm) {
+    if (!isPair (caar (e))) {
+	false;
+    } else if ((id === name (caar (e))) && (tm === time (caar (e)))) {
+	car (e);
+    } else{
+	lookup_loop (cdr (e), id, tm);
+    }
 
-	}else {
-	    return (function(a=copy(car(r),n)) {
-		return (function(e_A_=unify(car(a),car(g),e)) {
-		    return (function(){
-			if (e_A_) {
-			    return prove6(link(l,g,r,e,n,c),AppendInefficient3(cdr(a),list("r!",l),cdr(g)),whole_db,e_A_,_plus(1,n),l,whole_db);
-			} else {
-			    return back6(l,g,r,e,n,c,whole_db);
-			}
-		    })();
+}
 
-		})();
+function lookup (v, e) {
+    let id = name (v);let tm = time (v);
+    lookup_loop (e, id, tm);
+}
 
-	    })();
+function value (x, e) {
+    if (isForeign (x)) {
+	call_foreign (x, e);
+    } else if (isVar (x)) {
+	let v = lookup (x, e);
+	if (v) {
+	    value (cadr (v), e);
+	} else {
+	    x;
 	}
+    } else{
+	x;
+    }
 
-    })();
-};
-let empty = list(list("bottom"));
-let name = cadr;
-let time = cddr;
-function var_Q_(x) {
-    return pair_Q_(x) && string_Q_(car(x)) && string_EQ_Q_("?",car(x));
-};
-function lookup_loop(e,id,tm) {
-    return (function(){
-	if ((!pair_Q_(caar(e)))) {
-	    return false;
+}
 
-	} else if (eq_Q_(id,name(caar(e))) && eqv_Q_(tm,time(caar(e)))) {
-	    return car(e);
+function copy (x, n) {
+    if (!isPair (x)) {
+	x;
+    } else if (isVar (x)) {
+	append2 (x, n);
+    } else{
+	cons (copy (car (x), n), copy (cdr (x), n));
+    }
 
-	}else {
-	    return lookup_loop(cdr(e),id,tm);
+}
+
+function bind (x, y, e) {
+    cons (list (x, y), e);
+}
+
+function unify (x1, y1, e) {
+    let x = value (x1, e);let y = value (y1, e);
+    if (x === y) {
+	e;
+    } else if (isVar (x)) {
+	bind (x, y, e);
+    } else if (isVar (y)) {
+	bind (y, x, e);
+    } else if (or (!isPair (x), !isPair (y))) {
+	false;
+    } else{
+	let eStar = unify (car (x), car (y), e);
+	(eStar) && (unify (cdr (x), cdr (y), eStar));
+    }
+
+}
+
+function resolve (x, e) {
+    if (!isPair (x)) {
+	x;
+    } else if (isVar (x)) {
+	let v = value (x, e);
+	if (isVar (v)) {
+	    v;
+	} else {
+	    resolve (v, e);
 	}
+    } else{
+	cons (resolve (car (x), e), resolve (cdr (x), e));
+    }
 
-    })();
-};
-function lookup(v,e) {
-    return (function(id=name(v),tm=time(v)) {
-	return lookup_loop(e,id,tm);
+}
 
-    })();
-};
-function value(x,e) {
-    return (function(){
-	if (foreign_Q_(x)) {
-	    return call_foreign(x,e);
+function has_bindings_Q_ (ee) {
+    isPair (cdr (ee));
+}
 
-	} else if (var_Q_(x)) {
-	    return (function(v=lookup(x,e)) {
-		return (function(){
-		    if (v) {
-			return value(cadr(v),e);
-		    } else {
-			return x;
-		    }
-		})();
+function get_var_name_from_binding (ee) {
+    cadaar (ee);
+}
 
-	    })();
+function get_binding_value_from_binding (ee, e) {
+    resolve (caar (ee), e);
+}
 
-	}else {
-	    return x;
-	}
+function no_timestamp_binding_Q_ (ee) {
+    isEmptyList (time (caar (ee)));
+}
 
-    })();
-};
-function copy(x,n) {
-    return (function(){
-	if ((!pair_Q_(x))) {
-	    return x;
+function get_rest_of_bindings (ee) {
+    cdr (ee);
+}
 
-	} else if (var_Q_(x)) {
-	    return AppendInefficient(x,n);
-
-	}else {
-	    return cons(copy(car(x),n),copy(cdr(x),n));
-	}
-
-    })();
-};
-function bind(x,y,e) {
-    return cons(list(x,y),e);
-};
-function unify(x1,y1,e) {
-    return (function(x=value(x1,e),y=value(y1,e)) {
-	return (function(){
-	    if (eq_Q_(x,y)) {
-		return e;
-
-	    } else if (var_Q_(x)) {
-		return bind(x,y,e);
-
-	    }  else if (var_Q_(y)) {
-		return bind(y,x,e);
-
-	    }  else if ((!pair_Q_(x)) || (!pair_Q_(y))) {
-		return false;
-
-	    }else {
-		return (function(e_A_=unify(car(x),car(y),e)) {
-		    return e_A_ && unify(cdr(x),cdr(y),e_A_);
-
-		})();
-	    }
-
-	})();
-
-    })();
-};
-function resolve(x,e) {
-    return (function(){
-	if ((!pair_Q_(x))) {
-	    return x;
-
-	} else if (var_Q_(x)) {
-	    return (function(v=value(x,e)) {
-		return (function(){
-		    if (var_Q_(v)) {
-			return v;
-		    } else {
-			return resolve(v,e);
-		    }
-		})();
-
-	    })();
-
-	}else {
-	    return cons(resolve(car(x),e),resolve(cdr(x),e));
+function print_frame_helper (ee, all_bindings, accumulator) {
+    if (has_bindings_Q_ (ee)) {
+	let var_name = get_var_name_from_binding (ee);let binding_value = get_binding_value_from_binding (ee, all_bindings);let remaining_bindings = get_rest_of_bindings (ee);
+	if (no_timestamp_binding_Q_ (ee)) {
+	    print_frame_helper (remaining_bindings, all_bindings, cons (cons (var_name, binding_value), accumulator));
+	} else{
+	    print_frame_helper (remaining_bindings, all_bindings, accumulator);
 	}
 
-    })();
-};
-function has_bindings_Q_(ee) {
-    return pair_Q_(cdr(ee));
-};
-function get_var_name_from_binding(ee) {
-    return cadaar(ee);
-};
-function get_binding_value_from_binding(ee,e) {
-    return resolve(caar(ee),e);
-};
-function no_timestamp_binding_Q_(ee) {
-    return null_Q_(time(caar(ee)));
-};
-function get_rest_of_bindings(ee) {
-    return cdr(ee);
-};
-function print_frame_helper(ee,all_bindings,accumulator) {
-    return (function(){
-	if (has_bindings_Q_(ee)) {
-	    return (function(var_name=get_var_name_from_binding(ee),binding_value=get_binding_value_from_binding(ee,all_bindings),remaining_bindings=get_rest_of_bindings(ee)) {
-		return (function(){
-		    if (no_timestamp_binding_Q_(ee)) {
-			return print_frame_helper(remaining_bindings,all_bindings,cons(cons(var_name,binding_value),accumulator));
+    } else{
+	accumulator;
+    }
 
-		    }else {
-			return print_frame_helper(remaining_bindings,all_bindings,accumulator);
-		    }
+}
 
-		})();
+function print_frame (e) {
+    let final_result = print_frame_helper (e, e, constant_nil ());
+    final_result;
+}
 
-	    })();
+var db = constant_list (constant_list (constant_list (constant_symbol ("some"), constant_integer ("0"))), constant_list (constant_list (constant_symbol ("some"), constant_integer ("10"))), constant_list (constant_list (constant_symbol ("some"), constant_integer ("20"))), constant_list (constant_list (constant_symbol ("some"), constant_integer ("30"))), constant_list (constant_list (constant_symbol ("eq"), constant_list (constant_string ("?"), constant_symbol ("X")), constant_list (constant_string ("?"), constant_symbol ("X")))), constant_list (constant_list (constant_symbol ("neq"), constant_list (constant_string ("?"), constant_symbol ("X")), constant_list (constant_string ("?"), constant_symbol ("Y"))), constant_list (constant_symbol ("eq"), constant_list (constant_string ("?"), constant_symbol ("X")), constant_list (constant_string ("?"), constant_symbol ("Y"))), constant_symbol ("!"), constant_symbol ("fail")), constant_list (constant_list (constant_symbol ("neq"), constant_list (constant_string ("?"), constant_symbol ("X")), constant_list (constant_string ("?"), constant_symbol ("Y")))));
 
-	}else {
-	    return accumulator;
-	}
+var goals = constant_list (constant_list (constant_symbol ("some"), constant_list (constant_string ("?"), constant_symbol ("X"))), constant_list (constant_symbol ("some"), constant_list (constant_string ("?"), constant_symbol ("Y"))), constant_list (constant_symbol ("neq"), constant_list (constant_string ("?"), constant_symbol ("X")), constant_list (constant_string ("?"), constant_symbol ("Y"))), constant_list (constant_symbol ("eq"), constant_list (constant_string ("?"), constant_symbol ("X")), constant_list (constant_string ("@"), constant_string ("add"), constant_list (constant_string ("?"), constant_symbol ("X")), constant_list (constant_string ("?"), constant_symbol ("Y")))));
 
-    })();
-};
-function print_frame(e) {
-    return (function(final_result=print_frame_helper(e,e,list())) {
-	return final_result;
+function resolveArgs (a, bindings) {
+    resolveArgsHelper (a, constant_nil (), bindings);
+}
 
-    })();
-};
-let db = list(list(list("some",0)),list(list("some",10)),list(list("some",20)),list(list("some",30)),list(list("eq",list("?","X"),list("?","X"))),list(list("neq",list("?","X"),list("?","Y")),list("eq",list("?","X"),list("?","Y")),"!","fail"),list(list("neq",list("?","X"),list("?","Y"))));
-let goals = list(list("some",list("?","X")),list("some",list("?","Y")),list("neq",list("?","X"),list("?","Y")),list("eq",list("?","X"),list("@","add",list("?","X"),list("?","Y"))));
-function resolveArgs(a,bindings) {
-    return resolveArgsHelper(a,list(),bindings);
-};
-function resolveArgsHelper(args,accumulator,bindings) {
-    return (function(){
-	if (null_Q_(args)) {
-	    return accumulator;
+function resolveArgsHelper (args, accumulator, bindings) {
+    if (isEmptyList (args)) {
+	accumulator;
+    } else{
+	resolveArgsHelper (cdr (args), append2 (accumulator, list (value (car (args), bindings))), bindings);
+    }
 
-	}else {
-	    return resolveArgsHelper(cdr(args),AppendInefficient(accumulator,list(value(car(args),bindings))),bindings);
-	}
+}
 
-    })();
-};
-function foreign_Q_(expr) {
-    return pair_Q_(expr) && string_Q_(car(expr)) && string_EQ_Q_("@",car(expr));
-};
-function call_foreign(expr,bindings) {
-    return (function(func=cadr(expr),args=cddr(expr)) {
-	return (function(){
-	    if (string_EQ_Q_("unity",func)) {
-		return car(args);
+function isForeign (expr) {
+    (isPair (expr)) && (string? (car (expr))) && ("@" == car (expr));
+}
 
-	    } else if (string_EQ_Q_("add",func)) {
-		return (function(resolved_args=resolveArgs(args,bindings)) {
-		    return _plus(car(resolved_args),cadr(resolved_args));
+function call_foreign (expr, bindings) {
+    let func = cadr (expr);let args = cddr (expr);
+    if ("unity" == func) {
+	car (args);
+    } else if ("add" == func) {
+	let resolved_args = resolveArgs (args, bindings);
+	car (resolved_args) + cadr (resolved_args);
+    } else if ("display" == func) {
+	let a = value (car (args), bindings);
+	display (a);
+    } else if ("newline" == func) {
+	newline ();
+    } else{
+	error ("call_foreign called with unknown operator", func);
+    }
 
-		})();
+}
 
-	    }  else if (string_EQ_Q_("display",func)) {
-		return (function(a=value(car(args),bindings)) {
-		    return display(a);
-
-		})();
-
-	    }  else if (string_EQ_Q_("newline",func)) {
-		return newline();
-
-	    }else {
-		return error("call_foreign called with unknown operator",func);
-	    }
-
-	})();
-
-    })();
-};
-clear_result();
-newline();
-newline();
-prove6(list(),goals,db,empty,1,list(),db);
-display_result();
-newline();
-newline();
-
+clear_result ();
+newline ();
+newline ();
+prove6 (constant_nil (), goals, db, empty, 1, constant_nil (), db);
+display_result ();
+newline ();
+newline ();
 

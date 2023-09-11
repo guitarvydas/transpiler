@@ -21,7 +21,7 @@ ListRewrites <: Prolog {
     | "(" sym<"string=?"> Sexpr Sexpr ")" -- stringeq
     | "(" sym<"eq?"> Sexpr Sexpr ")" -- eq
     | "(" sym<"+"> Sexpr Sexpr ")" -- add
-    | "(" sym<"and"> AndSexpr Sexpr ")" -- and
+    | "(" sym<"and"> AndSexpr ")" -- and
     | "(" sym<"not"> Sexpr ")" -- not
 
     | "(" Operator Operand* ")" -- operator
@@ -32,7 +32,9 @@ ListRewrites <: Prolog {
   Then = StatementSexpr
   Else = StatementSexpr
 
-  AndSexpr = Sexpr
+  AndSexpr = 
+    | Sexpr AndSexpr -- rec
+    | Sexpr -- bottom
   
   Body = StatementSexpr Body?
   MainBody = Body

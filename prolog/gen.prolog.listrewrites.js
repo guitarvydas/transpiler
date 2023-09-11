@@ -60,7 +60,7 @@ mutate_carₓ ( cddrₓ ( xₓ,), constant_listₓ ( constant_nilₓ (),),);
 }
 
 function back6ₓ ( lₓ, gₓ, rₓ, eₓ, nₓ, cₓ, whole_dbₓ,) {
-if (isPairₓ ( gₓ,) && isPairₓ ( rₓ,)) {
+if ((isPairₓ ( gₓ,)) && (isPairₓ ( rₓ,))) {
 prove6ₓ ( lₓ, gₓ, cdrₓ ( rₓ,), eₓ, nₓ, cₓ, whole_dbₓ,);
 } else if (isPairₓ ( lₓ,)) {
 prove6ₓ ( L_lₓ ( lₓ,), L_gₓ ( lₓ,), cdrₓ ( L_rₓ ( lₓ,),), L_eₓ ( lₓ,), L_nₓ ( lₓ,), L_cₓ ( lₓ,), whole_dbₓ,);
@@ -109,13 +109,13 @@ var nameₓ = cadrₓ;
 var timeₓ = cddrₓ;
 
 function isVarₓ ( xₓ,) {
-andₓ ( isPairₓ ( xₓ,), string?ₓ ( carₓ ( xₓ,),), "?ₓ" == carₓ ( xₓ,),);
+(isPairₓ ( xₓ,)) && (string?ₓ ( carₓ ( xₓ,),)) && ("?ₓ" == carₓ ( xₓ,));
 }
 
 function lookup_loopₓ ( eₓ, idₓ, tmₓ,) {
 if (!isPairₓ ( caarₓ ( eₓ,),)) {
 falseₓ;
-} else if (idₓ === nameₓ ( caarₓ ( eₓ,),) && tmₓ === timeₓ ( caarₓ ( eₓ,),)) {
+} else if ((idₓ === nameₓ ( caarₓ ( eₓ,),)) && (tmₓ === timeₓ ( caarₓ ( eₓ,),))) {
 carₓ ( eₓ,);
 } else{
 lookup_loopₓ ( cdrₓ ( eₓ,), idₓ, tmₓ,);
@@ -171,7 +171,7 @@ bindₓ ( yₓ, xₓ, eₓ,);
 falseₓ;
 } else{
 let eStarₓ = unifyₓ ( carₓ ( xₓ,), carₓ ( yₓ,), eₓ,);
-eStarₓ && unifyₓ ( cdrₓ ( xₓ,), cdrₓ ( yₓ,), eStarₓ,);
+(eStarₓ) && (unifyₓ ( cdrₓ ( xₓ,), cdrₓ ( yₓ,), eStarₓ,));
 }
 
 }
@@ -250,7 +250,7 @@ resolveArgsHelperₓ ( cdrₓ ( argsₓ,), append2ₓ ( accumulatorₓ, listₓ 
 }
 
 function isForeignₓ ( exprₓ,) {
-andₓ ( isPairₓ ( exprₓ,), string?ₓ ( carₓ ( exprₓ,),), "@ₓ" == carₓ ( exprₓ,),);
+(isPairₓ ( exprₓ,)) && (string?ₓ ( carₓ ( exprₓ,),)) && ("@ₓ" == carₓ ( exprₓ,));
 }
 
 function call_foreignₓ ( exprₓ, bindingsₓ,) {
