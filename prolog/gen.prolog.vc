@@ -1,8 +1,10 @@
-;; (define (value p q)
-;;   (let ((A B))
-;;     (if X
-;; 	Y
-;; 	Z)))
+(defineₓ (valueₓ pₓ qₓ)
+  (letₓ ((Aₓ Bₓ))
+    (ifₓ Xₓ
+	(ifₓ Pₓ
+	    Qₓ
+	    Rₓ)
+	Zₓ)))
 
 ;; (define (value x e)
 ;;   (cond ((foreign? x)
@@ -21,38 +23,39 @@
 ;; (define result_ '())
 ;; (define (clear_result) (set! result_ '()))
 
-(defineₓ (foreign?ₓ exprₓ)
-  (andₓ (pair?ₓ exprₓ)
-       (string?ₓ (carₓ exprₓ))
-       (string=?ₓ "@ₓ" (carₓ exprₓ))))
+;; (define (foreign? expr)
+;;   (and (pair? expr)
+;;        (string? (car expr))
+;;        (string=? "@" (car expr))))
 
-(defineₓ (call-foreignₓ exprₓ bindingsₓ)
-  (letₓ ((funcₓ (cadrₓ exprₓ))
-	(argsₓ (cddrₓ exprₓ)))
+;; (define (call-foreign expr bindings)
+;;   (let ((func (cadr expr))
+;; 	(args (cddr expr)))
 
-    (condₓ ((string=?ₓ "unityₓ" funcₓ)
-	   (carₓ argsₓ))
+;;     (cond ((string=? "unity" func)
+;; 	   (car args))
 
-	  ((string=?ₓ "addₓ" funcₓ)
-	   (letₓ ((resolved-argsₓ (resolveArgsₓ argsₓ bindingsₓ)))
-	     (+ₓ (carₓ resolved-argsₓ) (cadrₓ resolved-argsₓ))))
+;; 	  ((string=? "add" func)
+;; 	   (let ((resolved-args (resolveArgs args bindings)))
+;; 	     (+ (car resolved-args) (cadr resolved-args))))
 
-	  ((string=?ₓ "displayₓ" funcₓ)
-	   (letₓ ((aₓ (valueₓ (carₓ argsₓ) bindingsₓ)))
-	     (displayₓ aₓ)))
+;; 	  ((string=? "display" func)
+;; 	   (let ((a (value (car args) bindings)))
+;; 	     (display a)))
 	  
-	  ((string=?ₓ "newlineₓ" funcₓ)
-	   (newlineₓ))
+;; 	  ((string=? "newline" func)
+;; 	   (newline))
 	  
-	  (elseₓ (errorₓ "call-foreignₓ calledₓ withₓ unknownₓ operatorₓ" funcₓ)))))
+;; 	  (else (error "call-foreign called with unknown operator" func)))))
 
 
-; 9-slide PROVE
-(clear_resultₓ)
-(newlineₓ)  
-(newlineₓ)  
-(prove6ₓ '() goalsₓ dbₓ emptyₓ 1ₓ '() dbₓ)
-(display_resultₓ)
-(newlineₓ)  
-(newlineₓ)
+;; ; 9-slide PROVE
+;; (clear_result)
+;; (newline)  
+;; (newline)  
+;; (prove6 '() goals db empty 1 '() db)
+;; (display_result)
+;; (newline)  
+ (newlineₓ)
+
 

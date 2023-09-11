@@ -44,7 +44,7 @@ cp gen.prolog.js out.js
 
 m4 <retval.ohm.m4 >gen.retval.ohm
 m4 <retval.rwr.m4 >gen.retval.rwr
-../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.retval.rwr >gen.retval.sem.js
+../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.retval.rwr | cat semsupport.js - >gen.retval.sem.js
 ../ohmjs.js "JSRetVal" gen.retval.ohm gen.retval.sem.js <out.js >gen.retval.js
 cp gen.retval.js out.js
 echo 'output in out.js'

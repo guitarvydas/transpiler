@@ -1,3 +1,32 @@
+_ = {
+    retstack: [0],
+    clearret: function () {
+	_.retstack = [0];
+    },
+    rettop: function () {
+	let top = _.retstack.pop ();
+	_.retstack.push (top);
+	return `_${top}`;
+    },
+    retpop: function () {
+	let top = _.retstack.pop ();
+	return `_${top}`;
+    },
+    retprev: function () {
+	let top = _.retstack.pop ();
+	let next = _.retstack.pop ();
+	_.retstack.push (next);
+	_.retstack.push (top);
+	return `_${next}`;
+    },
+    retnew: function () {
+	let top = _.retstack.pop ();
+	_.retstack.push (top);
+	let rnew = top + 1;
+	_.retstack.push (rnew);
+    }
+},
+
 {
 Program: function (fv,main) {
 _ruleEnter ("Program");
@@ -336,6 +365,8 @@ return `${c}`;
 },
 Function: function (kfunction,id,lp,formals,rp,lb,statements,rb) {
 _ruleEnter ("Function");
+var _0 = `${_.clearret ()}`;
+
 kfunction = kfunction.rwr ();
 id = id.rwr ();
 lp = lp.rwr ();
@@ -346,9 +377,55 @@ statements = statements.rwr ();
 rb = rb.rwr ();
 
 _ruleExit ("Function");
-return `${kfunction} ${id} ${lp}${formals}${rp} ${lb}${statements}
+return `${kfunction} ${id} ${lp}${formals}${rp} ${lb}
+let ${_.rettop ()} = undefined;${statements}
+return ${_.rettop ()};
 ${rb}
 `;
+},
+LetStatement: function (klet,id,keq,op,ksemi) {
+_ruleEnter ("LetStatement");
+var _0 = `${_.clearret ()}`;
+
+klet = klet.rwr ();
+id = id.rwr ();
+keq = keq.rwr ();
+op = op.rwr ();
+ksemi = ksemi.rwr ();
+
+_ruleExit ("LetStatement");
+return `
+${klet} ${id} ${keq} ${op}${ksemi}`;
+},
+IfStatement: function (kif,lp,op,rp,lb,s,rb,elsif,els) {
+_ruleEnter ("IfStatement");
+var _0 = `${_.retnew ()}`;
+
+kif = kif.rwr ();
+lp = lp.rwr ();
+op = op.rwr ();
+rp = rp.rwr ();
+lb = lb.rwr ();
+s = s.rwr ();
+rb = rb.rwr ();
+elsif = elsif.rwr ().join ('');
+els = els.rwr ().join ('');
+
+_ruleExit ("IfStatement");
+return `
+${_.rettop ()} = undefined;
+${kif} ${lp}${op}${rp}${lb}${s}
+${rb}${elsif}${els}
+${_.retprev ()} = ${_.retpop ()};`;
+},
+OperationStatement: function (op,ksemi) {
+_ruleEnter ("OperationStatement");
+op = op.rwr ();
+ksemi = ksemi.rwr ();
+
+_ruleExit ("OperationStatement");
+return `
+${_.rettop ()} = ${op}${ksemi}`;
 },
 
     _terminal: function () { return this.sourceString; },
