@@ -1,28 +1,20 @@
-function isForeign (expr) {
-    (isPair(expr)) && (isString(car(expr))) && ("@" == car(expr));
+function value (p, q) {
+let _0 = undefined;
+let A = B;
+_1 = undefined;
+if (X){
+_2 = undefined;
+if (P){
+_2 = Q;
+} else {
+_2 = R;
 }
-function call_foreign (expr, bindings) {
-    let func = cadr(expr);
-    let args = cddr(expr);
-    if ("unity" == func){
-	car(args);
-    } else if ("add" == func){
-	let resolved_args = resolveArgs(args, bindings);
-	car(resolved_args) + cadr(resolved_args);
-    } else if ("display" == func){
-	let a = value(car(args), bindings);
-	display(a);
-    } else if ("newline" == func){
-	newline();
-    } else {
-	error("call_foreign&nbsp;called&nbsp;with&nbsp;unknown&nbsp;operator", func);
-    }
+_1 = _2;
+} else {
+_1 = Z;
+}
+_0 = _1;
+return _0;
 }
 
-clear_result();
-newline();
-newline();
-prove6(constant_nil(), goals, db, empty, 1, constant_nil(), db);
-display_result();
-newline();
-newline();
+_0 = newline();
