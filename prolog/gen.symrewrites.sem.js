@@ -92,6 +92,13 @@ k = k.rwr ();
 _ruleExit ("Symbol_isPair");
 return `isPairₓ`;
 },
+Symbol_isString: function (k) {
+_ruleEnter ("Symbol_isString");
+k = k.rwr ();
+
+_ruleExit ("Symbol_isString");
+return `isStringₓ`;
+},
 Symbol_rBang: function (k) {
 _ruleEnter ("Symbol_rBang");
 k = k.rwr ();

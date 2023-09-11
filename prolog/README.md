@@ -1,6 +1,5 @@
 TODO:
-- function isForeign returns boolean AND
-- Program == Defines Main
+- RetVal
 
 
 character rewrites:

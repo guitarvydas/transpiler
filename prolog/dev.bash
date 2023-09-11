@@ -1,6 +1,6 @@
 #!/bin/bash
-#SRC=test.scm
-SRC=prolog.scm
+SRC=test.scm
+#SRC=prolog.scm
 ../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >gen.prolog.vc
 
 m4 <unquote.ohm.m4 >gen.unquote.ohm
@@ -35,6 +35,12 @@ m4 <listrewrites.rwr.m4 >gen.listrewrites.rwr
 
 ./cleanup.js <gen.prolog.listrewrites.js >gen.prolog.js
 cp gen.prolog.js out.js
+
+m4 <retval.ohm.m4 >gen.retval.ohm
+m4 <retval.rwr.m4 >gen.retval.rwr
+../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.retval.rwr >gen.retval.sem.js
+../ohmjs.js "JSRetVal" gen.retval.ohm gen.retval.sem.js <gen.prolog.js >gen.retval.js
+cp gen.retval.js out.js
 echo 'output in out.js'
 
 
