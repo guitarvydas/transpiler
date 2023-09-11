@@ -17,7 +17,7 @@ displayₓ ( aₓ,);
 } else if ("newlineₓ" == funcₓ) {
 newlineₓ ();
 } else {
-errorₓ ( "call_foreignₓ calledₓ withₓ unknownₓ operatorₓ", funcₓ,);
+errorₓ ( "call_foreignₓ&nbsp;calledₓ&nbsp;withₓ&nbsp;unknownₓ&nbsp;operatorₓ", funcₓ,);
 }
 
 }

@@ -2,11 +2,16 @@
 SRC=test.scm
 #SRC=prolog.scm
 ../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >gen.prolog.vc
+cp gen.prolog.vc out.txt
+
+../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <escapes.rwr >gen.escapes.sem.js
+../ohmjs.js "Escapes" escapes.ohm gen.escapes.sem.js <out.txt >gen.escapes.txt
+cp gen.escapes.txt out.txt
 
 m4 <unquote.ohm.m4 >gen.unquote.ohm
 m4 <unquote.rwr.m4 >gen.unquote.rwr
 ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.unquote.rwr >gen.unquote.sem.js
-../ohmjs.js "Unquote" gen.unquote.ohm gen.unquote.sem.js <gen.prolog.vc >gen.prolog.unquote
+../ohmjs.js "Unquote" gen.unquote.ohm gen.unquote.sem.js <out.txt >gen.prolog.unquote
 
 m4 <constants.ohm.m4 >gen.constants.ohm
 m4 <constants.rwr.m4 >gen.constants.rwr
@@ -32,14 +37,15 @@ m4 <listrewrites.ohm.m4 >gen.listrewrites.ohm
 m4 <listrewrites.rwr.m4 >gen.listrewrites.rwr
 ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.listrewrites.rwr >gen.listrewrites.sem.js
 ../ohmjs.js "ListRewrites" gen.listrewrites.ohm gen.listrewrites.sem.js <gen.prolog.symrewrites.js >gen.prolog.listrewrites.js
+cp gen.prolog.listrewrites.js out.js
 
-./cleanup.js <gen.prolog.listrewrites.js >gen.prolog.js
+./cleanup.js <out.js >gen.prolog.js
 cp gen.prolog.js out.js
 
 m4 <retval.ohm.m4 >gen.retval.ohm
 m4 <retval.rwr.m4 >gen.retval.rwr
 ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.retval.rwr >gen.retval.sem.js
-../ohmjs.js "JSRetVal" gen.retval.ohm gen.retval.sem.js <gen.prolog.js >gen.retval.js
+../ohmjs.js "JSRetVal" gen.retval.ohm gen.retval.sem.js <out.js >gen.retval.js
 cp gen.retval.js out.js
 echo 'output in out.js'
 

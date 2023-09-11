@@ -1,0 +1,59 @@
+;;&nbsp;(define&nbsp;(value&nbsp;p&nbsp;q)
+;;&nbsp;&nbsp;&nbsp;(let&nbsp;((A&nbsp;B))
+;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;X
+;;&nbsp;&#9;Y
+;;&nbsp;&#9;Z)))
+
+;;&nbsp;(define&nbsp;(value&nbsp;x&nbsp;e)
+;;&nbsp;&nbsp;&nbsp;(cond&nbsp;((foreign?&nbsp;x)
+;;&nbsp;&#9;&nbsp;(call-foreign&nbsp;x&nbsp;e))
+;;&nbsp;&#9;((var?&nbsp;x)
+;;&nbsp;&#9;&nbsp;(let&nbsp;((v&nbsp;(lookup&nbsp;x&nbsp;e)))
+;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;v
+;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(value&nbsp;(cadr&nbsp;v)&nbsp;e)
+;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x)))
+;;&nbsp;&#9;(else&nbsp;x)))
+
+
+;;&nbsp;(define&nbsp;(append3&nbsp;list1&nbsp;list2&nbsp;list3)
+;;&nbsp;&nbsp;&nbsp;(append2&nbsp;list1&nbsp;(append2&nbsp;list2&nbsp;list3)))
+
+;;&nbsp;(define&nbsp;result_&nbsp;&39;())
+;;&nbsp;(define&nbsp;(clear_result)&nbsp;(set!&nbsp;result_&nbsp;&39;()))
+
+(defineₓ (foreign?ₓ exprₓ)
+  (andₓ (pair?ₓ exprₓ)
+       (string?ₓ (carₓ exprₓ))
+       (string=?ₓ "@ₓ" (carₓ exprₓ))))
+
+(defineₓ (call-foreignₓ exprₓ bindingsₓ)
+  (letₓ ((funcₓ (cadrₓ exprₓ))
+	(argsₓ (cddrₓ exprₓ)))
+
+    (condₓ ((string=?ₓ "unityₓ" funcₓ)
+	   (carₓ argsₓ))
+
+	  ((string=?ₓ "addₓ" funcₓ)
+	   (letₓ ((resolved-argsₓ (resolveArgsₓ argsₓ bindingsₓ)))
+	     (+ₓ (carₓ resolved-argsₓ) (cadrₓ resolved-argsₓ))))
+
+	  ((string=?ₓ "displayₓ" funcₓ)
+	   (letₓ ((aₓ (valueₓ (carₓ argsₓ) bindingsₓ)))
+	     (displayₓ aₓ)))
+	  
+	  ((string=?ₓ "newlineₓ" funcₓ)
+	   (newlineₓ))
+	  
+	  (elseₓ (errorₓ "call-foreignₓ&nbsp;calledₓ&nbsp;withₓ&nbsp;unknownₓ&nbsp;operatorₓ" funcₓ)))))
+
+
+;&nbsp;9-slide&nbsp;PROVE
+(clear_resultₓ)
+(newlineₓ)  
+(newlineₓ)  
+(prove6ₓ '() goalsₓ dbₓ emptyₓ 1ₓ '() dbₓ)
+(display_resultₓ)
+(newlineₓ)  
+(newlineₓ)
+
+

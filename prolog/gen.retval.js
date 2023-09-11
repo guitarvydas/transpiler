@@ -15,7 +15,7 @@ display(a);
 } else if ("newline" == func){
 newline();
 } else {
-error("call_foreigncalledwithunknownoperator", func);
+error("call_foreign&nbsp;called&nbsp;with&nbsp;unknown&nbsp;operator", func);
 }
 }
 
