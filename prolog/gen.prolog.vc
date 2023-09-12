@@ -1,61 +1,264 @@
-(defineₓ (valueₓ pₓ qₓ)
-  (letₓ ((Aₓ Bₓ))
-    (ifₓ Xₓ
-	(ifₓ Pₓ
-	    Qₓ
-	    Rₓ)
-	Zₓ)))
+;; utility functions
+(defineₓ (firstₓ xₓ) (carₓ xₓ))
+(defineₓ (restₓ xₓ) (cdrₓ xₓ))
 
-;; (define (value x e)
-;;   (cond ((foreign? x)
-;; 	 (call-foreign x e))
-;; 	((var? x)
-;; 	 (let ((v (lookup x e)))
-;;            (if v
-;;                (value (cadr v) e)
-;;                x)))
-;; 	(else x)))
+(defineₓ (append2ₓ list1ₓ list2ₓ)
+  (ifₓ (null?ₓ list1ₓ)
+      list2ₓ
+      (consₓ (carₓ list1ₓ) (append2ₓ (cdrₓ list1ₓ) list2ₓ))))
+
+(defineₓ (append3ₓ list1ₓ list2ₓ list3ₓ)
+  (append2ₓ list1ₓ (append2ₓ list2ₓ list3ₓ)))
+
+(defineₓ result_ₓ '())
+(defineₓ (clear_resultₓ) (set!ₓ result_ₓ '()))
+(defineₓ (append_to_resultₓ lisₓ) (set!ₓ result_ₓ (consₓ lisₓ result_ₓ)))
+(defineₓ (get_resultₓ) result_ₓ)
+(defineₓ (display_resultₓ) (displayₓ (get_resultₓ)))
+
+;;;;
+
+(defineₓ linkₓ listₓ)
+(defineₓ L_lₓ carₓ)
+(defineₓ L_gₓ cadrₓ)
+(defineₓ L_rₓ caddrₓ)
+(defineₓ L_eₓ cadddrₓ)
+(defineₓ (L_nₓ xₓ) (carₓ (cddddrₓ xₓ)))
 
 
-;; (define (append3 list1 list2 list3)
-;;   (append2 list1 (append2 list2 list3)))
+(defineₓ (L_cₓ xₓ) (cadrₓ (cddddrₓ xₓ)))
 
-;; (define result_ '())
-;; (define (clear_result) (set! result_ '()))
 
-;; (define (foreign? expr)
-;;   (and (pair? expr)
-;;        (string? (car expr))
-;;        (string=? "@" (car expr))))
+(defineₓ (clear_rₓ xₓ)
+  (set-car!ₓ (cddrₓ xₓ) '(())))
 
-;; (define (call-foreign expr bindings)
-;;   (let ((func (cadr expr))
-;; 	(args (cddr expr)))
 
-;;     (cond ((string=? "unity" func)
-;; 	   (car args))
+(defineₓ (back6ₓ lₓ gₓ rₓ eₓ nₓ cₓ whole-dbₓ)
+  (condₓ
+    ((andₓ (pair?ₓ gₓ)
+          (pair?ₓ rₓ))
+      (prove6ₓ lₓ gₓ (cdrₓ rₓ) eₓ nₓ cₓ whole-dbₓ))
+    ((pair?ₓ lₓ)
+      (prove6ₓ (L_lₓ lₓ)
+              (L_gₓ lₓ)
+              (cdrₓ (L_rₓ lₓ))
+              (L_eₓ lₓ)
+              (L_nₓ lₓ)
+              (L_cₓ lₓ)
+	      whole-dbₓ))))
 
-;; 	  ((string=? "add" func)
-;; 	   (let ((resolved-args (resolveArgs args bindings)))
-;; 	     (+ (car resolved-args) (cadr resolved-args))))
 
-;; 	  ((string=? "display" func)
-;; 	   (let ((a (value (car args) bindings)))
-;; 	     (display a)))
+;; g == goals
+;; r == rules (factbase)
+(defineₓ (prove6ₓ lₓ gₓ rₓ eₓ nₓ cₓ whole-dbₓ)
+  
+  (condₓ
+    ((null?ₓ gₓ)
+      (letₓ ((next_resultₓ (print-frameₓ eₓ)))
+	(append_to_resultₓ next_resultₓ))
+      (back6ₓ lₓ gₓ rₓ eₓ nₓ cₓ whole-dbₓ))
+    ((eq?ₓ '!ₓ (carₓ gₓ))
+      (clear_rₓ cₓ)
+      (prove6ₓ cₓ (cdrₓ gₓ) rₓ eₓ nₓ cₓ whole-dbₓ))
+    ((eq?ₓ 'r!ₓ (carₓ gₓ))
+      (prove6ₓ lₓ (cddrₓ gₓ) rₓ eₓ nₓ (cadrₓ gₓ) whole-dbₓ))
+    ((null?ₓ rₓ)
+      (ifₓ (null?ₓ lₓ)
+          #tₓ
+          (back6ₓ lₓ gₓ rₓ eₓ nₓ cₓ whole-dbₓ)))
+    ((foreign?ₓ (carₓ gₓ))
+     (call-foreignₓ (carₓ gₓ) eₓ)
+     (prove6ₓ lₓ (cdrₓ gₓ) rₓ eₓ nₓ cₓ whole-dbₓ))
+    ((foreign?ₓ (carₓ rₓ))
+     (call-foreignₓ (carₓ rₓ) eₓ)
+     (prove6ₓ lₓ gₓ (cdrₓ rₓ) eₓ nₓ cₓ whole-dbₓ))
+    (elseₓ
+      (letₓ ((aₓ  (copyₓ (carₓ rₓ) nₓ)))
+        (letₓ ((e*ₓ (unifyₓ (carₓ aₓ) (carₓ gₓ) eₓ)))
+          (ifₓ e*ₓ
+              (prove6ₓ (linkₓ lₓ gₓ rₓ eₓ nₓ cₓ)
+                      (append3ₓ (cdrₓ aₓ) (listₓ (quoteₓ r!ₓ) lₓ)  (cdrₓ gₓ))
+                      whole-dbₓ
+                      e*ₓ
+                      (+ₓ 1ₓ nₓ)
+                      lₓ
+		      whole-dbₓ)
+              (back6ₓ lₓ gₓ rₓ eₓ nₓ cₓ whole-dbₓ))))
+      )))
+
+(defineₓ emptyₓ '((bottomₓ)))
+
+;(define var '?) ; removed for transpilation
+(defineₓ nameₓ cadrₓ)
+(defineₓ timeₓ cddrₓ)
+
+(defineₓ (var?ₓ xₓ)
+  (andₓ (pair?ₓ xₓ)
+       (string?ₓ (carₓ xₓ))
+       (string=?ₓ "?ₓ" (carₓ xₓ))))
+
+;; manually rewritten named let
+(defineₓ (lookup_loopₓ eₓ idₓ tmₓ)
+    (condₓ ((notₓ (pair?ₓ (caarₓ eₓ)))
+	   #fₓ)
+	  ((andₓ (eq?ₓ idₓ (nameₓ (caarₓ eₓ)))
+		(eqv?ₓ tmₓ (timeₓ (caarₓ eₓ))))
+	   (carₓ eₓ))
+	  (elseₓ
+	   (lookup_loopₓ (cdrₓ eₓ) idₓ tmₓ))))
+
+(defineₓ (lookupₓ vₓ eₓ)
+    (letₓ ((idₓ (nameₓ vₓ))
+          (tmₓ  (timeₓ vₓ)))
+      (lookup_loopₓ eₓ idₓ tmₓ)))
+;;; end rewrite
+
+(defineₓ (valueₓ xₓ eₓ)
+  (condₓ ((foreign?ₓ xₓ)
+	 (call-foreignₓ xₓ eₓ))
+	((var?ₓ xₓ)
+	 (letₓ ((vₓ (lookupₓ xₓ eₓ)))
+           (ifₓ vₓ
+               (valueₓ (cadrₓ vₓ) eₓ)
+               xₓ)))
+	(elseₓ xₓ)))
+
+(defineₓ (copyₓ xₓ nₓ)
+  (condₓ
+    ((notₓ (pair?ₓ xₓ)) xₓ)
+    ((var?ₓ xₓ) (append2ₓ xₓ nₓ))
+    (elseₓ
+      (consₓ (copyₓ (carₓ xₓ) nₓ)
+            (copyₓ (cdrₓ xₓ) nₓ)))))
+
+(defineₓ (bindₓ xₓ yₓ eₓ)
+  (consₓ (listₓ xₓ yₓ) eₓ))
+
+(defineₓ (unifyₓ x1ₓ y1ₓ eₓ)
+  (letₓ ((xₓ (valueₓ x1ₓ eₓ))
+        (yₓ (valueₓ y1ₓ eₓ)))
+    (condₓ
+      ((eq?ₓ xₓ yₓ) eₓ)
+      ((var?ₓ xₓ) (bindₓ xₓ yₓ eₓ))
+      ((var?ₓ yₓ) (bindₓ yₓ xₓ eₓ))
+      ((orₓ (notₓ (pair?ₓ xₓ))
+           (notₓ (pair?ₓ yₓ))) #fₓ)
+      (elseₓ
+        (letₓ ((e*ₓ (unifyₓ (carₓ xₓ) (carₓ yₓ) eₓ)))
+          (andₓ e*ₓ (unifyₓ (cdrₓ xₓ) (cdrₓ yₓ) e*ₓ)))))))
+
+
+(defineₓ (resolveₓ xₓ eₓ)
+  (condₓ ((notₓ (pair?ₓ xₓ)) xₓ)
+        ((var?ₓ xₓ)
+          (letₓ ((vₓ (valueₓ xₓ eₓ)))
+            (ifₓ (var?ₓ vₓ)
+                vₓ
+                (resolveₓ vₓ eₓ))))
+        (elseₓ
+          (consₓ
+            (resolveₓ (carₓ xₓ) eₓ)
+            (resolveₓ (cdrₓ xₓ) eₓ)))))
+
+(defineₓ (has_bindings_Q_ₓ eeₓ)
+  (pair?ₓ (cdrₓ eeₓ)))
+
+(defineₓ (get_var_name_from_bindingₓ eeₓ)
+  (cadaarₓ eeₓ))
+
+(defineₓ (get_binding_value_from_bindingₓ eeₓ eₓ)
+  (resolveₓ (caarₓ eeₓ) eₓ))
+
+(defineₓ (no_timestamp_binding_Q_ₓ eeₓ)
+  (null?ₓ (timeₓ (caarₓ eeₓ))))
+
+(defineₓ (get_rest_of_bindingsₓ eeₓ)
+  (cdrₓ eeₓ))
+
+(defineₓ (print_frame_helperₓ eeₓ all_bindingsₓ accumulatorₓ)
+  (condₓ ((has_bindings_Q_ₓ eeₓ)
+	 (letₓ ((var_nameₓ (get_var_name_from_bindingₓ eeₓ))
+	       (binding_valueₓ (get_binding_value_from_bindingₓ eeₓ all_bindingsₓ))
+	       (remaining_bindingsₓ (get_rest_of_bindingsₓ eeₓ)))
+           (condₓ ((no_timestamp_binding_Q_ₓ eeₓ)
+		  (print_frame_helperₓ remaining_bindingsₓ 
+				      all_bindingsₓ 
+				      (consₓ 
+				       (consₓ var_nameₓ binding_valueₓ)
+				       accumulatorₓ)))
+		 (elseₓ 
+		  (print_frame_helperₓ remaining_bindingsₓ 
+				      all_bindingsₓ 
+				      accumulatorₓ)))))
+        (elseₓ accumulatorₓ)))
+
+(defineₓ (print-frameₓ eₓ)
+  (letₓ ((final_resultₓ (print_frame_helperₓ eₓ eₓ '())))
+    final_resultₓ))
+
+
+(defineₓ dbₓ
+  '(
+    ((someₓ 0ₓ))
+    ((someₓ 10ₓ))
+    ((someₓ 20ₓ))
+    ((someₓ 30ₓ))
+    ((eqₓ ("?ₓ" Xₓ) ("?ₓ" Xₓ)))
+    ((neqₓ ("?ₓ" Xₓ) ("?ₓ" Yₓ))
+     (eqₓ ("?ₓ" Xₓ) ("?ₓ" Yₓ)) !ₓ failₓ)
+    ((neqₓ ("?ₓ" Xₓ) ("?ₓ" Yₓ)))
+   ))
+
+(defineₓ goalsₓ '((someₓ ("?ₓ" Xₓ))
+		  (someₓ ("?ₓ" Yₓ))
+		  (neqₓ ("?ₓ" Xₓ) ("?ₓ" Yₓ))
+		  (eqₓ ("?ₓ" Xₓ) ("@ₓ" "addₓ" ("?ₓ" Xₓ) ("?ₓ" Yₓ)))))
+
+
+(defineₓ (resolveArgsₓ aₓ bindingsₓ)
+  (resolveArgsHelperₓ aₓ '() bindingsₓ))
+
+(defineₓ (resolveArgsHelperₓ argsₓ accumulatorₓ bindingsₓ)
+  (condₓ ((null?ₓ argsₓ)
+	 accumulatorₓ)
+	(elseₓ
+	 (resolveArgsHelperₓ (cdrₓ argsₓ) 
+			      (append2ₓ accumulatorₓ
+						 (listₓ (valueₓ (carₓ argsₓ) bindingsₓ)))
+			      bindingsₓ))))
+
+
+(defineₓ (foreign?ₓ exprₓ)
+  (andₓ (pair?ₓ exprₓ)
+       (string?ₓ (carₓ exprₓ))
+       (string=?ₓ "@ₓ" (carₓ exprₓ))))
+
+(defineₓ (call-foreignₓ exprₓ bindingsₓ)
+  (letₓ ((funcₓ (cadrₓ exprₓ))
+	(argsₓ (cddrₓ exprₓ)))
+
+    (condₓ ((string=?ₓ "unityₓ" funcₓ)
+	   (carₓ argsₓ))
+
+	  ((string=?ₓ "addₓ" funcₓ)
+	   (letₓ ((resolved-argsₓ (resolveArgsₓ argsₓ bindingsₓ)))
+	     (+ₓ (carₓ resolved-argsₓ) (cadrₓ resolved-argsₓ))))
+
+	  ((string=?ₓ "displayₓ" funcₓ)
+	   (letₓ ((aₓ (valueₓ (carₓ argsₓ) bindingsₓ)))
+	     (displayₓ aₓ)))
 	  
-;; 	  ((string=? "newline" func)
-;; 	   (newline))
+	  ((string=?ₓ "newlineₓ" funcₓ)
+	   (newlineₓ))
 	  
-;; 	  (else (error "call-foreign called with unknown operator" func)))))
+	  (elseₓ (errorₓ "call-foreignₓ calledₓ withₓ unknownₓ operatorₓ" funcₓ)))))
 
-
-;; ; 9-slide PROVE
-;; (clear_result)
-;; (newline)  
-;; (newline)  
-;; (prove6 '() goals db empty 1 '() db)
-;; (display_result)
-;; (newline)  
- (newlineₓ)
-
+; 9-slide PROVE
+(clear_resultₓ)
+(newlineₓ)  
+(newlineₓ)  
+(prove6ₓ '() goalsₓ dbₓ emptyₓ 1ₓ '() dbₓ)
+(display_resultₓ)
+(newlineₓ)  
+(newlineₓ)
 

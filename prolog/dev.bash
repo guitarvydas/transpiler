@@ -1,6 +1,8 @@
 #!/bin/bash
-SRC=test.scm
-#SRC=prolog.scm
+#SRC=test.scm
+SRC=prolog.scm
+set -x
+
 ../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >gen.prolog.vc
 cp gen.prolog.vc out.txt
 
