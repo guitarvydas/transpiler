@@ -62,7 +62,7 @@ return «_.rettop ()»;
 «rb»
 ’
 
-LetStatement [klet id keq op ksemi] ‛«_.clearret ()»’= ‛\n«klet» «id» «keq» «op»«ksemi»’
+LetStatement [klet id keq op ksemi] = ‛\n«klet» «id» «keq» «op»«ksemi»’
 
 IfStatement [kif lp op rp lb s rb elsif* els?] ‛«_.retnew ()»’ =
 ‛
