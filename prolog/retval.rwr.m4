@@ -2,13 +2,16 @@ JSRetVal {
 include(`js.rwr.inc')
 
 Function [kfunction id lp formals? rp lb statements rb] ‛«_.clearret ()»’= 
-‛«kfunction» «id» «lp»«formals»«rp» «lb»
+‛\n«kfunction» «id» «lp»«formals»«rp» «lb»
 let «_.rettop ()» = undefined;«statements»
 return «_.rettop ()»;
 «rb»
 ’
 
-LetStatement [klet id keq op ksemi] = ‛\n«klet» «id» «keq» «op»«ksemi»’
+LetStatement [klet id keq op ksemi] = ‛
+«klet» «id» «keq» «op»«ksemi»
+«_.rettop ()» = «id»;’
+
 
 IfStatement [kif lp op rp lb s rb elsif* els?] ‛«_.retnew ()»’ =
 ‛
@@ -20,5 +23,5 @@ let «_.rettop ()» = undefined;
 OperationStatement [op ksemi] = ‛
 «_.rettop ()» = «op»«ksemi»’
 
-Main [s] ‛«_.clearret ()»’ = ‛let «_.rettop ()» = undefined;«s»’
+Main [s] ‛«_.clearret ()»’ = ‛\nlet «_.rettop ()» = undefined;«s»’
 }

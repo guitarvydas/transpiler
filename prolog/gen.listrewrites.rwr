@@ -1,4 +1,4 @@
-SymRewrites {
+ListRewrites {
   Program [Sexpr+] = ‛«Sexpr»’
   Sexpr_list [lp Sexpr+ rp] = ‛«lp»«Sexpr»«rp»’
   Sexpr_quoted [q Sexpr] = ‛«q»«Sexpr»’
@@ -24,11 +24,12 @@ SymRewrites {
   OperationSexpr_eq [lp k arg1 arg2 rp] = ‛«arg1» === «arg2»’
   OperationSexpr_add [lp k arg1 arg2 rp] = ‛«arg1» + «arg2»’
   OperationSexpr_and [lp k andarg rp] = ‛«andarg»’
+  OperationSexpr_or [lp k andarg rp] = ‛«andarg»’
 
   ControlFlowSexpr_let [lp k lp2 binding rp2 body rp] = ‛«binding»«body»’
 
   ControlFlowSexpr_if [lp k test thn els rp] = ‛\nif («test») {«thn»\n} else {«els»\n}’
-  
+
   OperationSexpr_not [lp k arg1 rp] = ‛!«arg1»’
 
 
@@ -44,6 +45,9 @@ SymRewrites {
   AndSexpr_rec [sexpr rec] = ‛(«sexpr») && «rec»’
   AndSexpr_bottom [sexpr] = ‛(«sexpr»)’
 
+  OrSexpr_rec [sexpr rec] = ‛(«sexpr») || «rec»’
+  OrSexpr_bottom [sexpr] = ‛(«sexpr»)’
+
   Body [sexpr recursive?] = ‛«sexpr»«recursive»’
   StatementOperationSexpr [x] = ‛\n«x»;’
 
@@ -53,6 +57,9 @@ SymRewrites {
   OperationSexpr_operator [lp operator operand* rp] = ‛«operator» («operand»)’
   Operand [x] = ‛ «x»,’
   
+  LHS [sym] = ‛«sym»’
+  RHS [e] = ‛«e»’
+
   ControlFlowAtom [a] = ‛\n«a»;’
   
   sym [s vcomma?] = ‛«s»«vcomma»’

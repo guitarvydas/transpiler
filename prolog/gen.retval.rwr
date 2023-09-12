@@ -1,9 +1,11 @@
 JSRetVal {
 Program [fv+ main] = ‛«fv»«main»’
 
-Function [kfunction id lp formals? rp lb statements rb] = ‛«kfunction» «id» «lp»«formals»«rp» «lb»«statements»\n«rb»\n’
+Function [kfunction id lp formals? rp lb statements rb] = ‛\n«kfunction» «id» «lp»«formals»«rp» «lb»«statements»\n«rb»\n’
 
-Variable [kvar id keq operations ksemi] = ‛«kvar»«id»«keq»«operations»«ksemi»’
+Variable [kvar id keq operations ksemi] = ‛\n«kvar» «id» «keq» «operations»«ksemi»’
+
+Assignment [id keq operation ksemi] = ‛\n«id» «keq» «operation»«ksemi»’
 
 Main [s] = ‛«s»’
 
@@ -46,6 +48,7 @@ Symbol [id] = ‛«id»’
 InfixOperator_eqv [x] = ‛«x»’
 InfixOperator_eq [x] = ‛«x»’
 InfixOperator_branchingand [x] = ‛«x»’
+InfixOperator_branchingor [x] = ‛«x»’
 InfixOperator_plus [x] = ‛«x»’
 
 UnaryOperator [opr] = ‛«opr»’
@@ -56,13 +59,16 @@ legalCharacterRest [c] = ‛«c»’
 
 
 Function [kfunction id lp formals? rp lb statements rb] ‛«_.clearret ()»’= 
-‛«kfunction» «id» «lp»«formals»«rp» «lb»
+‛\n«kfunction» «id» «lp»«formals»«rp» «lb»
 let «_.rettop ()» = undefined;«statements»
 return «_.rettop ()»;
 «rb»
 ’
 
-LetStatement [klet id keq op ksemi] = ‛\n«klet» «id» «keq» «op»«ksemi»’
+LetStatement [klet id keq op ksemi] = ‛
+«klet» «id» «keq» «op»«ksemi»
+«_.rettop ()» = «id»;’
+
 
 IfStatement [kif lp op rp lb s rb elsif* els?] ‛«_.retnew ()»’ =
 ‛
@@ -74,5 +80,5 @@ let «_.rettop ()» = undefined;
 OperationStatement [op ksemi] = ‛
 «_.rettop ()» = «op»«ksemi»’
 
-Main [s] ‛«_.clearret ()»’ = ‛let «_.rettop ()» = undefined;«s»’
+Main [s] ‛«_.clearret ()»’ = ‛\nlet «_.rettop ()» = undefined;«s»’
 }

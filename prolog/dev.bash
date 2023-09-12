@@ -48,6 +48,17 @@ m4 <retval.rwr.m4 >gen.retval.rwr
 ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.retval.rwr | cat semsupport.js - >gen.retval.sem.js
 ../ohmjs.js "JSRetVal" gen.retval.ohm gen.retval.sem.js <out.js >gen.retval.js
 cp gen.retval.js out.js
+
 echo 'output in out.js'
 
+# m4 <macro.ohm.m4 >gen.macro.ohm
+# m4 <macro.rwr.m4 >gen.macro.rwr
+# ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.macro.rwr | cat semsupport.js - >gen.macro.sem.js
+# ../ohmjs.js "JSMacro" gen.macro.ohm gen.macro.sem.js <out.js >gen.macro.js
+# cp gen.macro.js out.js
+# echo 'output in out.js'
+
+#cat support.js out.js >prolog.js
+
+#echo 'output in prolog.js'
 

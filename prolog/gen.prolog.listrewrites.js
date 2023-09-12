@@ -169,7 +169,7 @@ eₓ;
 bindₓ ( xₓ, yₓ, eₓ,);
 } else if (isVarₓ ( yₓ,)) {
 bindₓ ( yₓ, xₓ, eₓ,);
-} else if (orₓ ( !isPairₓ ( xₓ,), !isPairₓ ( yₓ,),)) {
+} else if ((!isPairₓ ( xₓ,)) || (!isPairₓ ( yₓ,))) {
 falseₓ;
 } else {
 let eStarₓ = unifyₓ ( carₓ ( xₓ,), carₓ ( yₓ,), eₓ,);

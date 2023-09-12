@@ -1,10 +1,12 @@
-(define (value p q)
-  (let ((A B))
-    (if X
-	(if P
-	    Q
-	    R)
-	Z)))
+(define (clear_result) (set! result_ '()))
+
+;; (define (value p q)
+;;   (let ((A B))
+;;     (if X
+;; 	(if P
+;; 	    Q
+;; 	    R)
+;; 	Z)))
 
 ;; (define (value x e)
 ;;   (cond ((foreign? x)

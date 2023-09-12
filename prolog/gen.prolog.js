@@ -169,7 +169,7 @@ e;
 bind (x, y, e);
 } else if (isVar (y)) {
 bind (y, x, e);
-} else if (or (!isPair (x), !isPair (y))) {
+} else if ((!isPair (x)) || (!isPair (y))) {
 false;
 } else {
 let eStar = unify (car (x), car (y), e);

@@ -156,6 +156,16 @@ rp = rp.rwr ();
 _ruleExit ("OperationSexpr_and");
 return `${andarg}`;
 },
+OperationSexpr_or: function (lp,k,andarg,rp) {
+_ruleEnter ("OperationSexpr_or");
+lp = lp.rwr ();
+k = k.rwr ();
+andarg = andarg.rwr ();
+rp = rp.rwr ();
+
+_ruleExit ("OperationSexpr_or");
+return `${andarg}`;
+},
 ControlFlowSexpr_let: function (lp,k,lp2,binding,rp2,body,rp) {
 _ruleEnter ("ControlFlowSexpr_let");
 lp = lp.rwr ();
@@ -276,6 +286,21 @@ sexpr = sexpr.rwr ();
 _ruleExit ("AndSexpr_bottom");
 return `(${sexpr})`;
 },
+OrSexpr_rec: function (sexpr,rec) {
+_ruleEnter ("OrSexpr_rec");
+sexpr = sexpr.rwr ();
+rec = rec.rwr ();
+
+_ruleExit ("OrSexpr_rec");
+return `(${sexpr}) || ${rec}`;
+},
+OrSexpr_bottom: function (sexpr) {
+_ruleEnter ("OrSexpr_bottom");
+sexpr = sexpr.rwr ();
+
+_ruleExit ("OrSexpr_bottom");
+return `(${sexpr})`;
+},
 Body: function (sexpr,recursive) {
 _ruleEnter ("Body");
 sexpr = sexpr.rwr ();
@@ -322,6 +347,20 @@ x = x.rwr ();
 
 _ruleExit ("Operand");
 return ` ${x},`;
+},
+LHS: function (sym) {
+_ruleEnter ("LHS");
+sym = sym.rwr ();
+
+_ruleExit ("LHS");
+return `${sym}`;
+},
+RHS: function (e) {
+_ruleEnter ("RHS");
+e = e.rwr ();
+
+_ruleExit ("RHS");
+return `${e}`;
 },
 ControlFlowAtom: function (a) {
 _ruleEnter ("ControlFlowAtom");

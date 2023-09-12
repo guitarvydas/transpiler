@@ -61,3 +61,7 @@ JS {
   legalCharacterFirst = letter | "_"
   legalCharacterRest = legalCharacterFirst | digit
 }
+
+
+JSMacro <: JS {
+}

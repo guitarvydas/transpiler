@@ -1,8 +1,10 @@
 Program [fv+ main] = ‛«fv»«main»’
 
-Function [kfunction id lp formals? rp lb statements rb] = ‛«kfunction» «id» «lp»«formals»«rp» «lb»«statements»\n«rb»\n’
+Function [kfunction id lp formals? rp lb statements rb] = ‛\n«kfunction» «id» «lp»«formals»«rp» «lb»«statements»\n«rb»\n’
 
-Variable [kvar id keq operations ksemi] = ‛«kvar»«id»«keq»«operations»«ksemi»’
+Variable [kvar id keq operations ksemi] = ‛\n«kvar» «id» «keq» «operations»«ksemi»’
+
+Assignment [id keq operation ksemi] = ‛\n«id» «keq» «operation»«ksemi»’
 
 Main [s] = ‛«s»’
 
@@ -45,6 +47,7 @@ Symbol [id] = ‛«id»’
 InfixOperator_eqv [x] = ‛«x»’
 InfixOperator_eq [x] = ‛«x»’
 InfixOperator_branchingand [x] = ‛«x»’
+InfixOperator_branchingor [x] = ‛«x»’
 InfixOperator_plus [x] = ‛«x»’
 
 UnaryOperator [opr] = ‛«opr»’

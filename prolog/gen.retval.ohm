@@ -1,7 +1,8 @@
 JS {
-  Program = (Function | Variable)+ Main
+  Program = (Function | Variable | Assignment)+ Main
   Function = "function" ID "(" Formals? ")" "{" Statements "}"
   Variable = "var" ID "=" Operation ";"
+  Assignment = ID "=" Operation ";"
   Main = Statements
 
   Formals =
@@ -13,9 +14,9 @@ JS {
     | LetStatement Statements? -- let
     | OperationStatement Statements? -- op
 
-  OperationStatement = Operation ";"
-  LetStatement = "let" ID "=" Operation ";"
   IfStatement = "if" "(" Operation ")" "{" Statements "}" Elsif* Els?
+  LetStatement = "let" ID "=" Operation ";"
+  OperationStatement = Operation ";"
 
   Elsif = "else" "if" "(" Operation ")" "{" Statements "}" Elsif*
   Els = "else" "{" Statements "}"
@@ -50,6 +51,7 @@ JS {
     | "===" -- eqv
     | "==" -- eq
     | "&&" -- branchingand
+    | "||" -- branchingor
     | "+" -- plus
 
   UnaryOperator =

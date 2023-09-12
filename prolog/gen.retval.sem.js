@@ -48,7 +48,8 @@ statements = statements.rwr ();
 rb = rb.rwr ();
 
 _ruleExit ("Function");
-return `${kfunction} ${id} ${lp}${formals}${rp} ${lb}${statements}
+return `
+${kfunction} ${id} ${lp}${formals}${rp} ${lb}${statements}
 ${rb}
 `;
 },
@@ -61,7 +62,19 @@ operations = operations.rwr ();
 ksemi = ksemi.rwr ();
 
 _ruleExit ("Variable");
-return `${kvar}${id}${keq}${operations}${ksemi}`;
+return `
+${kvar} ${id} ${keq} ${operations}${ksemi}`;
+},
+Assignment: function (id,keq,operation,ksemi) {
+_ruleEnter ("Assignment");
+id = id.rwr ();
+keq = keq.rwr ();
+operation = operation.rwr ();
+ksemi = ksemi.rwr ();
+
+_ruleExit ("Assignment");
+return `
+${id} ${keq} ${operation}${ksemi}`;
 },
 Main: function (s) {
 _ruleEnter ("Main");
@@ -327,6 +340,13 @@ x = x.rwr ();
 _ruleExit ("InfixOperator_branchingand");
 return `${x}`;
 },
+InfixOperator_branchingor: function (x) {
+_ruleEnter ("InfixOperator_branchingor");
+x = x.rwr ();
+
+_ruleExit ("InfixOperator_branchingor");
+return `${x}`;
+},
 InfixOperator_plus: function (x) {
 _ruleEnter ("InfixOperator_plus");
 x = x.rwr ();
@@ -377,7 +397,8 @@ statements = statements.rwr ();
 rb = rb.rwr ();
 
 _ruleExit ("Function");
-return `${kfunction} ${id} ${lp}${formals}${rp} ${lb}
+return `
+${kfunction} ${id} ${lp}${formals}${rp} ${lb}
 let ${_.rettop ()} = undefined;${statements}
 return ${_.rettop ()};
 ${rb}
@@ -393,7 +414,8 @@ ksemi = ksemi.rwr ();
 
 _ruleExit ("LetStatement");
 return `
-${klet} ${id} ${keq} ${op}${ksemi}`;
+${klet} ${id} ${keq} ${op}${ksemi}
+${_.rettop ()} = ${id};`;
 },
 IfStatement: function (kif,lp,op,rp,lb,s,rb,elsif,els) {
 _ruleEnter ("IfStatement");
@@ -432,7 +454,8 @@ var _0 = `${_.clearret ()}`;
 s = s.rwr ();
 
 _ruleExit ("Main");
-return `let ${_.rettop ()} = undefined;${s}`;
+return `
+let ${_.rettop ()} = undefined;${s}`;
 },
 
     _terminal: function () { return this.sourceString; },

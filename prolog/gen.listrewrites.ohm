@@ -42,6 +42,7 @@ ListRewrites <: Prolog {
     | "(" sym<"eq?"> Sexpr Sexpr ")" -- eq
     | "(" sym<"+"> Sexpr Sexpr ")" -- add
     | "(" sym<"and"> AndSexpr ")" -- and
+    | "(" sym<"or"> OrSexpr ")" -- or
     | "(" sym<"not"> Sexpr ")" -- not
 
     | "(" Operator Operand* ")" -- operator
@@ -54,6 +55,10 @@ ListRewrites <: Prolog {
 
   AndSexpr = 
     | Sexpr AndSexpr -- rec
+    | Sexpr -- bottom
+  
+  OrSexpr = 
+    | Sexpr OrSexpr -- rec
     | Sexpr -- bottom
   
   Body = StatementSexpr Body?
@@ -72,6 +77,9 @@ ListRewrites <: Prolog {
   Operator = Sexpr
   Operand = Sexpr
   
+  LHS = Symbol
+  RHS = Sexpr
+
   ControlFlowAtom =     
     | string -- string
     | number -- number
