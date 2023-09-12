@@ -1,3 +1,4 @@
+JSMacro {
 Program [fv+ main] = ‛«fv»«main»’
 
 Function [kfunction id lp formals? rp lb statements rb] = ‛\n«kfunction» «id» «lp»«formals»«rp» «lb»«statements»\n«rb»\n’
@@ -57,3 +58,5 @@ UnaryOperator [opr] = ‛«opr»’
 ID [c cs*] = ‛«c»«cs»’
 legalCharacterFirst [c] = ‛«c»’
 legalCharacterRest [c] = ‛«c»’
+
+}

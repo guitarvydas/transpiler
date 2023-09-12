@@ -1,6 +1,7 @@
 #!/bin/bash
-#SRC=test.scm
-SRC=prolog.scm
+SRC=test.scm
+#SRC=prolog.scm
+OUT=out.js
 
 ../ohmjs.js "VirtualComma" virtualcomma.ohm virtualcomma.js <${SRC} >gen.prolog.vc
 cp gen.prolog.vc out.txt
@@ -24,15 +25,19 @@ m4 <constants.rwr.m4 >gen.constants.rwr
 # JS emitter
 ###
 
+echo "** character rewrites"
+
 # character rewrites
 ./characterrewrites.js <gen.prolog.constants >gen.prolog.characterrewrites.js
 
+echo "** symbol rewrites"
 # symbol rewrites
 m4 <symrewrites.ohm.m4 >gen.symrewrites.ohm
 m4 <symrewrites.rwr.m4 >gen.symrewrites.rwr
 ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.symrewrites.rwr >gen.symrewrites.sem.js
 ../ohmjs.js "SymRewrites" gen.symrewrites.ohm gen.symrewrites.sem.js <gen.prolog.characterrewrites.js >gen.prolog.symrewrites.js
 
+echo "** list rewrites"
 # list rewrites
 m4 <listrewrites.ohm.m4 >gen.listrewrites.ohm
 m4 <listrewrites.rwr.m4 >gen.listrewrites.rwr
@@ -40,25 +45,26 @@ m4 <listrewrites.rwr.m4 >gen.listrewrites.rwr
 ../ohmjs.js "ListRewrites" gen.listrewrites.ohm gen.listrewrites.sem.js <gen.prolog.symrewrites.js >gen.prolog.listrewrites.js
 cp gen.prolog.listrewrites.js out.js
 
+echo "** macro rewrites"
+m4 <macro.ohm.m4 >gen.macro.ohm
+m4 <macro.rwr.m4 >gen.macro.rwr
+../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.macro.rwr >gen.macro.sem.js
+../ohmjs.js "JSMacro" gen.macro.ohm gen.macro.sem.js <out.js >gen.macro.js
+cp gen.macro.js ${OUT}
+
+echo "** cleanup"
 ./cleanup.js <out.js >gen.prolog.js
-cp gen.prolog.js out.js
+cp gen.prolog.js ${OUT}
 
-m4 <retval.ohm.m4 >gen.retval.ohm
-m4 <retval.rwr.m4 >gen.retval.rwr
-../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.retval.rwr | cat semsupport.js - >gen.retval.sem.js
-../ohmjs.js "JSRetVal" gen.retval.ohm gen.retval.sem.js <out.js >gen.retval.js
-cp gen.retval.js out.js
-
-echo 'output in out.js'
-
-# m4 <macro.ohm.m4 >gen.macro.ohm
-# m4 <macro.rwr.m4 >gen.macro.rwr
-# ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.macro.rwr | cat semsupport.js - >gen.macro.sem.js
-# ../ohmjs.js "JSMacro" gen.macro.ohm gen.macro.sem.js <out.js >gen.macro.js
-# cp gen.macro.js out.js
-# echo 'output in out.js'
+# m4 <retval.ohm.m4 >gen.retval.ohm
+# m4 <retval.rwr.m4 >gen.retval.rwr
+# ../ohmjs.js "RWR" ../rwr.ohm ../rwr.sem.js <gen.retval.rwr | cat semsupport.js - >gen.retval.sem.js
+# ../ohmjs.js "JSRetVal" gen.retval.ohm gen.retval.sem.js <out.js >gen.retval.js
+# cp gen.retval.js ${OUT}
 
 #cat support.js out.js >prolog.js
 
 #echo 'output in prolog.js'
+
+echo 'output in' ${OUT}
 

@@ -7,7 +7,7 @@ JS {
 
   Formals =
     | ID "," Formals -- nonlastformal
-    | ID -- lastformal
+    | ID ","? -- lastformal
 
   Statements =
     | IfStatement Statements? -- if
@@ -25,8 +25,10 @@ JS {
     | Operation InfixOperator Operation -- infix
     | UnaryOperator Operation -- unary
     | "(" Operation ")" -- parenthesized
-    | ID "(" Args? ")" -- operation
+    | InvokeOperation -- invoke
     | Atom -- atom
+
+  InvokeOperation =  ID "(" Args? ")"
 
   Arg =
     | Operation -- op
@@ -34,7 +36,7 @@ JS {
     
   Args = 
     | Arg "," Args -- list
-    | Arg -- final
+    | Arg ","? -- final
 
   Atom =
     | String -- string
