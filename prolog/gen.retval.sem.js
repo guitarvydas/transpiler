@@ -411,7 +411,7 @@ els = els.rwr ().join ('');
 
 _ruleExit ("IfStatement");
 return `
-${_.rettop ()} = undefined;
+let ${_.rettop ()} = undefined;
 ${kif} ${lp}${op}${rp}${lb}${s}
 ${rb}${elsif}${els}
 ${_.retprev ()} = ${_.retpop ()};`;
@@ -424,6 +424,15 @@ ksemi = ksemi.rwr ();
 _ruleExit ("OperationStatement");
 return `
 ${_.rettop ()} = ${op}${ksemi}`;
+},
+Main: function (s) {
+_ruleEnter ("Main");
+var _0 = `${_.clearret ()}`;
+
+s = s.rwr ();
+
+_ruleExit ("Main");
+return `let ${_.rettop ()} = undefined;${s}`;
 },
 
     _terminal: function () { return this.sourceString; },

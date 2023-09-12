@@ -12,7 +12,7 @@ LetStatement [klet id keq op ksemi] = ‛\n«klet» «id» «keq» «op»«ksemi
 
 IfStatement [kif lp op rp lb s rb elsif* els?] ‛«_.retnew ()»’ =
 ‛
-«_.rettop ()» = undefined;
+let «_.rettop ()» = undefined;
 «kif» «lp»«op»«rp»«lb»«s»
 «rb»«elsif»«els»
 «_.retprev ()» = «_.retpop ()»;’
@@ -20,4 +20,5 @@ IfStatement [kif lp op rp lb s rb elsif* els?] ‛«_.retnew ()»’ =
 OperationStatement [op ksemi] = ‛
 «_.rettop ()» = «op»«ksemi»’
 
+Main [s] ‛«_.clearret ()»’ = ‛let «_.rettop ()» = undefined;«s»’
 }
