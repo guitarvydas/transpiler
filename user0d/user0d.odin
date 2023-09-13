@@ -47,6 +47,15 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/virtualcomma.ohm'", init = leaf.vcohm_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/virtualcomma.js'", init = leaf.vcjs_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "OhmJS", init = leaf.ohmjs_instantiate })
+
+    append(leaves, reg.Leaf_Instantiator { name = "'RWR'", init = leaf.rwr_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'rwr.ohm'", init = leaf.rwrohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'rwr.sem.js'", init = leaf.rwrsemjs_instantiate })
+
+    append(leaves, reg.Leaf_Instantiator { name = "'Escapes'", init = leaf.escapes_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/escapes.ohm'", init = leaf.escapesohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/escapes.rwr'", init = leaf.escapesrwr_instantiate })
+    
 }
 
 

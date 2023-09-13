@@ -1062,3 +1062,70 @@ ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^OhmJS_Instance_Data) {
 	zd.send(eh, "error", emsg)
     }
 }
+
+////
+
+/// RWR rewriter generates semantics from .rwr spec
+
+rwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("vc (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, rwr_proc)
+}
+rwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "RWR")
+}
+rwrohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("rwrohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, rwrohm_proc)
+}
+rwrohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "rwr.ohm")
+}
+rwrsemjs_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("rwrsemjs (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, rwrsemjs_proc)
+}
+rwrsemjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "rwr.sem.js")
+}
+
+///
+escapes_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("escapes (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, escapes_proc)
+}
+escapes_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "Escapes")
+}
+escapesohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("escapesohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, escapesohm_proc)
+}
+escapesohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/escapes.ohm")
+}
+escapesrwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("escapesrwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, escapesrwr_proc)
+}
+escapesrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/escapes.rwr")
+}
