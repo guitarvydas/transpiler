@@ -993,18 +993,6 @@ vcohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     zd.send(eh, "go", "virtualcomma.ohm")
 }
 
-vcohm_instantiate :: proc(name: string) -> ^zd.Eh {
-    @(static) counter := 0
-    counter += 1
-
-    name_with_id := fmt.aprintf("vcohm (ID:%d)", counter)
-    return zd.make_leaf(name_with_id, vcohm_proc)
-}
-
-vcohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    zd.send(eh, "go", "virtualcomma.ohm")
-}
-
 vcjs_instantiate :: proc(name: string) -> ^zd.Eh {
     @(static) counter := 0
     counter += 1
@@ -1034,23 +1022,23 @@ ohmjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 ohmjs_maybe :: proc (eh: ^zd.Eh, inst: ^OhmJS_Instance_Data) {
-    if "" != inst.grammarname && "" != inst.grammar && "" != inst.semantic && "" != inst.input {
+    if "" != inst.grammarname && "" != inst.grammar && "" != inst.semantics && "" != inst.input {
     }
 }
 
 ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^OhmJS_Instance_Data) {
     switch (msg.port) {
     case "grammar name":
-	inst.grammarname := strings.clone (msg.datum.(string))
+	inst.grammarname = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
     case "grammar":
-	inst.grammar := strings.clone (msg.datum.(string))
+	inst.grammar = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
     case "semantics":
-	inst.semantics := strings.clone (msg.datum.(string))
+	inst.semantics = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
     case "input":
-	inst.input := strings.clone (msg.datum.(string))
+	inst.input = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
     }
 }
