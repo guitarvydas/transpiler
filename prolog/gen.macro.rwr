@@ -1,3 +1,4 @@
+JSMacro {
 Program [fv+ main] = ‛«fv»«main»’
 
 Function [kfunction id lp formals? rp lb statements rb] = ‛\n«kfunction» «id» «lp»«formals»«rp» «lb»«statements»\n«rb»\n’
@@ -58,3 +59,7 @@ legalCharacterFirst [c] = ‛«c»’
 legalCharacterRest [c] = ‛«c»’
 
 sym [s vcomma?] = ‛«s»«vcomma»’
+InvokeOperation [x] = ‛«x»’
+InvokeOperation_assign [id lp sym kcomma arg rp] = ‛«id» = «arg»’
+InvokeOperation_other [id lp args? rp] = ‛«id»«lp»«args»«rp»’
+}
