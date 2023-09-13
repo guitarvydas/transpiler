@@ -1,4 +1,4 @@
-package transpiler
+package testpl
 
 import "core:fmt"
 import "core:log"
@@ -24,7 +24,7 @@ main :: proc() {
     }
 
     // load arguments
-    diagram_source_file := slice.get(os.args, 1) or_else "transpiler.drawio"
+    diagram_source_file := slice.get(os.args, 1) or_else "prolog/test.drawio"
     main_container_name := slice.get(os.args, 2) or_else "main"
 
     if !os.exists(diagram_source_file) {
@@ -59,14 +59,11 @@ run :: proc (regstry : reg.Component_Registry, main_container_name : string, dia
         main_container_name,
         diagram_source_file,
     )
-    injectfn (main_container)
+    inject (main_container)
     fmt.println("--- Outputs ---")
     zd.print_output_list(main_container)
 }
 
 inject :: proc (main_container : ^zd.Eh) {
-    main_container.handler(main_container, zd.make_message("grammar", "TEST { main = \"A\" }" ))
-//    main_container.handler(main_container, zd.make_message("semantics", "TEST { main [x] = ‛«x»’ }"))
-//    main_container.handler(main_container, zd.make_message("support", ""))
-    main_container.handler(main_container, zd.make_message("src", "A"))
+    main_container.handler(main_container, zd.make_message("filename", "prolog/test.scm" ))
 }

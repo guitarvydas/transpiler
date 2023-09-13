@@ -40,7 +40,13 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "HardCodedSupport", init = leaf.hard_coded_rwr_support_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "Bang", init = leaf.bang_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "concat", init = leaf.concat_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "ohmjs", init = leaf.ohmjs_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "ohmjs", init = leaf.ohmjs0_instantiate })
+
+    // for prolog
+    append(leaves, reg.Leaf_Instantiator { name = "'VirtualComma'", init = leaf.literalvc_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'virtualcomma.ohm'", init = leaf.vcohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'virtualcomma.js'", init = leaf.vcjs_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "OhmJS", init = leaf.ohmjs_instantiate })
 }
 
 

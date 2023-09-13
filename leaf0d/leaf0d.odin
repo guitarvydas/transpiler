@@ -949,20 +949,108 @@ concat_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^Concat_Instance_Data) {
 }
 
 ////
+ohmjs0_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("ohmjs0 (ID:%d)", counter)
+    return zd.make_leaf (name_with_id, ohmjs0_proc)
+}
+
+ohmjs0_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    switch (msg.port) {
+    case "args":
+	fmt.printf ("ohmjs0 gets grammar: %v\n", msg.datum.(string))
+    case "stdin":
+	fmt.printf ("ohmjs0 gets stdin: %v\n", msg.datum.(string))
+    }
+}
+
+////
+
+vc_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("vc (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, vc_proc)
+}
+
+vc_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "go", "VirtualComma")
+}
+
+
+vcohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("vcohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, vcohm_proc)
+}
+
+vcohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "go", "virtualcomma.ohm")
+}
+
+vcohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("vcohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, vcohm_proc)
+}
+
+vcohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "go", "virtualcomma.ohm")
+}
+
+vcjs_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("vcjs (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, vcjs_proc)
+}
+
+vcjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "go", "virtualcomma.js")
+}
+
+OhmJS_Instance_Data :: struct {
+    grammarname : string, // grammar name
+    grammar : string, // grammar in ohm-js format
+    semantics : string, // soruce text of semantics support code JavaScript namespace
+    input : string, // source file to be parsed
+}
+
 ohmjs_instantiate :: proc(name: string) -> ^zd.Eh {
     @(static) counter := 0
     counter += 1
 
-    name_with_id := fmt.aprintf("ohmjs (ID:%d)", counter)
-    return zd.make_leaf (name_with_id, ohmjs_proc)
+    name_with_id := fmt.aprintf("OhmJS (ID:%d)", counter)
+    inst := new (OhmJS_Instance_Data) // all fields have zero value before any messages are received
+    return zd.make_leaf_with_data (name_with_id, inst, ohmjs_proc)
 }
 
-ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    switch (msg.port) {
-    case "args":
-	fmt.printf ("ohmjs gets grammar: %v\n", msg.datum.(string))
-    case "stdin":
-	fmt.printf ("ohmjs gets stdin: %v\n", msg.datum.(string))
+ohmjs_maybe :: proc (eh: ^zd.Eh, inst: ^OhmJS_Instance_Data) {
+    if "" != inst.grammarname && "" != inst.grammar && "" != inst.semantic && "" != inst.input {
     }
 }
 
+ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^OhmJS_Instance_Data) {
+    switch (msg.port) {
+    case "grammar name":
+	inst.grammarname := strings.clone (msg.datum.(string))
+	ohmjs_maybe (eh, inst)
+    case "grammar":
+	inst.grammar := strings.clone (msg.datum.(string))
+	ohmjs_maybe (eh, inst)
+    case "semantics":
+	inst.semantics := strings.clone (msg.datum.(string))
+	ohmjs_maybe (eh, inst)
+    case "input":
+	inst.input := strings.clone (msg.datum.(string))
+	ohmjs_maybe (eh, inst)
+    }
+}
