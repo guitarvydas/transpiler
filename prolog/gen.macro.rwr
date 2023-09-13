@@ -10,7 +10,7 @@ Assignment [id keq operation ksemi] = ‛\n«id» «keq» «operation»«ksemi»
 Main [s] = ‛«s»’
 
 Formals_nonlastformal [id kcomma more] = ‛«id»«kcomma» «more»’
-Formals_lastformal [id kcomma?] = ‛«id»’
+Formals_lastformal [id kcomma] = ‛«id»’
 
 Statements_if [s more?] = ‛«s»«more»’
 Statements_let [s more?] = ‛«s»«more»’
@@ -31,11 +31,10 @@ Operation_atom [a] = ‛«a»’
 
 InvokeOperation [id lp args? rp] = ‛«id»«lp»«args»«rp»’
 
-Arg_op [op] = ‛«op»’
-Arg_op [a] = ‛«a»’
+Args [a+] = ‛«a»’
 
-Args_list [a1 kcomma more] = ‛«a1»«kcomma» «more»’
-Args_final [a kcomma?] = ‛«a»’
+Arg_op [op acomma] = ‛«op»«acomma»’
+Arg_atom [a acomma] = ‛«a»«acomma»’
 
 Atom_string [x] = ‛«x»’
 Atom_number [x] = ‛«x»’
@@ -59,4 +58,8 @@ ID [c cs*] = ‛«c»«cs»’
 legalCharacterFirst [c] = ‛«c»’
 legalCharacterRest [c] = ‛«c»’
 
+sym [s vcomma?] = ‛«s»«vcomma»’
+InvokeOperation [x] = ‛«x»’
+InvokeOperation_assign [id lp sym kcomma arg rp] = ‛«id» = «arg»’
+InvokeOperation_other [id lp args? rp] = ‛«id»«lp»«args»«rp»’
 }

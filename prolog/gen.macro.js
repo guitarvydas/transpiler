@@ -1,6 +1,6 @@
 
 function clear_resultₓ () {
-mutateₓ(result_ₓ, constant_nilₓ());
+mutateₓ = constant_nilₓ()†;
 }
 
 newlineₓ();

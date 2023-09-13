@@ -329,7 +329,7 @@ _ruleEnter ("Formal");
 sym = sym.rwr ();
 
 _ruleExit ("Formal");
-return ` ${sym},`;
+return ` ${sym}‡`;
 },
 OperationSexpr_operator: function (lp,operator,operand,rp) {
 _ruleEnter ("OperationSexpr_operator");
@@ -346,7 +346,7 @@ _ruleEnter ("Operand");
 x = x.rwr ();
 
 _ruleExit ("Operand");
-return ` ${x},`;
+return ` ${x}†`;
 },
 LHS: function (sym) {
 _ruleEnter ("LHS");

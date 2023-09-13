@@ -39,10 +39,10 @@ include(`prolog.rwr.inc')
   StatementOperationSexpr [x] = ‛\n«x»;’
 
   Formals [f*] = ‛«f»’
-  Formal [sym] = ‛ «sym»,’
+  Formal [sym] = ‛ «sym»‡’
   
   OperationSexpr_operator [lp operator operand* rp] = ‛«operator» («operand»)’
-  Operand [x] = ‛ «x»,’
+  Operand [x] = ‛ «x»†’
   
   LHS [sym] = ‛«sym»’
   RHS [e] = ‛«e»’

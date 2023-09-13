@@ -66,7 +66,7 @@ return `${id}${kcomma} ${more}`;
 Formals_lastformal: function (id,kcomma) {
 _ruleEnter ("Formals_lastformal");
 id = id.rwr ();
-kcomma = kcomma.rwr ().join ('');
+kcomma = kcomma.rwr ();
 
 _ruleExit ("Formals_lastformal");
 return `${id}`;
@@ -210,36 +210,28 @@ rp = rp.rwr ();
 _ruleExit ("InvokeOperation");
 return `${id}${lp}${args}${rp}`;
 },
-Arg_op: function (op) {
+Args: function (a) {
+_ruleEnter ("Args");
+a = a.rwr ().join ('');
+
+_ruleExit ("Args");
+return `${a}`;
+},
+Arg_op: function (op,acomma) {
 _ruleEnter ("Arg_op");
 op = op.rwr ();
+acomma = acomma.rwr ();
 
 _ruleExit ("Arg_op");
-return `${op}`;
+return `${op}${acomma}`;
 },
-Arg_op: function (a) {
-_ruleEnter ("Arg_op");
+Arg_atom: function (a,acomma) {
+_ruleEnter ("Arg_atom");
 a = a.rwr ();
+acomma = acomma.rwr ();
 
-_ruleExit ("Arg_op");
-return `${a}`;
-},
-Args_list: function (a1,kcomma,more) {
-_ruleEnter ("Args_list");
-a1 = a1.rwr ();
-kcomma = kcomma.rwr ();
-more = more.rwr ();
-
-_ruleExit ("Args_list");
-return `${a1}${kcomma} ${more}`;
-},
-Args_final: function (a,kcomma) {
-_ruleEnter ("Args_final");
-a = a.rwr ();
-kcomma = kcomma.rwr ().join ('');
-
-_ruleExit ("Args_final");
-return `${a}`;
+_ruleExit ("Arg_atom");
+return `${a}${acomma}`;
 },
 Atom_string: function (x) {
 _ruleEnter ("Atom_string");
@@ -362,6 +354,43 @@ c = c.rwr ();
 
 _ruleExit ("legalCharacterRest");
 return `${c}`;
+},
+sym: function (s,vcomma) {
+_ruleEnter ("sym");
+s = s.rwr ();
+vcomma = vcomma.rwr ().join ('');
+
+_ruleExit ("sym");
+return `${s}${vcomma}`;
+},
+InvokeOperation: function (x) {
+_ruleEnter ("InvokeOperation");
+x = x.rwr ();
+
+_ruleExit ("InvokeOperation");
+return `${x}`;
+},
+InvokeOperation_assign: function (id,lp,sym,kcomma,arg,rp) {
+_ruleEnter ("InvokeOperation_assign");
+id = id.rwr ();
+lp = lp.rwr ();
+sym = sym.rwr ();
+kcomma = kcomma.rwr ();
+arg = arg.rwr ();
+rp = rp.rwr ();
+
+_ruleExit ("InvokeOperation_assign");
+return `${id} = ${arg}`;
+},
+InvokeOperation_other: function (id,lp,args,rp) {
+_ruleEnter ("InvokeOperation_other");
+id = id.rwr ();
+lp = lp.rwr ();
+args = args.rwr ().join ('');
+rp = rp.rwr ();
+
+_ruleExit ("InvokeOperation_other");
+return `${id}${lp}${args}${rp}`;
 },
 
     _terminal: function () { return this.sourceString; },

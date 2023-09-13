@@ -8,6 +8,8 @@ function rewrites(inputString) {
 	.replace(/,\)/g,')')
 	.replace(/\( /g,'(')
 	.replace(/ₓ/g,'')
+	.replace(/‡/g,',')
+	.replace(/†/g,',')
     ;
     return r;
 }

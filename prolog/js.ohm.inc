@@ -6,8 +6,8 @@ JS {
   Main = Statements
 
   Formals =
-    | ID "," Formals -- nonlastformal
-    | ID ","? -- lastformal
+    | ID FComma Formals -- nonlastformal
+    | ID FComma -- lastformal
 
   Statements =
     | IfStatement Statements? -- if
@@ -30,14 +30,12 @@ JS {
 
   InvokeOperation =  ID "(" Args? ")"
 
+  Args = Arg+
+  
   Arg =
-    | Operation -- op
-    | Atom -- atom
+    | Operation AComma -- op
+    | Atom AComma -- atom
     
-  Args = 
-    | Arg "," Args -- list
-    | Arg ","? -- final
-
   Atom =
     | String -- string
     | Number -- number
@@ -62,4 +60,11 @@ JS {
   ID = legalCharacterFirst legalCharacterRest*
   legalCharacterFirst = letter | "_"
   legalCharacterRest = legalCharacterFirst | digit
+
+  vcomma = "ₓ"
+  sym<s> = s vcomma?
+
+  FComma = "‡"
+  AComma = "†"
+
 }

@@ -1,6 +1,6 @@
 
 function clear_result () {
-mutate(result_, constant_nil());
+mutate = constant_nil(),;
 }
 
 newline();
