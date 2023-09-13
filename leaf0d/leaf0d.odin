@@ -977,7 +977,7 @@ vc_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vc_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    zd.send(eh, "go", "VirtualComma")
+    zd.send(eh, "output", "VirtualComma")
 }
 
 
@@ -990,7 +990,7 @@ vcohm_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vcohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    zd.send(eh, "go", "virtualcomma.ohm")
+    zd.send(eh, "output", "virtualcomma.ohm")
 }
 
 vcjs_instantiate :: proc(name: string) -> ^zd.Eh {
@@ -1002,7 +1002,7 @@ vcjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vcjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    zd.send(eh, "go", "virtualcomma.js")
+    zd.send(eh, "output", "virtualcomma.js")
 }
 
 OhmJS_Instance_Data :: struct {
