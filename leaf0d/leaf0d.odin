@@ -345,6 +345,18 @@ probe_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     fmt.println (eh.name, msg.datum)
 }
 
+trash_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("trash%d", counter)
+    return zd.make_leaf(name_with_id, trash_proc)
+}
+
+trash_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    // to appease dumped-on-floor checker
+}
+
 literalvsh_instantiate :: proc(name: string) -> ^zd.Eh {
     @(static) counter := 0
     counter += 1
@@ -1151,13 +1163,13 @@ syncfilewrite2_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^Syncfilewrite_Da
     switch msg.port {
     case "filename":
 	inst.filename = msg.datum.(string)
-	zd.send (eh, "done", true)
     case "input":
 	contents := msg.datum.(string)
 	ok := os.write_entire_file (inst.filename, transmute([]u8)contents, true)
 	if !ok {
 	    zd.send (eh, "error", "write error")
 	}
+	zd.send (eh, "done", true)
     }
 }
 

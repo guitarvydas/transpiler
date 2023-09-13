@@ -13,6 +13,7 @@ start_logger :: proc () -> bool {
 components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "1then2", init = leaf.deracer_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "?", init = leaf.probe_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "trash", init = leaf.trash_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "stringconcat", init = leaf.stringconcat_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "panic", init = leaf.panic_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "command", init = leaf.command_instantiate })
