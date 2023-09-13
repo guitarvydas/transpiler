@@ -1129,3 +1129,50 @@ escapesrwr_instantiate :: proc(name: string) -> ^zd.Eh {
 escapesrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     zd.send(eh, "output", "prolog/escapes.rwr")
 }
+
+//
+
+/* Syncfilewrite_Data :: struct { */
+/*     filename : string */
+/* } */
+
+// temp copy for bootstrap, sends "done" (error during bootstrap if not wired)
+
+syncfilewrite2_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("syncfilewrite2 (ID:%d)", counter)
+    inst := new (Syncfilewrite_Data)
+    return zd.make_leaf(name_with_id, inst, syncfilewrite2_proc)
+}
+
+syncfilewrite2_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^Syncfilewrite_Data) {
+    switch msg.port {
+    case "filename":
+	inst.filename = msg.datum.(string)
+	zd.send (eh, "done", true)
+    case "input":
+	contents := msg.datum.(string)
+	ok := os.write_entire_file (inst.filename, transmute([]u8)contents, true)
+	if !ok {
+	    zd.send (eh, "error", "write error")
+	}
+    }
+}
+
+fakepipename_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("fakepipename (ID:%d)", counter)
+    inst := new (Syncfilewrite_Data)
+    return zd.make_leaf(name_with_id, inst, fakepipename_proc)
+}
+
+fakepipename_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^Syncfilewrite_Data) {
+    @(static) rand := 0
+    rand += 1
+    zd.send (eh, "output", fmt.aprintf ("/tmp/fakepipename%d", rand))
+}
+

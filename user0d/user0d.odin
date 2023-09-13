@@ -20,7 +20,6 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "Read Text File", init = leaf.read_text_file_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "Read Text From FD", init = leaf.read_text_from_fd_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "Open Text File", init = leaf.open_text_file_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "Transpiler", init = leaf.transpiler_instantiate })
 
     append(leaves, reg.Leaf_Instantiator { name = "suffix", init = leaf.suffix_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "syncfilewrite", init = leaf.syncfilewrite_instantiate })
@@ -55,6 +54,9 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "'Escapes'", init = leaf.escapes_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/escapes.ohm'", init = leaf.escapesohm_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/escapes.rwr'", init = leaf.escapesrwr_instantiate })
+    
+    append(leaves, reg.Leaf_Instantiator { name = "fakepipename", init = leaf.fakepipename_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "syncfilewrite2", init = leaf.syncfilewrite2_instantiate })
     
 }
 
