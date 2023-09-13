@@ -977,6 +977,7 @@ vc_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vc_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
     zd.send(eh, "output", "VirtualComma")
 }
 
@@ -990,7 +991,8 @@ vcohm_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vcohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    zd.send(eh, "output", "virtualcomma.ohm")
+    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
+    zd.send(eh, "output", "prolog/virtualcomma.ohm")
 }
 
 vcjs_instantiate :: proc(name: string) -> ^zd.Eh {
@@ -1002,13 +1004,14 @@ vcjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vcjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    zd.send(eh, "output", "virtualcomma.js")
+    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
+    zd.send(eh, "output", "prolog/virtualcomma.js")
 }
 
 OhmJS_Instance_Data :: struct {
     grammarname : string, // grammar name
-    grammar : string, // grammar in ohm-js format
-    semantics : string, // soruce text of semantics support code JavaScript namespace
+    grammarfilename : string, // file name of grammar in ohm-js format
+    semanticsfilename : string, // file name of source text of semantics support code JavaScript namespace
     input : string, // source file to be parsed
 }
 
@@ -1022,23 +1025,40 @@ ohmjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 ohmjs_maybe :: proc (eh: ^zd.Eh, inst: ^OhmJS_Instance_Data) {
-    if "" != inst.grammarname && "" != inst.grammar && "" != inst.semantics && "" != inst.input {
+    log.debugf("MAYBE %s)", eh.name)
+    if "" != inst.grammarname && "" != inst.grammarfilename && "" != inst.semanticsfilename && "" != inst.input {
+
+        c := "pwd"
+	o, e := process.run_command (c, inst.input)
+
+        cmd := fmt.aprintf ("./ohmjs.js %s %s %s", inst.grammarname, inst.grammarfilename, inst.semanticsfilename)
+	log.debugf("YES %s: %s", eh.name, cmd)
+	captured_output, err := process.run_command (cmd, inst.input)
+	if err == "" {
+            zd.send(eh, "output", captured_output)
+	} else {
+	    zd.send (eh, "error", err)
+	}
     }
 }
 
 ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^OhmJS_Instance_Data) {
+    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
     switch (msg.port) {
     case "grammar name":
 	inst.grammarname = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
     case "grammar":
-	inst.grammar = strings.clone (msg.datum.(string))
+	inst.grammarfilename = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
     case "semantics":
-	inst.semantics = strings.clone (msg.datum.(string))
+	inst.semanticsfilename = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
     case "input":
 	inst.input = strings.clone (msg.datum.(string))
 	ohmjs_maybe (eh, inst)
+     case:
+        emsg := fmt.aprintf("!!! ERROR: OhmJS got an illegal message port %v", msg.port)
+	zd.send(eh, "error", emsg)
     }
 }

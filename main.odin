@@ -16,12 +16,10 @@ import leaf "leaf0d"
 
 main :: proc() {
 
-    if user.start_logger () {
-	fmt.println ("*** starting logger ***")
-	context.logger = log.create_console_logger(
-            opt={.Level, .Time, .Terminal_Color},
-	)
-    }
+    /* fmt.println ("*** starting logger ***") */
+    /* context.logger = log.create_console_logger( */
+    /*     opt={.Level, .Time, .Terminal_Color}, */
+    /* ) */
 
     // load arguments
     diagram_source_file := slice.get(os.args, 1) or_else "prolog/test.drawio"

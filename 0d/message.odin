@@ -54,5 +54,5 @@ destroy_message :: proc(msg: Message) {
 }
 
 destroy_datum :: proc (d: any) {
-    log.errorf("wanted: destroy datum %v, but don't know how yet\n")
+    //log.errorf("TODO: destroy datum %v, but don't know how yet\n", typeid_of (type_of (d)))
 }

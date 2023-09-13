@@ -7,7 +7,7 @@ import zd "../0d"
 import leaf "../leaf0d"
 
 start_logger :: proc () -> bool {
-    return false
+    return true
 }
 
 components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
@@ -44,8 +44,8 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
 
     // for prolog
     append(leaves, reg.Leaf_Instantiator { name = "'VirtualComma'", init = leaf.vc_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'virtualcomma.ohm'", init = leaf.vcohm_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'virtualcomma.js'", init = leaf.vcjs_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/virtualcomma.ohm'", init = leaf.vcohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/virtualcomma.js'", init = leaf.vcjs_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "OhmJS", init = leaf.ohmjs_instantiate })
 }
 
