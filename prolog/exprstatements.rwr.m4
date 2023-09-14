@@ -5,10 +5,10 @@ include(`prolog/prolog.rwr.inc')
   Sexpr [s] = ‛«s»’
   StatementSexpr [s] = ‛«s»’
 
-  DefineSexpr_define [lp k lp2 name formals rp2 body rp] ‛«clearstatementvalue ()»’ = ‛
+  DefineSexpr_define [lp k lp2 name formals rp2 body rp] ‛«_.clearstatementvalue ()»’ = ‛
 (defineₓ («name» «formals») (letₓ ((«statementvaluetop ()» 0ₓ))«body»))
 ’
-  DefineSexpr_definevar [lp k name e rp] ‛«clearstatementvalue ()»’ = ‛(defineₓ («name») «e»)’
+  DefineSexpr_definevar [lp k name e rp] ‛«_.clearstatementvalue ()»’ = ‛(defineₓ («name») «e»)’
 
 
   ControlFlowSexpr_cond [lp k clauses rp] = ‛(condₓ «clauses»)’
