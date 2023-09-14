@@ -1,5 +1,5 @@
 SymRewrites {
-include(`prolog.rwr.inc')
+include(`prolog/prolog.rwr.inc')
 
   Symbol [x] = ‛«x»’
   Symbol_true [k] = ‛trueₓ’

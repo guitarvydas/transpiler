@@ -1254,3 +1254,103 @@ constantsrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     zd.send(eh, "output", "prolog/constants.rwr.m4")
 }
 
+///
+symrewrites_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("symrewrites (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, symrewrites_proc)
+}
+symrewrites_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "SymRewrites")
+}
+symrewritesohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("symrewritesohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, symrewritesohm_proc)
+}
+symrewritesohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/symrewrites.ohm.m4")
+}
+symrewritesrwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("symrewritesrwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, symrewritesrwr_proc)
+}
+symrewritesrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/symrewrites.rwr.m4")
+}
+
+///
+listrewrites_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("listrewrites (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, listrewrites_proc)
+}
+listrewrites_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "ListRewrites")
+}
+listrewritesohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("listrewritesohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, listrewritesohm_proc)
+}
+listrewritesohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/listrewrites.ohm.m4")
+}
+listrewritesrwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("listrewritesrwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, listrewritesrwr_proc)
+}
+listrewritesrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/listrewrites.rwr.m4")
+}
+
+///
+macro_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("macro (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, macro_proc)
+}
+macro_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "JSMacro")
+}
+macroohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("macroohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, macroohm_proc)
+}
+macroohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/macro.ohm.m4")
+}
+macrorwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("macrorwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, macrorwr_proc)
+}
+macrorwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/macro.rwr.m4")
+}
+
+
+
+
+

@@ -1,5 +1,5 @@
 ListRewrites {
-include(`prolog.rwr.inc')
+include(`prolog/prolog.rwr.inc')
 
   Program [defines+ mainbody] = ‛«defines»«mainbody»’
 

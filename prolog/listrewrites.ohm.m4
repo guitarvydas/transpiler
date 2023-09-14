@@ -1,4 +1,4 @@
-include(`prolog.ohm.inc')
+include(`prolog/prolog.ohm.inc')
 
 ListRewrites <: Prolog {
 

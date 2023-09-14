@@ -66,6 +66,19 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "'Constants'", init = leaf.constants_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/constants.ohm.m4'", init = leaf.constantsohm_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/constants.rwr.m4'", init = leaf.constantsrwr_instantiate })
+
+    
+    append(leaves, reg.Leaf_Instantiator { name = "'SymRewrites'", init = leaf.symrewrites_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/symrewrites.ohm.m4'", init = leaf.symrewritesohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/symrewrites.rwr.m4'", init = leaf.symrewritesrwr_instantiate })
+    
+    append(leaves, reg.Leaf_Instantiator { name = "'ListRewrites'", init = leaf.listrewrites_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/listrewrites.ohm.m4'", init = leaf.listrewritesohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/listrewrites.rwr.m4'", init = leaf.listrewritesrwr_instantiate })
+    
+    append(leaves, reg.Leaf_Instantiator { name = "'JSMacro'", init = leaf.macro_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.ohm.m4'", init = leaf.macroohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.rwr.m4'", init = leaf.macrorwr_instantiate })
     
 }
 
