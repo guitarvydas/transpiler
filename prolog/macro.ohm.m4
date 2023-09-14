@@ -5,7 +5,7 @@ JSMacro {
     | any
 
   Macro =
-    | "mutate" vcomma "(" Actual argComma Actual argComma ")" -- assign
+    | "mutate" vcomma "(" Actual argComma Actual argComma ")" ";" -- assign
 
   Actual = actualChar+
   actualChar = ~argComma any
