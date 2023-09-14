@@ -1,6 +1,8 @@
 JSMacro {
-include(`prolog/js.rwr.inc')
-InvokeOperation [x] = ‛«x»’
-InvokeOperation_assign [kmutate lp id kcomma arg rp] = ‛«id» = «arg»’
-InvokeOperation_other [id lp args? rp] = ‛«id»«lp»«args»«rp»’
+  stuff [c+] = ‛«c»’
+  Macro_assign [kmutate kvcomma lp sym kacomma1 a2 kacomma2 rp] = ‛«sym» = «a2»’
+
+  Actual [c+] = ‛«c»’
+  actualChar [c] = ‛«c»’
+  
 }

@@ -1,8 +1,14 @@
-include(`prolog/js.ohm.inc')
+JSMacro {
+  stuff = char+
+  char =
+    | applySyntactic<Macro>
+    | any
 
-JSMacro <: JS {
-  InvokeOperation := 
-    | sym<"mutate"> "(" Symbol AComma Arg ")" -- assign
-    | ID "(" Args? ")" -- other
+  Macro =
+    | "mutate" vcomma "(" Actual argComma Actual argComma ")" -- assign
 
+  Actual = actualChar+
+  actualChar = ~argComma any
+  argComma = "†"
+  vcomma = "ₓ"
 }
