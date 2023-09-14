@@ -6,18 +6,18 @@ _ = {
     statementvaluetop: function () {
 	let top = _.statementvaluestack.pop ();
 	_.statementvaluestack.push (top);
-	return `_${top}`;
+	return `_${top}ₓ`;
     },
     statementvaluepop: function () {
 	let top = _.statementvaluestack.pop ();
-	return `_${top}`;
+	return `_${top}ₓ`;
     },
     statementvalueprev: function () {
 	let top = _.statementvaluestack.pop ();
 	let next = _.statementvaluestack.pop ();
 	_.statementvaluestack.push (next);
 	_.statementvaluestack.push (top);
-	return `_${next}`;
+	return `_${next}ₓ`;
     },
     statementvaluenew: function () {
 	let top = _.statementvaluestack.pop ();

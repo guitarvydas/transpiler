@@ -1,4 +1,4 @@
-ListRewrites {
+ExprStatements {
 include(`prolog/prolog.rwr.inc')
 
   Program [defines+ mainbody] = ‛«defines»«mainbody»’
@@ -6,9 +6,11 @@ include(`prolog/prolog.rwr.inc')
   StatementSexpr [s] = ‛«s»’
 
   DefineSexpr_define [lp k lp2 name formals rp2 body rp] ‛«_.clearstatementvalue ()»’ = ‛
-(defineₓ («name» «formals») (letₓ ((«_.statementvaluetop ()» 0ₓ))«body»))
+(defineₓ («name» «formals») (letₓ ((«_.statementvaluetop ()» 0ₓ))«body»
+(returnₓ «_.statementvaluetop ()»)))
 ’
-  DefineSexpr_definevar [lp k name e rp] ‛«_.clearstatementvalue ()»’ = ‛(defineₓ («name») «e»)’
+  DefineSexpr_definevar [lp k name e rp] ‛«_.clearstatementvalue ()»’ =
+  ‛(defineₓ «name» «e»)(mutateₓ «_.statementvaluetop ()» «name»)’
 
 
   ControlFlowSexpr_cond [lp k clauses rp] = ‛(condₓ «clauses»)’
