@@ -59,6 +59,14 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "fakepipename", init = leaf.fakepipename_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "syncfilewrite2", init = leaf.syncfilewrite2_instantiate })
     
+    append(leaves, reg.Leaf_Instantiator { name = "'Unquote'", init = leaf.unquote_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/unquote.ohm.m4'", init = leaf.unquoteohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/unquote.rwr.m4'", init = leaf.unquoterwr_instantiate })
+
+    append(leaves, reg.Leaf_Instantiator { name = "'Constants'", init = leaf.constants_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/constants.ohm.m4'", init = leaf.constantsohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/constants.rwr.m4'", init = leaf.constantsrwr_instantiate })
+    
 }
 
 

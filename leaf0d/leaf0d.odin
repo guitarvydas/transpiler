@@ -1188,3 +1188,69 @@ fakepipename_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^Syncfilewrite_Data
     zd.send (eh, "output", fmt.aprintf ("/tmp/fakepipename%d", rand))
 }
 
+
+///
+
+///
+unquote_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("unquote (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, unquote_proc)
+}
+unquote_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "Unquote")
+}
+unquoteohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("unquoteohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, unquoteohm_proc)
+}
+unquoteohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/unquote.ohm.m4")
+}
+unquoterwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("unquoterwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, unquoterwr_proc)
+}
+unquoterwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/unquote.rwr.m4")
+}
+///
+constants_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("constants (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, constants_proc)
+}
+constants_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "Constants")
+}
+constantsohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("constantsohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, constantsohm_proc)
+}
+constantsohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/constants.ohm.m4")
+}
+constantsrwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("constantsrwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, constantsrwr_proc)
+}
+constantsrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/constants.rwr.m4")
+}
+
