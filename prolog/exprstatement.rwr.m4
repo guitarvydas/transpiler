@@ -1,4 +1,4 @@
-JSRetVal {
+ExprStatement {
 include(`js.rwr.inc')
 
 Function [kfunction id lp formals? rp lb statements rb] ‛«_.clearret ()»’= 
