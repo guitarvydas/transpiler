@@ -26,7 +26,7 @@ JS {
     | UnaryOperator Operation -- unary
     | "(" Operation ")" -- parenthesized
     | InvokeOperation -- invoke
-    | Atom vcomma? -- atom
+    | Atom -- atom
 
   InvokeOperation =  ID "(" Args? ")"
 
@@ -37,9 +37,9 @@ JS {
     | Atom AComma -- atom
     
   Atom =
-    | String -- string
-    | Number -- number
-    | Symbol -- symbol
+    | String vcomma? -- string
+    | Number vcomma? -- number
+    | Symbol vcomma? -- symbol
 
   String = dq (~dq any)* dq
   dq = "\""

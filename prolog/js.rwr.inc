@@ -26,7 +26,7 @@ Operation_infix [op1 infixop op2] = ‛«op1» «infixop» «op2»’
 Operation_unary [uop op] = ‛«uop»«op»’
 Operation_parenthesized [lp op rp] = ‛«lp»«op»«rp»’
 Operation_invoke [x] = ‛«x»’
-Operation_atom [a vcomma?] = ‛«a»«vcomma»’
+Operation_atom [a] = ‛«a»’
 
 InvokeOperation [id lp args? rp] = ‛«id»«lp»«args»«rp»’
 
@@ -35,9 +35,9 @@ Args [a+] = ‛«a»’
 Arg_op [op acomma] = ‛«op»«acomma»’
 Arg_atom [a acomma] = ‛«a»«acomma»’
 
-Atom_string [x] = ‛«x»’
-Atom_number [x] = ‛«x»’
-Atom_symbol [x] = ‛«x»’
+Atom_string [x vcomma?] = ‛«x»«vcomma»’
+Atom_number [x vcomma?] = ‛«x»«vcomma»’
+Atom_symbol [x vcomma?] = ‛«x»«vcomma»’
 
 String [ldq c* rdq] = ‛«ldq»«c»«rdq»’
 dq [c] = ‛«c»’
