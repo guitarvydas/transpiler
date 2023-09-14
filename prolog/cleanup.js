@@ -6,6 +6,9 @@ const fs = require ('fs');
 function rewrites(inputString) {
     var r = inputString
 	.replace(/,\)/g,')')
+	.replace(/†\)/g,')')
+	.replace(/,;/g,';')
+	.replace(/†;/g,';')
 	.replace(/\( /g,'(')
 	.replace(/ₓ/g,'')
 	.replace(/‡/g,',')
