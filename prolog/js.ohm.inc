@@ -26,7 +26,7 @@ JS {
     | UnaryOperator Operation -- unary
     | "(" Operation ")" -- parenthesized
     | InvokeOperation -- invoke
-    | Atom -- atom
+    | Atom vcomma? -- atom
 
   InvokeOperation =  ID "(" Args? ")"
 

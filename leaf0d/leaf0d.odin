@@ -1350,6 +1350,37 @@ macrorwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     zd.send(eh, "output", "prolog/macro.rwr.m4")
 }
 
+///
+exprstatements_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("exprstatements (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, exprstatements_proc)
+}
+exprstatements_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "ExprStatements")
+}
+exprstatementsohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("exprstatementsohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, exprstatementsohm_proc)
+}
+exprstatementsohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/exprstatements.ohm.m4")
+}
+exprstatementsrwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("exprstatementsrwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, exprstatementsrwr_proc)
+}
+exprstatementsrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/exprstatements.rwr.m4")
+}
 
 
 

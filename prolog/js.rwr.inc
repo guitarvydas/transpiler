@@ -26,7 +26,7 @@ Operation_infix [op1 infixop op2] = ‛«op1» «infixop» «op2»’
 Operation_unary [uop op] = ‛«uop»«op»’
 Operation_parenthesized [lp op rp] = ‛«lp»«op»«rp»’
 Operation_invoke [x] = ‛«x»’
-Operation_atom [a] = ‛«a»’
+Operation_atom [a vcomma?] = ‛«a»«vcomma»’
 
 InvokeOperation [id lp args? rp] = ‛«id»«lp»«args»«rp»’
 

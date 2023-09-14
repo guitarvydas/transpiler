@@ -80,6 +80,10 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.ohm.m4'", init = leaf.macroohm_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.rwr.m4'", init = leaf.macrorwr_instantiate })
     
+    append(leaves, reg.Leaf_Instantiator { name = "'ExprStatements'", init = leaf.exprstatements_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.ohm.m4'", init = leaf.exprstatementsohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.rwr.m4'", init = leaf.exprstatementsrwr_instantiate })
+    
 }
 
 

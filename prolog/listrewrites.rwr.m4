@@ -11,7 +11,7 @@ include(`prolog/prolog.rwr.inc')
   OperationSexpr_eq [lp k arg1 arg2 rp] = ‛«arg1» === «arg2»’
   OperationSexpr_add [lp k arg1 arg2 rp] = ‛«arg1» + «arg2»’
   OperationSexpr_and [lp k andarg rp] = ‛«andarg»’
-  OperationSexpr_or [lp k andarg rp] = ‛«andarg»’
+  OperationSexpr_or [lp k orarg rp] = ‛«orarg»’
 
   ControlFlowSexpr_let [lp k lp2 binding rp2 body rp] = ‛«binding»«body»’
 
