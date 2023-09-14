@@ -1,4 +1,4 @@
-include(`js.ohm.inc')
+include(`prolog/js.ohm.inc')
 
 JSMacro <: JS {
   InvokeOperation := 
