@@ -1405,7 +1405,7 @@ exprstatementssupport_instantiate :: proc(name: string) -> ^zd.Eh {
     return zd.make_leaf(name_with_id, exprstatementssupport_proc)
 }
 exprstatementssupport_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    zd.send(eh, "output", "prolog/exprstatementssupport.m4")
+    zd.send(eh, "output", "prolog/exprstatementssupport.js")
 }
 
 
