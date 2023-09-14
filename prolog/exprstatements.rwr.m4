@@ -1,27 +1,54 @@
-ExprStatements {
-include(`prolog/js.rwr.inc')
+ListRewrites {
+include(`prolog/prolog.rwr.inc')
 
-Function [kfunction id lp formals? rp lb statements rb] ‛«_.clearret ()»’= 
-‛\n«kfunction» «id» «lp»«formals»«rp» «lb»
-let «_.rettop ()» = undefined;«statements»
-return «_.rettop ()»;
-«rb»
+  Program [defines+ mainbody] = ‛«defines»«mainbody»’
+  Sexpr [s] = ‛«s»’
+  StatementSexpr [s] = ‛«s»’
+
+  DefineSexpr_define [lp k lp2 name formals rp2 body rp] ‛«clearstatementvalue ()»’ = ‛
+(defineₓ («name» «formals») (letₓ ((«statementvaluetop ()» 0ₓ))«body»))
 ’
-
-LetStatement [klet id keq op ksemi] = ‛
-«klet» «id» «keq» «op»«ksemi»
-«_.rettop ()» = «id»;’
+  DefineSexpr_definevar [lp k name e rp] ‛«clearstatementvalue ()»’ = ‛(defineₓ («name») «e»)’
 
 
-IfStatement [kif lp op rp lb s rb elsif* els?] ‛«_.retnew ()»’ =
-‛
-let «_.rettop ()» = undefined;
-«kif» «lp»«op»«rp»«lb»«s»
-«rb»«elsif»«els»
-«_.retprev ()» = «_.retpop ()»;’
+  ControlFlowSexpr_cond [lp k clauses rp] = ‛(condₓ «clauses»)’
+  ControlFlowSexpr_let [lp k lp2 binding rp2 body rp] = ‛(letₓ («binding») «body»)’
+  ControlFlowSexpr_if [lp k test thn els rp] = ‛(ifₓ «test») «thn» «els»’
 
-OperationStatement [op ksemi] = ‛
-«_.rettop ()» = «op»«ksemi»’
+  
 
-Main [s] ‛«_.clearret ()»’ = ‛\nlet «_.rettop ()» = undefined;«s»’
+  OperationSexpr [lp operator operand* rp] = ‛(«operator» «operand»)’
+
+  StatementOperationSexpr [s] = ‛«s»’
+  
+  Binding [lp target src rp recursive?] = ‛(«target» «src»)«recursive»’
+  Test [s] = ‛«s»’
+  Then [s] = ‛«s»’
+  Else [s] = ‛«s»’
+
+  Body [sexpr recursive?] = ‛«sexpr»«recursive»’
+  MainBody [b] = ‛«b»’
+
+  CondClauses [lp test body rp more?] = ‛(«test» «body»)«more»’
+  CondTest [e]= ‛«e»’
+  CondConsequent [b] = ‛«b»’
+  RemainingCondClauses_else [lp kels body rp] = ‛(elseₓ «body»)’
+  RemainingCondClauses_more [clause] = ‛«clause»’
+  
+  Formals [f*] = ‛«f»’
+  Formal [sym] = ‛«sym»’
+  
+  Operator [s] = ‛«s»’
+  Operand [s] = ‛«s»’
+  
+  LHS [sym] = ‛«sym»’
+  RHS [e] = ‛«e»’
+
+  ControlFlowAtom_string [a] = ‛«a»’
+  ControlFlowAtom_number [a] = ‛«a»’
+  ControlFlowAtom_symbol [a] = ‛«a»’
+  
+  sym [s vcomma?] = ‛«s»«vcomma»’
+
+
 }
