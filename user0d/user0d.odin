@@ -14,6 +14,7 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "1then2", init = leaf.deracer_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "?", init = leaf.probe_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "trash", init = leaf.trash_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "null tester", init = leaf.nulltester_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "stringconcat", init = leaf.stringconcat_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "panic", init = leaf.panic_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "command", init = leaf.command_instantiate })
@@ -79,6 +80,11 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "'JSMacro'", init = leaf.macro_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.ohm.m4'", init = leaf.macroohm_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.rwr.m4'", init = leaf.macrorwr_instantiate })
+    
+    append(leaves, reg.Leaf_Instantiator { name = "'ExprStatements'", init = leaf.exprstatements_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.ohm.m4'", init = leaf.exprstatementsohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.rwr.m4'", init = leaf.exprstatementsrwr_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatementssupport.js'", init = leaf.exprstatementssupport_instantiate })
     
 }
 

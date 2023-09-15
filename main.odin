@@ -1,4 +1,4 @@
-package testpl
+package transpiler
 
 import "core:fmt"
 import "core:log"

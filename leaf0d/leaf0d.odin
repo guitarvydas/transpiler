@@ -357,6 +357,22 @@ trash_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     // to appease dumped-on-floor checker
 }
 
+nulltester_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("nulltester (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, nulltester_proc)
+}
+
+nulltester_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    if "" == msg.datum.(string) {
+	zd.send(eh, "null", "")
+    } else {
+	zd.send(eh, "str", msg.datum.(string))
+    }
+}
+
 literalvsh_instantiate :: proc(name: string) -> ^zd.Eh {
     @(static) counter := 0
     counter += 1
@@ -1350,6 +1366,47 @@ macrorwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     zd.send(eh, "output", "prolog/macro.rwr.m4")
 }
 
+///
+exprstatements_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("exprstatements (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, exprstatements_proc)
+}
+exprstatements_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "ExprStatements")
+}
+exprstatementsohm_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("exprstatementsohm (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, exprstatementsohm_proc)
+}
+exprstatementsohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/exprstatements.ohm.m4")
+}
+exprstatementsrwr_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("exprstatementsrwr (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, exprstatementsrwr_proc)
+}
+exprstatementsrwr_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/exprstatements.rwr.m4")
+}
+exprstatementssupport_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
+
+    name_with_id := fmt.aprintf("exprstatementssupport (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, exprstatementssupport_proc)
+}
+exprstatementssupport_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", "prolog/exprstatementssupport.js")
+}
 
 
 

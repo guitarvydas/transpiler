@@ -1,5 +1,5 @@
-JSRetVal {
-include(`js.rwr.inc')
+ExprStatements {
+include(`prolog/js.rwr.inc')
 
 Function [kfunction id lp formals? rp lb statements rb] ‛«_.clearret ()»’= 
 ‛\n«kfunction» «id» «lp»«formals»«rp» «lb»

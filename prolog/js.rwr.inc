@@ -35,9 +35,9 @@ Args [a+] = ‛«a»’
 Arg_op [op acomma] = ‛«op»«acomma»’
 Arg_atom [a acomma] = ‛«a»«acomma»’
 
-Atom_string [x] = ‛«x»’
-Atom_number [x] = ‛«x»’
-Atom_symbol [x] = ‛«x»’
+Atom_string [x vcomma?] = ‛«x»«vcomma»’
+Atom_number [x vcomma?] = ‛«x»«vcomma»’
+Atom_symbol [x vcomma?] = ‛«x»«vcomma»’
 
 String [ldq c* rdq] = ‛«ldq»«c»«rdq»’
 dq [c] = ‛«c»’

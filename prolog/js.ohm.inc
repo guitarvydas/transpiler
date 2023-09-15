@@ -37,9 +37,9 @@ JS {
     | Atom AComma -- atom
     
   Atom =
-    | String -- string
-    | Number -- number
-    | Symbol -- symbol
+    | String vcomma? -- string
+    | Number vcomma? -- number
+    | Symbol vcomma? -- symbol
 
   String = dq (~dq any)* dq
   dq = "\""
