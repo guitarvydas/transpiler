@@ -1005,7 +1005,6 @@ vc_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vc_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
     zd.send(eh, "output", "VirtualComma")
 }
 
@@ -1019,7 +1018,6 @@ vcohm_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vcohm_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
     zd.send(eh, "output", "prolog/virtualcomma.ohm")
 }
 
@@ -1032,7 +1030,6 @@ vcjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 vcjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
-    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
     zd.send(eh, "output", "prolog/virtualcomma.js")
 }
 
@@ -1053,14 +1050,12 @@ ohmjs_instantiate :: proc(name: string) -> ^zd.Eh {
 }
 
 ohmjs_maybe :: proc (eh: ^zd.Eh, inst: ^OhmJS_Instance_Data) {
-    log.debugf("MAYBE %s)", eh.name)
     if "" != inst.grammarname && "" != inst.grammarfilename && "" != inst.semanticsfilename && "" != inst.input {
 
         c := "pwd"
 	o, e := process.run_command (c, inst.input)
 
         cmd := fmt.aprintf ("./ohmjs.js %s %s %s", inst.grammarname, inst.grammarfilename, inst.semanticsfilename)
-	log.debugf("YES %s: %s", eh.name, cmd)
 	captured_output, err := process.run_command (cmd, inst.input)
 	if err == "" {
             zd.send(eh, "output", captured_output)
@@ -1071,7 +1066,6 @@ ohmjs_maybe :: proc (eh: ^zd.Eh, inst: ^OhmJS_Instance_Data) {
 }
 
 ohmjs_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^OhmJS_Instance_Data) {
-    log.debugf("HANDLE %s<-(%s)", eh.name, msg.port)
     switch (msg.port) {
     case "grammar name":
 	inst.grammarname = strings.clone (msg.datum.(string))

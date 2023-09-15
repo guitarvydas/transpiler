@@ -100,6 +100,7 @@ send :: proc(eh: ^Eh, port: string, data: $Data) {
     } else {
         msg := make_message(port, data)
     }
+    sendf("SEND 0x%p  %s(%s)", eh, eh.name, msg.port)
     fifo_push(&eh.output, msg)
 }
 
@@ -215,6 +216,18 @@ deposit :: proc(c: Connector, message: Message) {
     fifo_push(c.receiver.queue, new_message)
 }
 
+receivef :: proc(fmt_str: string, args: ..any, location := #caller_location) {
+	log.logf(.Debug,   fmt_str, ..args, location=location)
+}
+
+sendf :: proc(fmt_str: string, args: ..any, location := #caller_location) {
+	log.logf(.Debug,   fmt_str, ..args, location=location)
+}
+
+outputf :: proc(fmt_str: string, args: ..any, location := #caller_location) {
+	log.logf(.Debug,   fmt_str, ..args, location=location)
+}
+
 step_children :: proc(container: ^Eh) {
     container.state = .idle
     for child in container.children {
@@ -230,7 +243,7 @@ step_children :: proc(container: ^Eh) {
         }
 
         if ok {
-            log.debugf("INPUT  0x%p %s/%s(%s)", child, container.name, child.name, msg.port)
+            receivef("HANDLE  0x%p %s/%s(%s)", child, container.name, child.name, msg.port)
             child.handler(child, msg)
             destroy_message(msg)
         }
@@ -241,7 +254,7 @@ step_children :: proc(container: ^Eh) {
 
         for child.output.len > 0 {
             msg, _ = fifo_pop(&child.output)
-            log.debugf("OUTPUT 0x%p %s/%s(%s)", child, container.name, child.name, msg.port)
+            outputf("OUTPUT 0x%p %s/%s(%s)", child, container.name, child.name, msg.port)
             route(container, child, msg)
             destroy_message(msg)
         }
