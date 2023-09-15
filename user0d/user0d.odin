@@ -85,7 +85,9 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.ohm.m4'", init = leaf.exprstatementsohm_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.rwr.m4'", init = leaf.exprstatementsrwr_instantiate })
     append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatementssupport.js'", init = leaf.exprstatementssupport_instantiate })
-    
+
+    append(leaves, reg.Leaf_Instantiator { name = "': '", init = leaf.colonspc_instantiate })
+
 }
 
 
