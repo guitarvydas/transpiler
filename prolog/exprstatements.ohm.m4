@@ -2,7 +2,7 @@ include(`prolog/prolog.ohm.inc')
 
 ExprStatements <: Prolog {
 
-  Program := DefineSexpr+ MainBody
+  Program := DefineSexpr* MainBody
 
   Sexpr += DefineSexpr | ControlFlowSexpr | OperationSexpr
   StatementSexpr = DefineSexpr | ControlFlowSexpr | StatementOperationSexpr | ControlFlowAtom

@@ -417,7 +417,12 @@ stringconcat_proc :: proc(eh: ^zd.Eh, msg: zd.Message, inst: ^StringConcat_Insta
     case "1":
 	inst.buffer = strings.clone (msg.datum.(string))
     case "2":
-	concatenated_string := fmt.aprintf ("%s%s", inst.buffer, msg.datum.(string))
+	s := strings.clone (msg.datum.(string))
+	if 0 == len (inst.buffer) || 0 == len (s) {
+	    fmt.printf ("stringconcat %d %d\n", len (inst.buffer), len (s))
+	    fmt.assertf (false, "TODO: something is wrong, 0 length string passed to stringconcat\n")
+	}
+	concatenated_string := fmt.aprintf ("%s%s", inst.buffer, s)
 	zd.send(eh, "str", concatenated_string)
     case:
         fmt.assertf (false, "bad msg.port for stringconcat: %v\n", msg.port)
