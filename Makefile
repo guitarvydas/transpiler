@@ -13,7 +13,7 @@ abci:
 	./ohmjs.js "ABC" abc/abc.ohm abc/abc.sem.interp.js <abc/abc.abc
 
 dev:
-	rm -f testpl
+	rm -f transpiler
 	odin run . $(ODIN_FLAGS)
 
 devsimple:

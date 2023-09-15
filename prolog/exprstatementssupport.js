@@ -10,7 +10,7 @@ _ = {
     },
     statementvaluepop: function () {
 	let top = _.statementvaluestack.pop ();
-	return `_${top}ₓ`;
+	return '';
     },
     statementvalueprev: function () {
 	let top = _.statementvaluestack.pop ();

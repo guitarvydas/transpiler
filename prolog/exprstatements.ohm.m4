@@ -26,7 +26,7 @@ ExprStatements <: Prolog {
   Else = StatementSexpr
 
   Body = StatementSexpr Body?
-  MainBody = Body
+  MainBody (Main Body) = Body
   
   CondClauses = "(" CondTest CondConsequent ")" RemainingCondClauses?
   CondTest = Sexpr
