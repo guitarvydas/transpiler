@@ -1402,6 +1402,15 @@ exprstatementssupport_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
     zd.send(eh, "output", "prolog/exprstatementssupport.js")
 }
 
+///
 
+colonspc_instantiate :: proc(name: string) -> ^zd.Eh {
+    @(static) counter := 0
+    counter += 1
 
-
+    name_with_id := fmt.aprintf("colonspc (ID:%d)", counter)
+    return zd.make_leaf(name_with_id, colonspc_proc)
+}
+colonspc_proc :: proc(eh: ^zd.Eh, msg: zd.Message) {
+    zd.send(eh, "output", ": ")
+}

@@ -2,12 +2,12 @@ include(`prolog/prolog.ohm.inc')
 
 ListRewrites <: Prolog {
 
-  Program := DefineSexpr+ MainBody
+  Program := DefineSexpr* MainBody
 
   Sexpr += DefineSexpr | ControlFlowSexpr | OperationSexpr
   StatementSexpr = DefineSexpr | ControlFlowSexpr | StatementOperationSexpr | ControlFlowAtom
 
-  DefineSexpr = 
+  DefineSexpr (define sexpr) = 
     | "(" sym<"define"> "(" Symbol Formals ")" Body ")" -- define
     | "(" sym<"define"> Symbol Sexpr ")" -- definevar
 
