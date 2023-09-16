@@ -37,8 +37,11 @@
 ;; (newline)
 
 ;; always needed for testing
-8
-(9)
-(e)
-(e d)
-(f g)
+;; 8
+;; (9)
+;; (e)
+;; (e d)
+;; (f g)
+(mutate r 7)
+
+
