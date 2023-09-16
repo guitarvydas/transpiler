@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-09-15T21:36:48.410Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="pCYXX0nFPF5HJvQZr36C" version="21.6.8" type="device" pages="26">
+<mxfile host="Electron" modified="2023-09-16T02:37:58.494Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="WsydfanZ9O9v9Cq3MU0V" version="21.6.8" type="device" pages="26">
   <diagram id="4kLP1CQ5fGZEGZqcJPXK" name="main">
     <mxGraphModel dx="1285" dy="765" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
@@ -1339,9 +1339,6 @@
           <mxGeometry x="800" y="602.5" width="120" height="80" as="geometry">
             <mxRectangle x="-98" y="-1230" width="99" height="26" as="alternateBounds" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="5asnFXQC5aZ6MzgHQzLy-8" value="x" style="rounded=1;whiteSpace=wrap;html=1;sketch=0;points=[[0,0.5,0,0,0],[1,0.5,0,0,0]];fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;arcSize=50;fontFamily=Helvetica;fontSize=11;" vertex="1" parent="5asnFXQC5aZ6MzgHQzLy-5">
-          <mxGeometry x="54" y="27.5" width="66" height="25" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

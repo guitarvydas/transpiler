@@ -37,4 +37,8 @@
 ;; (newline)
 
 ;; always needed for testing
+8
+(9)
+(e)
+(e d)
 (f g)

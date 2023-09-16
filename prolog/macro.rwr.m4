@@ -1,6 +1,6 @@
 JSMacro {
   stuff [item+] = ‛«item»’
-  Macro_assign [kmutate kvcomma lp sym kacomma1 a2 kacomma2 rp ksemi] = ‛\n«sym» = «a2»;\n’
+  Macro_assign [kmutate kvcomma lp sym kacomma1 a2 kacomma2 rp] = ‛\n«sym» = «a2»’
 
   Sym [c+] = ‛«c»’
   Expr [inneritem+] = ‛«inneritem»’

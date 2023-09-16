@@ -5,7 +5,7 @@ JSMacro {
     | any
 
   Macro =
-    | "mutate" vcomma "(" Sym argComma Expr argComma ")" ";" -- assign
+    | "mutate" vcomma "(" Sym argComma Expr argComma ")" -- assign
 
   Sym = char+
   Expr = inneritem+
