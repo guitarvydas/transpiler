@@ -8,12 +8,13 @@ JSMacro {
     | "mutate" vcomma "(" Sym argComma Expr argComma ")" -- assign
 
   Sym = char+
-  Expr = inneritem+
-  inneritem =
+  Expr = innerItem+
+  innerItem =
     | applySyntactic<Macro> -- macro
-    | "(" char* ")" -- nested
+    | "(" innerItemArgComma* ")" -- nested
     | char -- other 
 
+  innerItemArgComma = innerItem+ argComma
   char = ~delimiter any
   delimiter = argComma | "(" | ")"
   argComma = "†"

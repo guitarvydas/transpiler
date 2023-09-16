@@ -1,10 +1,11 @@
 JSMacro {
-  stuff [item+] = ‛«item»’
-  Macro_assign [kmutate kvcomma lp sym kacomma1 a2 kacomma2 rp] = ‛\n«sym» = «a2»’
+  stuff [items+] = ‛«items»’
+  Macro_assign [kmutate kvcomma lp sym kacomma1 a2 kacomma2 rp] = ‛«sym» = «a2»’
 
-  Sym [c+] = ‛«c»’
-  Expr [inneritem+] = ‛«inneritem»’
-  inneritem_macro [m] = ‛«m»’
-  inneritem_nested [lp c* rp] = ‛«lp»«c»«rp»’
-  inneritem_other [c] = ‛«c»’
+  Sym [cs+] = ‛«cs»’
+  Expr [innerItems+] = ‛«innerItems»’
+  innerItem_macro [m] = ‛«m»’
+  innerItem_nested [lp innerItemArgCommas* rp] = ‛«lp»«innerItemArgCommas»«rp»’
+  innerItem_other [c] = ‛«c»’
+  innerItemArgComma [innerItems+ argComma] = ‛«innerItems»«argComma»’
 }
