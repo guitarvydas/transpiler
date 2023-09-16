@@ -1,6 +1,7 @@
 JSMacro {
   stuff = item+
   item =
+    | "\n"
     | applySyntactic<Macro>
     | any
 
