@@ -1,6 +1,6 @@
 ODIN_FLAGS ?= -debug -o:none
 
-all: dev
+all: runjsprolog
 
 # transpiler: transpiler.drawio main.odin */*.odin
 # 	rm -f transpiler
@@ -19,6 +19,8 @@ dev:
 devsimple:
 	./ohmjs.js "TEST" test.ohm test.sem.js  <test.txt
 
-runprolog:
+runjsprolog:
+	rm -f transpiler
+	odin run . $(ODIN_FLAGS) >out.js
 	cat prolog/support.js out.js >out1.js
 	node out1.js

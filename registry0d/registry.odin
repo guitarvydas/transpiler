@@ -7,8 +7,15 @@ import "core:encoding/json"
 
 import zd "../0d"
 
+Registry_Stats :: struct {
+    nleaves : int,
+    ncontainers : int,
+    ninstances : int
+}
+
 Component_Registry :: struct {
     initializers: map[string]Initializer,
+    stats : Registry_Stats,
 }
 
 Container_Initializer :: struct {
@@ -27,6 +34,7 @@ Initializer :: union {
     Container_Initializer,
 }
 
+
 make_component_registry :: proc(leaves: []Leaf_Initializer, container_xml: string) -> Component_Registry {
 
 //    dump_diagram (container_xml)
@@ -36,6 +44,7 @@ make_component_registry :: proc(leaves: []Leaf_Initializer, container_xml: strin
     for leaf_init in leaves {
 	fmt.assertf (!(leaf_init.name in reg.initializers), "Leaf \"%v\" already declared", leaf_init.name)
         reg.initializers[leaf_init.name] = leaf_init
+	reg.stats.nleaves += 1
     }
 
     decls, err := syntax.parse_drawio_mxgraph(container_xml)
@@ -47,12 +56,13 @@ make_component_registry :: proc(leaves: []Leaf_Initializer, container_xml: strin
         }
 	fmt.assertf (!(decl.name in reg.initializers), "component \"%v\" already declared", decl.name)
         reg.initializers[decl.name] = container_init
+	reg.stats.ncontainers += 1
     }
 
     return reg
 }
 
-get_component_instance :: proc(reg: Component_Registry, name: string) -> (instance: ^zd.Eh, ok: bool) {
+get_component_instance :: proc(reg: ^Component_Registry, name: string) -> (instance: ^zd.Eh, ok: bool) {
     initializer: Initializer
     initializer, ok = reg.initializers[name]
     if ok {
@@ -62,11 +72,12 @@ get_component_instance :: proc(reg: Component_Registry, name: string) -> (instan
         case Container_Initializer:
             instance = container_initializer(reg, init.decl)
         }
+	reg.stats.ninstances += 1
     }
     return instance, ok
 }
 
-container_initializer :: proc(reg: Component_Registry, decl: syntax.Container_Decl) -> ^zd.Eh {
+container_initializer :: proc(reg: ^Component_Registry, decl: syntax.Container_Decl) -> ^zd.Eh {
 
     container := zd.make_container(decl.name)
 
@@ -202,4 +213,8 @@ dump_diagram :: proc (container_xml: string) {
     decls, _ := syntax.parse_drawio_mxgraph(container_xml)
     diagram_json, _ := json.marshal(decls, {pretty=true, use_spaces=true})
     fmt.println(string(diagram_json))
+}
+
+print_stats :: proc (reg: ^Component_Registry) {
+    fmt.printf ("registry statistics: %v\n", reg.stats)
 }

@@ -47,12 +47,13 @@ main :: proc() {
 
     regstry := reg.make_component_registry(leaves[:], diagram_source_file)
 
-    run (regstry, main_container_name, diagram_source_file, inject)
+    run (&regstry, main_container_name, diagram_source_file, inject)
 }
 
-run :: proc (regstry : reg.Component_Registry, main_container_name : string, diagram_source_file : string, injectfn : #type proc (^zd.Eh)) {
+run :: proc (r : ^reg.Component_Registry, main_container_name : string, diagram_source_file : string, injectfn : #type proc (^zd.Eh)) {
+    pregstry := r
     // get entrypoint container
-    main_container, ok := reg.get_component_instance(regstry, main_container_name)
+    main_container, ok := reg.get_component_instance(pregstry, main_container_name)
     fmt.assertf(
         ok,
         "Couldn't find main container with page name %s in file %s (check tab names, or disable compression?)\n",
@@ -60,8 +61,10 @@ run :: proc (regstry : reg.Component_Registry, main_container_name : string, dia
         diagram_source_file,
     )
     inject (main_container)
-    fmt.println("--- Outputs ---")
-    zd.print_output_list(main_container)
+    /* fmt.println("--- Outputs ---") */
+    /* zd.print_output_list(main_container) */
+    reg.print_stats (pregstry)
+    zd.print_specific_output (main_container, "output")
 }
 
 inject :: proc (main_container : ^zd.Eh) {

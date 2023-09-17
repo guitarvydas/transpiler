@@ -1,3 +1,4 @@
+
 function first (x,) {
 let _0 = undef ();
 _0 = car(x);
@@ -389,3 +390,6 @@ _0 = prove6(constant_nil (), goals, db, empty, 1, constant_nil (), db);
 _0 = display_result();
 _0 = newline();
 _0 = newline();
+
+
+

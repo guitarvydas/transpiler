@@ -341,3 +341,23 @@ set_idle :: proc (eh: ^Eh) {
     eh.state = .idle
 }
 
+// Utility for printing a specific output message.
+fetch_first_output_mustbestring :: proc (eh :^Eh, port: string) -> string {
+    iter := make_fifo_iterator(&eh.output)
+    for msg, idx in fifo_iterate(&iter) {
+	if msg.port == port {
+	    return msg.datum.(string)
+	}
+    }
+    return ""
+}
+
+print_specific_output :: proc(eh: ^Eh, port: string) {
+    sb: strings.Builder
+    defer strings.builder_destroy(&sb)
+
+    datum := fetch_first_output_mustbestring (eh, port)
+    fmt.sbprintf(&sb, "%v", datum)
+    fmt.println(strings.to_string(sb))
+}
+
