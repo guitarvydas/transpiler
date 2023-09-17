@@ -20,5 +20,7 @@ devsimple:
 	./ohmjs.js "TEST" test.ohm test.sem.js  <test.txt
 
 runprolog:
+	rm -f transpiler
+	odin run . $(ODIN_FLAGS) >out.js
 	cat prolog/support.js out.js >out1.js
 	node out1.js
