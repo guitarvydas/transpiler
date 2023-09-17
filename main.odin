@@ -65,6 +65,6 @@ run :: proc (regstry : reg.Component_Registry, main_container_name : string, dia
 }
 
 inject :: proc (main_container : ^zd.Eh) {
-    main_container.handler(main_container, zd.make_message("filename", "prolog/test.scm" ))
-    //main_container.handler(main_container, zd.make_message("filename", "prolog/prolog.scm" ))
+    //main_container.handler(main_container, zd.make_message("filename", "prolog/test.scm" ))
+    main_container.handler(main_container, zd.make_message("filename", "prolog/prolog.scm" ))
 }

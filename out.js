@@ -154,7 +154,7 @@ var time = cddr;
 _0 = time;
 function isVar (x,) {
 let _0 = undef ();
-mutate (_0, (isPair (x)) && (isString (car (x))) && ("?" == car (x)));
+_0 = (isPair (x))&&(isString (car (x)))&&("?" == car (x));
 return (_0);
 }
 
@@ -239,7 +239,7 @@ _1 = bind(y, x, e);
 _1 = false;
 } else {
 let eStar = unify (car (x), car (y), e);
-mutate (_1, (eStar) && (unify (cdr (x), cdr (y), eStar)));
+_1 = (eStar)&&(unify (cdr (x), cdr (y), eStar));
 }
 
 _0 = _1;
@@ -355,7 +355,7 @@ return (_0);
 
 function isForeign (expr,) {
 let _0 = undef ();
-mutate (_0, (isPair (expr)) && (isString (car (expr))) && ("@" == car (expr)));
+_0 = (isPair (expr))&&(isString (car (expr)))&&("@" == car (expr));
 return (_0);
 }
 

@@ -19,3 +19,6 @@ dev:
 devsimple:
 	./ohmjs.js "TEST" test.ohm test.sem.js  <test.txt
 
+runprolog:
+	cat prolog/support.js out.js >out1.js
+	node out1.js
