@@ -287,3 +287,4 @@ function cellToStr(cell) {
     return str + ")";
 }
 
+function undef () { return undefined; }

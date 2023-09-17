@@ -1,8 +1,13 @@
-(define (call-foreign expr bindings)
-    (cond 
-	  ((b g)
-	   (f 4))
-	  ))
+(define (var? x)
+  (and (pair? x)
+       (string? (car x))
+       (string=? "?" (car x))))
+
+;; (define (call-foreign expr bindings)
+;;     (cond 
+;; 	  ((b g)
+;; 	   (f 4))
+;; 	  ))
 
 ;; (define (call-foreign expr bindings)
 ;;   (let ((func (cadr expr))

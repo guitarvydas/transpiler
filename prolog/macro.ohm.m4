@@ -12,7 +12,8 @@ JSMacro {
   Expr = innerItem+
   innerItem =
     | applySyntactic<Macro> -- macro
-    | "(" innerItemArgComma* ")" -- nested
+    | "(" innerItemArgComma* ")" -- actual
+    | "(" innerItem* ")" -- nested
     | char -- other 
 
   innerItemArgComma = innerItem+ argComma

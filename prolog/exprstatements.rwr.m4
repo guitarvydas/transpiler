@@ -7,7 +7,7 @@ include(`prolog/prolog.rwr.inc')
 
   DefineSexpr_define [lp k lp2 name formals rp2 body rp] ‛«_.clearstatementvalue ()»’ = ‛
 (defineₓ («name» «formals»)
-(letₓ ((«_.statementvaluetop ()» (undefinedₓ)))«body»
+(letₓ ((«_.statementvaluetop ()» (undefₓ)))«body»
 (returnₓ «_.statementvaluetop ()»)))
 ’
   DefineSexpr_definevar [lp k name e rp] ‛«_.clearstatementvalue ()»’ = ‛
@@ -16,13 +16,13 @@ include(`prolog/prolog.rwr.inc')
 
 
   ControlFlowSexpr_cond [lp k clauses rp] ‛«_.statementvaluenew ()»’ = ‛
-(let ((«_.statementvaluetop ()» (undefinedₓ)))
+(let ((«_.statementvaluetop ()» (undefₓ)))
 (condₓ «clauses»)
 (mutateₓ «_.statementvalueprev ()» «_.statementvaluetop ()»))«_.statementvaluepop ()»’
 
   ControlFlowSexpr_let [lp k lp2 binding rp2 body rp] = ‛(letₓ («binding») «body»)’
 
-  ControlFlowSexpr_if [lp k test thn els rp] ‛«_.statementvaluenew ()»’ = ‛(let ((«_.statementvaluetop ()» (undefinedₓ)))(ifₓ «test» «thn» «els»)(mutateₓ «_.statementvalueprev ()» «_.statementvaluetop ()»))«_.statementvaluepop ()»’
+  ControlFlowSexpr_if [lp k test thn els rp] ‛«_.statementvaluenew ()»’ = ‛(let ((«_.statementvaluetop ()» (undefₓ)))(ifₓ «test» «thn» «els»)(mutateₓ «_.statementvalueprev ()» «_.statementvaluetop ()»))«_.statementvaluepop ()»’
 
   
 

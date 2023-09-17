@@ -5,7 +5,8 @@ JSMacro {
   Sym [cs+] = ‛«cs»’
   Expr [innerItems+] = ‛«innerItems»’
   innerItem_macro [m] = ‛«m»’
-  innerItem_nested [lp innerItemArgCommas* rp] = ‛«lp»«innerItemArgCommas»«rp»’
+  innerItem_actual [lp innerItemArgCommas* rp] = ‛«lp»«innerItemArgCommas»«rp»’
+  innerItem_nested [lp innerItem* rp] = ‛«lp»«innerItem»«rp»’
   innerItem_other [c] = ‛«c»’
   innerItemArgComma [innerItems+ argComma] = ‛«innerItems»«argComma»’
 }
