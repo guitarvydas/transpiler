@@ -1,5 +1,4 @@
---- Outputs ---
-[{output, 
+
 function first (x,) {
 let _0 = undef ();
 _0 = car(x);
@@ -393,4 +392,4 @@ _0 = newline();
 _0 = newline();
 
 
-}]
+
