@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Introduction.md",
+                "file": "doc/Introduction.md",
                 "mode": "source",
                 "source": false
               }
@@ -170,8 +170,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "cd2636f13f32980c",
+  "active": "d776a3d162b1a080",
   "lastOpenFiles": [
+    "transpiler",
+    "transpiler.o",
     "js/attic/test.scm",
     "js/attic/semsupport.js",
     "js/attic/scm2.ohm",
@@ -181,12 +183,10 @@
     "js/attic/gen.emptylist.ohm",
     "js/attic/exprstatements.rwr.m4~",
     "js/attic/exprstatements.rwr.m4",
-    "js/attic/exprstatements.ohm.m4~",
-    "js/attic/exprstatements.ohm.m4",
     "js/README.md",
     "prolog/js/README.md",
     "doc/Top Level.md",
-    "Introduction.md",
+    "doc/Introduction.md",
     "doc/To JavaScript.md",
     "doc/Front End.md",
     "doc/front end.png"
