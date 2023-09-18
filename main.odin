@@ -24,7 +24,7 @@ main :: proc() {
     /* ) */
 
     // load arguments
-    diagram_source_file := slice.get(os.args, 1) or_else "prolog/test.drawio"
+    diagram_source_file := slice.get(os.args, 1) or_else "js/js.drawio"
     main_container_name := slice.get(os.args, 2) or_else "main"
 
     if !os.exists(diagram_source_file) {
