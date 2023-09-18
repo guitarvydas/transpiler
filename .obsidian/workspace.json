@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/Start Here.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#characterrewrites",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "doc/Start Here.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "doc/Start Here.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "doc/Start Here.md"
+                "file": "README.md"
               }
             }
           }
@@ -148,26 +148,29 @@
   },
   "active": "af8fd2475ac889cb",
   "lastOpenFiles": [
-    "transpiler",
-    "transpiler.o",
-    "doc/M4.md",
-    "doc/Start Here.md",
-    "doc/Fake Pipe.md",
-    "doc/Rewriter.md",
-    "doc/isRewriter.md",
     "doc/Cleanup.md",
+    "#README.md#",
+    "doc/Start Here.md",
     "doc/Macros.md",
+    "doc/List Rewrites.md",
     "doc/Expression Statements.md",
     "doc/Symbol Rewrites.md",
     "doc/Character Rewrites.md",
+    "js/#characterrewrites.js#",
+    "doc/screenshots/unquote.png",
     "doc/Constants.md",
     "doc/Unquote.md",
     "doc/Escape Whitespace.md",
     "doc/Insert Virtual Commas.md",
+    "transpiler",
+    "transpiler.o",
+    "doc/M4.md",
+    "doc/Fake Pipe.md",
+    "doc/Rewriter.md",
+    "doc/isRewriter.md",
     "doc/screenshots/prolog.ohm.inc.png",
     "doc/screenshots/scm.ohm.inc.png",
     "doc/screenshots/prolog.rwr.inc.png",
-    "doc/screenshots/unquote.png",
     "doc/Transpiler.md",
     "doc/screenshots/Rewriter.png",
     "doc/screenshots/isRewriter.png",
@@ -177,7 +180,6 @@
     "doc/screenshots/constants.png",
     "doc/iRewriter.md",
     "doc/Front End.md",
-    "doc/List Rewrites.md",
     "doc/screenshots",
     "doc/To JavaScript.md",
     "js/support.js",
@@ -185,8 +187,6 @@
     "js/macro.rwr.m4",
     "js/macro.ohm.m4",
     "js/listrewrites.rwr.m4",
-    "js/listrewrites.ohm.m4",
-    "js/exprstatementssupport.js",
     "js/README.md",
     "prolog/js/README.md",
     "doc/Top Level.md",

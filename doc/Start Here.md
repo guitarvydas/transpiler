@@ -24,8 +24,10 @@
 [[Fake Pipe]]
 [[M4]]
 
-## Front End Grammars
-`
+## Front End 
+
+### Grammars
+#### Prolog in Scheme
 ```
 Prolog {
   Program = Sexpr+
@@ -49,7 +51,46 @@ Prolog {
 }
 ```
 
-## Front End Rewrite Specifications
-## JavaScript Emitter Grammars
-## JavaScript Emitter Specifications
+### Rewrite Specifications
+#### Prolog in Scheme
+```
+  Program [Sexpr+] = ‛«Sexpr»’
+  Sexpr_list [lp Sexpr+ rp] = ‛«lp»«Sexpr»«rp»’
+  Sexpr_quoted [q Sexpr] = ‛«q»«Sexpr»’
+  Sexpr_symbol [Symbol] = ‛«Symbol»’
+
+  // separator [c] = ‛«c»’
+  // vcomma [c] = ‛«c»’
+  Symbol [symchar+ vcomma?] = ‛«symchar»«vcomma»’
+  // symchar [c] = ‛«c»’
+  
+  string [dq1 cs* dq2] = ‛«dq1»«cs»«dq2»’
+  number [ds+ vcomma?] = ‛«ds»«vcomma»’
+  semiColonComment [ksemi cs* nl] = ‛’
+```
+## JavaScript Emitter 
+
+### Code
+#characterrewrites 
+```
+#!/usr/bin/env node
+//'use strict'
+
+const fs = require ('fs');
+
+function characterRewrites(inputString) {
+    var r = inputString
+        .replace(/-/g,'_')
+    ;
+    return r;
+}
+      
+
+var input = fs.readFileSync ('/dev/fd/0', 'UTF-8');
+var output = characterRewrites (input);
+console.log (output);
+```
+### Grammars
+### Rewrite Specifications
+
 
