@@ -170,8 +170,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d776a3d162b1a080",
+  "active": "cd2636f13f32980c",
   "lastOpenFiles": [
+    "js/attic/test.scm",
+    "js/attic/semsupport.js",
+    "js/attic/scm2.ohm",
+    "js/attic/scm.ohm",
+    "js/attic/gen.emptylist.rwr",
+    "js/attic/prolog.js",
+    "js/attic/gen.emptylist.ohm",
+    "js/attic/exprstatements.rwr.m4~",
+    "js/attic/exprstatements.rwr.m4",
+    "js/attic/exprstatements.ohm.m4~",
+    "js/attic/exprstatements.ohm.m4",
+    "js/README.md",
+    "prolog/js/README.md",
     "doc/Top Level.md",
     "Introduction.md",
     "doc/To JavaScript.md",
