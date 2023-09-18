@@ -70,21 +70,21 @@ components :: proc (leaves: ^[dynamic]reg.Leaf_Initializer) {
 
     
     append(leaves, reg.Leaf_Instantiator { name = "'SymRewrites'", init = leaf.symrewrites_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/symrewrites.ohm.m4'", init = leaf.symrewritesohm_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/symrewrites.rwr.m4'", init = leaf.symrewritesrwr_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/symrewrites.ohm.m4'", init = leaf.symrewritesohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/symrewrites.rwr.m4'", init = leaf.symrewritesrwr_instantiate })
     
     append(leaves, reg.Leaf_Instantiator { name = "'ListRewrites'", init = leaf.listrewrites_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/listrewrites.ohm.m4'", init = leaf.listrewritesohm_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/listrewrites.rwr.m4'", init = leaf.listrewritesrwr_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/listrewrites.ohm.m4'", init = leaf.listrewritesohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/listrewrites.rwr.m4'", init = leaf.listrewritesrwr_instantiate })
     
     append(leaves, reg.Leaf_Instantiator { name = "'JSMacro'", init = leaf.macro_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.ohm.m4'", init = leaf.macroohm_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/macro.rwr.m4'", init = leaf.macrorwr_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/macro.ohm.m4'", init = leaf.macroohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/macro.rwr.m4'", init = leaf.macrorwr_instantiate })
     
     append(leaves, reg.Leaf_Instantiator { name = "'ExprStatements'", init = leaf.exprstatements_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.ohm.m4'", init = leaf.exprstatementsohm_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatements.rwr.m4'", init = leaf.exprstatementsrwr_instantiate })
-    append(leaves, reg.Leaf_Instantiator { name = "'prolog/exprstatementssupport.js'", init = leaf.exprstatementssupport_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/exprstatements.ohm.m4'", init = leaf.exprstatementsohm_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/exprstatements.rwr.m4'", init = leaf.exprstatementsrwr_instantiate })
+    append(leaves, reg.Leaf_Instantiator { name = "'js/exprstatementssupport.js'", init = leaf.exprstatementssupport_instantiate })
 
     append(leaves, reg.Leaf_Instantiator { name = "': '", init = leaf.colonspc_instantiate })
 
