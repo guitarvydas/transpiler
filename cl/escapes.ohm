@@ -1,0 +1,21 @@
+Escapes {
+  text = char+
+  char =
+    | dq (~dq stringchar)* dq -- string
+    | ";" (~nl stringchar)* nl -- comment
+    | any -- any
+
+  stringchar =
+    | " " -- space
+    | nl -- newline
+    | "\t" -- tab
+    | "<" -- lt
+    | ">" -- gt
+    | "&" -- amp
+    | dq -- quot
+    | "'" -- squote
+    | any -- any
+
+  dq = "\""
+  nl = "\n"
+}

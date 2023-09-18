@@ -1,0 +1,1 @@
+(defineₓ(clear_resultₓ)(set!ₓresult_ₓ(quote ())))(newlineₓ)

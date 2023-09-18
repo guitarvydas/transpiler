@@ -1,0 +1,254 @@
+
+
+// emitter semantics
+      var emitter_semantics = emitter_grammar.createSemantics();
+
+      emitter_semantics.addOperation(
+	  'toCL',
+	  {
+	      Program: function(tl) { return "(:Program " + tl.toCL() + ")";},
+	      Form: function(form) { return "(:Form " + form.toCL() + ")";},
+
+	      DottedList: function(_lp,items,_dot,lastItem,_rp) { 
+		  return "(:DottedList " + items.toCL() + " " + lastItem.toCL() + ")";},
+	      NullTerminatedList: function(_lp,items,_rp) { return "(:NullTerminatedList " + items.toCL() + ")";},
+	      ListItem: function(item) { return "(:ListItem " +  item.toCL() + ")";},
+	      Atom: function(a) { return "(:Atom " + a.toCL() + ")";},
+
+	      SList: function(form) { return "(:SList " + form.toCL() + ")";},
+	      SList_atnewlistat: function(_begin,_at,items,_end) { return "(:atnewlist " + items.toCL() + ")";},
+	      SList_atnewdottedlistat: function(_begin,_at,items,_end) { return "(:atnewdottedlist " + items.toCL() + ")";},
+
+	      SpecialForm: function(specialForm) { return "(:SpecialForm " + specialForm.toCL() + ")";},
+
+	      CondExpression: function(ce) { return "(:CondExpression " + ce.toCL() + ")";},
+	      CondExpressionWithElse: function(_begin,_cond,firstCondClause,moreCondClauses,condElseClause,_end) { 
+		  return "(:CondExpressionWithElse " + firstCondClause.toCL() + " " + moreCondClauses.toCL() + ")";},
+	      CondExpressionWithoutElse: function(_begin,_cond,firstCondClause,moreCondClauses,_end) { 
+		  return "(:CondExpressionWithoutElse " + firstCondClause.toCL() + " " + moreCondClauses.toCL() + ")";},
+    
+	      FirstCondClause: function(clause) { return "(:FirstCondClause " + clause.toCL() + ")";},
+	      MoreCondClause: function(clause) { return "(:MoreCondClause " + clause.toCL() + ")";},
+	      CondClause: function(_begin,condTest,statementBlock,_end) { 
+		  return "(:CondClause " + condTest.toCL() + " "  + statementBlock.toCL() + ")";},
+	      CondTest: function(form) { return "(:CondTest " + form.toCL() + ")";},
+
+	      CondElseClause: function(_begin,_else,statementBlock,_end) { 
+		  return "(:CondElseClause " + statementBlock.toCL() + ")";},
+
+	      CondStatementBlock: function(statementBlock) { 
+		  return "(:CondStatementBlock " + statementBlock.toCL() + ")";},
+
+	      StatementBlock: function(s) { return "(:StatementBlock " + s.toCL() + ")";},
+	      SequentialStatement: function(mids,last) { 
+		  return "(:SequentialStatement " + mids.toCL() + " " + last.toCL() + ")";},
+	      MidStatement: function(statement,_lookahead) { return "(:MidStatement " + statement.toCL() + ")";},
+	      LastStatement: function(statement) { return "(:LastStatement " + statement.toCL() + ")";},
+	      Statement: function(form) { return "(:Statement " + form.toCL() + ")";},
+
+	      LetExpression: function(le) { return "(:LetExpression " + le.toCL() + ")";},
+
+	      LetSequential: function(_begin,_letstar,bindings,body,_end) { 
+		  return "(:LetSequential " + bindings.toCL() + " " + body.toCL() + ")";},
+	      LetParallel: function(_begin,_let,bindings,body,_end) { 
+		  return "(:LetParallel " + bindings.toCL() + " " + body.toCL() + ")";},
+	      
+	      LetBindings: function(_begin,bindings,_end) { return "(:LetBindings " + bindings.toCL() + ")";},
+	      Binding: function(_begin,v,rhs,_end) { return "(:Binding " + v.toCL() + " " + rhs.toCL() + ")";},
+	      LetVar: function(v) { return "(:LetVar " + v.toCL() + ")";},
+	      LetBindingClause: function(form) { return "(:LetBindingClause " + form.toCL() + ")";},
+	      LetBody: function(statementBlock) { return "(:LetBodyClause " + statementBlock.toCL() + ")";},    
+
+	      IfThenElseExpression: function(_begin,_if,testExpr,thenPart,elsePart,_end) { 
+		  return "(:IfThenElseExpressio " + testExpr.toCL() + " " + thenPart.toCL() + " " + elsePart.toCL() + ")";},
+	      IfThenExpression: function(_begin,_if,testExpr,thenPart,_end) { 
+		  return "(:IfThenExpression " + testExpr.toCL() + " " + thenPart.toCL() + ")";},
+	      IfTestExpr: function(form) { return "(:IfTestExpr " + form.toCL() + ")";},
+	      ThenPart: function(form) { return "(:ThenPart " + form.toCL() + ")";},
+	      ElsePart: function(form) { return "(:ElsePart " + form.toCL() + ")";},
+
+	      AndExpression: function(_begin,_and,exprs,_end) { return "(:AndExpression " + exprs.toCL() + ")";},
+	      OrExpression: function(_begin,_or,exprs,_end) { return "(:OrExpression " + exprs.toCL() + ")";},
+	      NotExpression: function(_begin,_not,expr,_end) { return "(:NotExpression " + expr.toCL() + ")";},
+	      Bool: function(form) { return "(:Bool " + form.toCL() + ")";},
+
+              SetExpression: function(_begin,_set,v,e,_end) { return "(:SetExpression " + v.toCL + " " + e.ToCL() + ")"; },
+              SetVar: function(id) { return id.toCL(); },
+	      SetExpr: function(e) { return e.toCL(); },
+	      FunctionCall: function(_begin,id,args,_end) { return "(:FunctionCall " + id.toCL() + args.toCL() + ")";},
+	      Identifier: function(sym) { return "(:Identifier " + sym.toCL() + ")";},
+	      Arg: function(listItem) { return "(:Arg " + listItem.toCL() + ")";},
+
+
+	      GlobalFunctionDefinition: function(_begin,_define,_begin2,id,actuals,_end2,statementBlock,_end) { 
+		  return "(:GlobalFunctionDefinition " + id.toCL() + " " + actuals.toCL() + " " + statementBlock.toCL() + ")";},
+	      GlobalVariableDefinition: function(_begin,_define,id,form,_end) { 
+		  return "(:GlobalVariableDefinition " + id.toCL() + " " + form.toCL() + ")";},
+	      TopLevelFunctionCall: function(functionCall) { return "(:TopLevelFunctionCall " + functionCall.toCL() + ")";},
+
+	      BEGIN: function(_lp) { return "(:BEGIN)";},
+	      END: function(_rp) { return "(:END)";},
+	      
+	      QuotedExpression: function(e) { return "(:QuotedExpression " + e.toCL() + ")";},
+	      QuotedSymbol: function(_begin,_q,sym,_end) { return "(:QuotedSymbol " + sym.toCL() + ")";},
+	      QuotedOther: function(_begin,_q,e,_end) { return "(:QuoteOther " + e.toCL() + ")";},
+	      
+	      Keyword: function(lex) { return "(:Keyword " + lex.toCL() + ")";},
+	      
+	      lexical_AND: function(lex,_sp) { return "(:AND)";},
+	      lexical_OR: function(lex,_sp) { return "(:OR)";},
+	      lexical_NOT: function(lex,_sp) { return "(:NOT)";},
+	      lexical_AtNewListAt: function(lex,_sp) { return "(:AtNewList)";},
+	      lexical_AtNewDottedListAt: function(lex,_sp) { return "(:AtNewDottedList)";},
+	      lexical_DEFINE: function(lex,_sp) { return "(:DEFINE)";},
+	      lexical_IF: function(lex,_sp) { return "(:IF)";},
+	      lexical_COND: function(lex,_sp) { return "(:COND)";},
+	      lexical_ELSE: function(lex,_sp) { return "(:ELSE)";},
+	      lexical_LETSTAR: function(lex,_sp) { return "(LETSTAR)";},
+	      lexical_LET: function(lex,_sp) { return "(:LET)";},
+	      lexical_QUOTE: function(lex,_sp) { return "(:QUOTE)";},
+	      
+	      lexical_atom: function(a) { return "(:atom " + a.toCL() + ")";},
+	      lexical_boolean: function(b) { return "(:boolean";},
+	      lexical_integer: function(cs) { return "(:integer " + cs.toCL() + ")";},
+	      lexical_numchar: function(c) { return "(:numchar " + c.toCL() + ")";},
+	      lexical_string: function(_q1,cs,_q2) { return "(:string " + cs.toCL() + ")";},
+	      lexical_symbol: function(c,cs) { return "(:symbol [[" + this.sourceString + "]] )";},
+	      lexical_letchar: function(c) { return "(:letchar " + c.toCL() + ")";},
+	      lexical_lc: function(c) { return "(:lc " + c.toCL() + ")";},
+	      lexical_uc: function(c) { return "(:uc " + c.toCL() + ")";},
+	      _terminal: function() { return this.primitiveValue; }
+	  });
+
+      emitter_semantics.addOperation(
+	  'emitjs',
+	  {
+	      Program: function(listOfForms) {return toSpaceDelimitedList(listOfForms.emitjs())},
+              Arg: function(a) {return a.emitjs();},
+
+              Form: function(item) {return item.emitjs()},
+	      SList: function(lis) {return lis.emitjs()},
+              SList_atnewlistat: function(_begin,_at,items,_end) { return "list(" + items.emitjs() + ")"; },
+              SList_atnewdottedlistat: function(_begin,_at,items,_end) { return "cons(" + toDotted(items.emitjs()) + ")"; },
+
+              SpecialForm: function(e) { return e.emitjs(); },
+
+	      // CondExpression contains CondClauses (optional else clause)
+	      // CondClause contains Statements
+	      //
+	      // the first clause is emitted with "if"
+	      // subsequent (more) clauses are emitted with "} else if "
+	      //
+	      // statements are emitted suffixed by ':'
+	      // last statement is emitted as ' return ... ; '
+	      //
+              CondExpression: function(c){ return c.emitjs(); },
+              CondExpressionWithElse : function(_begin,_cond,firstClause,moreClauses,elseClause,_end) {
+                  return "(function(){<br>" + firstClause.emitjs() + toSpaceDelimitedList(moreClauses.emitjs()) + elseClause.emitjs() + "<br>})()" ; },
+              CondExpressionWithoutElse : function(_begin,_cond,firstClause,moreClauses,_end) {
+                  return "(function(){<br>"+ firstClause.emitjs() + toSpaceDelimitedList(moreClauses.emitjs()) + " else " + "{<br>return null;<br>}" + "<br>})()" ; },
+
+              FirstCondClause: function(c) { return "if " + c.emitjs(); },
+              MoreCondClause: function(c) { return " else if " + c.emitjs(); },
+	      CondClause: function(_begin,ctest,block,_end) {return "(" + ctest.emitjs() + ") {<br>" +  block.emitjs() + "<br>}"; },
+
+	      CondTest: function(f) { return f.emitjs(); },
+	      CondElseClause: function(_begin,_else,block,_end){ return "else {<br>" + block.emitjs() + "}<br>"; },
+
+              CondStatementBlock: function(sb) { return sb.emitjs(); },
+
+	      StatementBlock: function(atomOrSequential) { return atomOrSequential.emitjs(); },
+              SequentialStatement: function(midStatements, lastStatement) {
+		  return toSpaceDelimitedList(midStatements.emitjs()) + lastStatement.emitjs()},
+              MidStatement: function(s,_lookahead) { if (s._node.numChildren() > 0) {return s.emitjs() + ";<br>" ;} else {return "";}},
+              LastStatement: function(s) { return "return " + s.emitjs() + ";<br>" ;},
+              Statement: function(f) { return f.emitjs() ;},
+
+	      LetExpression: function(e) { return e.emitjs(); },
+              LetSequential: function(_begin,_letstar,bindings,body,_end) {
+		  throw "NIY: let*";
+		  return "(function(" + bindings.emitjs() + ") {<br>"+ body.emitjs() + "<br>})()"},
+              LetParallel: function(_begin,_let,bindings,body,_end) {
+		  return "(function(" + bindings.emitjs() + ") {<br>"+ body.emitjs() + "<br>})()"},
+
+              LetBindings: function(_begin,bindings,_end) { return bindings.emitjs(); },
+              Binding: function(_begin,v,e,_end) { return v.emitjs() + "=" + e.emitjs(); },
+              LetVar: function(id) {return id.emitjs(); },
+              LetBindingClause: function(e) { return e.emitjs(); },
+
+	      
+              IfThenElseExpression: function(_begin,_if,e,thenPart,elsePart,_end) {
+                  return "(function(){<br>if (" + e.emitjs() + ") {<br>return " + thenPart.emitjs() + ";<br>} else {<br>return " + elsePart.emitjs() + ";<br>}<br>})()";
+              },
+
+              IfThenExpression: function(_begin,_if,e,thenPart,_end) {
+                  return "(function(){<br>if (" + e.emitjs() + ") {<br>return " + thenPart.emitjs() + ";<br>} else {<br>" + "  return null;" + "<br>}<br>})()";
+              },
+
+              ThenPart: function(b) { return b.emitjs(); },
+              ElsePart: function(b) { return b.emitjs(); },
+
+              AndExpression: function(_begin,_and,booleans,_end) {
+		  return toBranchingAnd(booleans.emitjs());},
+              OrExpression: function(_begin,_and,booleans,_end) {
+		  return toBranchingOr(booleans.emitjs())},
+              NotExpression: function(_begin,_not,bool,_end) { return "(!" + bool.emitjs() + ")"; },
+              Bool: function(form){return form.emitjs(); },
+
+              SetExpression: function (_begin,_set,v,e,_end) { return "(" + v.emitjs() + " = " + e.emitjs() + ")"; },
+              SetVar: function (id) { return id.emitjs(); },
+              SetExpr: function (e) { return e.emitjs(); },
+
+              FunctionCall: function(_lp,id,actuals,_end) {return id.emitjs() + "(" + actuals.emitjs() + ")";},
+
+              GlobalFunctionDefinition: function(_begin,_define,_begin2,id,formals,_end2,body,_end) {
+		  return "function " + id.emitjs() + "(" + formals.emitjs() + ")" + " {<br>" + body.emitjs() + "};<br>"; },
+
+              GlobalVariableDefinition: function(_begin,_define,id,form,_end) {
+		  return "let " + id.emitjs() + " = " + form.emitjs() + ";<br>";},
+              TopLevelFunctionCall: function(fn) {return fn.emitjs() + ";<br>";},
+	      
+
+
+	      DottedList: function(_lp, items, _dot, lastItem, _rp) { throw "can't happen (in this solution)"; },
+	      //DottedList: function(_lp, items, _dot, lastItem, _rp) { return toSpaceDelimitedList(items.emitjs()) + " . " + lastItem.emitjs(); },
+
+	      NullTerminatedList: function(_lp, items, _rp) {
+		  return toSpaceDelimitedList(items.emitjs()) ;},
+	      ListItem: function(item) {return item.emitjs()},
+
+	      Atom: function(a) {return a.emitjs() ;},
+
+	      QuotedExpression: function(x) {return x.emitjs();},
+	      QuotedSymbol: function(_lp,_q,sym,_rp){ return '"' + sym.emitjs() + '"'},
+	      QuotedOther: function(_lp,_q,sym,_rp){ return sym.emitjs()},
+              lexical_QUOTE: function(_quote,_sp) {return "";},
+
+              Identifier: function(id) {return id.emitjs();},
+              END: function(_rp) {return "";},
+     
+              lexical_IF: function(_if,_sp) { return ""; },
+              lexical_ELSE: function(_else,_sp) { return ""; },
+              lexical_AND: function(_and,_sp) {return "";},
+              lexical_OR: function(_or,_sp2) {return "";},
+              lexical_NOT: function(_not,_sp) {return "";},
+              lexical_AtNewListAt: function(_atnewlistat,_rp) { return "" ; },
+              lexical_DEFINE: function(_,sp2){return "";},
+              lexical_LETSTAR: function(_let,_sp2) { return ""; },
+              lexical_LET: function(_let,_sp2) { return ""; },
+              lexical_COND: function(_,_sp2){return "";},
+              lexical_ELSE: function(_,_sp2){return "";},
+
+
+	      lexical_integer: function(ns) {return toPackedString(ns.emitjs());},
+	      lexical_symbol: function(c, cs) {return c.emitjs() + toPackedString(cs.emitjs());},
+	      lexical_string: function(_q1, chars, _q2) {return "\"" + toPackedString(chars.emitjs()) + "\""},
+	      lexical_letchar: function(c) {return c.emitjs()},
+	      lexical_numchar: function(c) {return c.emitjs()},
+	      lexical_lc: function(c) {return c.emitjs()},
+	      lexical_uc: function(c) {return c.emitjs()},
+
+	      lexical_boolean: function(b) {return ("#f" == this.sourceString) ? "false" : "true"; },
+	      _terminal: function() { return this.primitiveValue; }
+	  }
+      );

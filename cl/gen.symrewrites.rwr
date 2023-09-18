@@ -1,0 +1,32 @@
+SymRewrites {
+  Program [Sexpr+] = ‛«Sexpr»’
+  Sexpr_list [lp Sexpr+ rp] = ‛«lp»«Sexpr»«rp»’
+  Sexpr_quoted [q Sexpr] = ‛«q»«Sexpr»’
+  Sexpr_symbol [Symbol] = ‛«Symbol»’
+
+  // separator [c] = ‛«c»’
+  // vcomma [c] = ‛«c»’
+  Symbol [symchar+ vcomma?] = ‛«symchar»«vcomma»’
+  // symchar [c] = ‛«c»’
+  
+  string [dq1 cs* dq2] = ‛«dq1»«cs»«dq2»’
+  number [ds+ vcomma?] = ‛«ds»«vcomma»’
+  semiColonComment [ksemi cs* nl] = ‛’
+
+
+  Symbol [x] = ‛«x»’
+  Symbol_true [k] = ‛trueₓ’
+  Symbol_false [k] = ‛falseₓ’
+  Symbol_isPair [k] = ‛isPairₓ’
+  Symbol_isString [k] = ‛isStringₓ’
+  Symbol_rBang [k] = ‛rBangₓ’
+  Symbol_isForeign [k] = ‛isForeignₓ’
+  Symbol_isVar [k] = ‛isVarₓ’
+  Symbol_isEmptyList [k] = ‛isEmptyListₓ’
+  Symbol_mutate [k] = ‛mutateₓ’
+  Symbol_mutate_car [k] = ‛mutate_carₓ’
+  Symbol_eStar [k] = ‛eStarₓ’
+  Symbol_other [c+ vcomma?] = ‛«c»«vcomma»’
+
+  sym [s vcomma?] = ‛«s»«vcomma»’
+}

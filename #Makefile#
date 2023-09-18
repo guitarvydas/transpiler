@@ -24,8 +24,3 @@ runjsprolog:
 	odin run . $(ODIN_FLAGS) >out.js
 	cat prolog/support.js out.js >out1.js
 	node out1.js
-
-runpyprolog:
-	rm -f transpiler
-	odin run . $(ODIN_FLAGS) >out.js
-
