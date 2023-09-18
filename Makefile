@@ -6,9 +6,9 @@ dev: runjsprolog
 
 runjsprolog:
 	rm -f transpiler
-	odin run . $(ODIN_FLAGS) >out.js
-	cat prolog/support.js out.js >out1.js
-	node out1.js
+	odin run . $(ODIN_FLAGS) >out/gen.js
+	cat prolog/support.js out/gen.js >out/pl.js
+	node out/pl.js
 
 
 # very basic usage of ohmjs to compiler ABC compiler and interpreter
