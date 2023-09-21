@@ -1,7 +1,8 @@
+```
 ExprStatements {
 include(`prolog/prolog.rwr.inc')
 
-  Program [defines* mainbody] = ‛«defines»«mainbody»’
+  Program [defines+ mainbody] = ‛«defines»«mainbody»’
   Sexpr [s] = ‛«s»’
   StatementSexpr [s] = ‛«s»’
 
@@ -61,3 +62,4 @@ include(`prolog/prolog.rwr.inc')
 
 
 }
+```

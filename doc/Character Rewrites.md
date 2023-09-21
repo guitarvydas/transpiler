@@ -1,1 +1,1 @@
-see #characterrewrites
+see [[Character Rewrites Code]]
