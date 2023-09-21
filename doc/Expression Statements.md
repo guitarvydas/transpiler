@@ -69,7 +69,33 @@ For the record, I use the name "Operator" to denote the first item in a sexpr an
 
 The rule "OperationSexpr" breaks *operations* into 2 major pieces - *operator* and *operands*.  There might be 0 or more *operands*, so I use Ohm-JS' `"*"` operator as a suffix for *operands* in the "OperationSexpr" rule.
 
-The rule "StatementOperationSexpr" looks like a no-op in this grammar.  It simply invokes the rule "OperationSexpr".  Yet, in the rewrite specification, this seemingly minor distinction makes a difference - is the Sexpr an Operation, or, is the Sexpr a StatementOperation?  When emitting JavaScript, only the latter gets a semi-colon suffix.  Here, I allow the parser to determine the control flow for me, allowing my rewrite code to contain fewer `if...then...else` (ad-hoc) conditionals.
+The rule "StatementOperationSexpr" looks like a no-op in this grammar.  It simply invokes the rule "OperationSexpr".  Yet, in the rewrite specification, this seemingly minor distinction makes a difference - it answers the question: is the Sexpr an Operation, or, is the Sexpr a StatementOperation?  When emitting JavaScript, only the latter gets a semi-colon suffix.  Here, I allow the parser to determine the control flow for me, allowing my rewrite code to contain fewer `if...then...else` conditionals.  A goal is to stop using `if...then...else` completely.  `If...then...else` is too ad-hoc when mixed with variables, and, leads to spaghetti code.  Likewise `case` and `switch` in present forms.  Note that OOP boils down to `case-on-type`.  We need to collect up other use-cases of conditionals and give them unique syntaxes and to disallow over-generalization.  Note that a "grammar" is but a declarative specification of conditional code.
+
+The rule *Binding* peels off variable-bindings one at a time, recursively.  This helps the `let` rule parse `let` statements.  A `let` statement consists of 2 main parts
+1. the bindings (values for named variables)
+2. the body of the code in which the bindings are in effect ("scoped").
+
+In Scheme and Lisp syntax, the *bindings* appear as a single list of sub-lists, one sublist for each named variable. The *body* appears as one or more expressions that follow the list of bindings.  As with all Lisp syntax, this is "easy" to parse, there are 3 parseable bits:
+1. the keyword `let`
+2. a single list of bindings
+3. the rest (the *body*).
+
+Similarly `if...then...else` breaks down into 3+1 parts:
+1. the keyword `if`
+2. the test (a single *sexpr* - a single list)
+3. the *then-part* (a single sexpr)
+4. the *else-part* (a single sexpr).
+
+If there is no *else-part*, then the *else-part* is "nothing", i.e. *nil*, ie. the empty list.  An `if...then` expression is actually a list of 4 items, with the last item being `". nil"`.  The pretty-printer displays the `". nil"` part as nothing, to aid in human-readability, i.e. `(if (...) (...) . nil)` is displayed as `(if (...) (...))`.
+
+The *Body* rule parses Sexprs, one at a time recursively, and brands them as *"statements"*.  In Lisp (Scheme) these look like any other Sexpr, but, in a syntax-full language, like JavaScript, each statement is suffixed with a semi-colon "`;`" and the expression value is considered to be thrown away.
+
+The rule *MainBody* displays another feature of Ohm-JS syntax - the use a description for the rule, enclosed in parenthesis appearing before the `=` sign.  Here, again, *MainBody* punts the parsing work to another rule, *Body*, and tags the result uniquely or use in the rewriting section.
+
+A `cond` in Lisp (Scheme) consists of a bunch of clauses, and, optionally, one `else` clause.  The non-else clauses are simple lists containing lists of items, each a Sexpr.  The first item is a test expression and the rest of the items are Sexprs that are evaluated only if the test Sexpr evaluates to `true` (`#t` in Scheme, anything-that-isn't-nil in Lisp).  An `else` clause begins with the keyword `else` and the rest of the clause consists of Sexprs that are evaluated only if no preceding clause was fired.  In Lisp (Scheme) the clauses are tested in order of appearance.
+
+
+
 
 
 ![[doc/Code/exprstatements.ohm.m4|exprstatements.ohm.m4]]
