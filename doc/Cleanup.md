@@ -1,1 +1,2 @@
-![[cleanup.png]]
+![[docwiki/screenshots/cleanup.png]]
+see #cleanup 

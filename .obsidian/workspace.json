@@ -4,47 +4,131 @@
     "type": "split",
     "children": [
       {
-        "id": "465ac5f2a5b0cd32",
-        "type": "split",
+        "id": "622056f60f8ee5ba",
+        "type": "tabs",
         "children": [
           {
-            "id": "622056f60f8ee5ba",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "af8fd2475ac889cb",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "doc/Code/exprstatements.ohm.m4.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
+            "id": "af8fd2475ac889cb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docwiki/OhmJS.md",
+                "mode": "source",
+                "source": false
               }
-            ]
+            }
           },
           {
-            "id": "b52254f799cbd410",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "32bf72037b27597a",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "doc/Expression Statements.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
+            "id": "e4b6b322c21eca0f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docwiki/Introduction.md",
+                "mode": "source",
+                "source": false
               }
-            ]
+            }
+          },
+          {
+            "id": "66e554141b35c692",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docwiki/Introduction.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "964d6e195c6f76c2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docwiki/History.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fed8ecdd85a3438e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "doc/Start Here.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b135238518074866",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "doc/RWR.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "799e4e2635598270",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "doc/Rewriter.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fa1d176273e4a7f3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "doc/Lisp-Like Functions for JavaScript.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e01fd6463d425f64",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "doc/Front End.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "cf62550c0e3b20e3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docwiki/YAGNI.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "direction": "horizontal"
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -110,7 +194,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "doc/Expression Statements.md",
+                "file": "doc/RWR.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +211,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "doc/Expression Statements.md",
+                "file": "doc/RWR.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +234,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "doc/Expression Statements.md"
+                "file": "doc/RWR.md"
               }
             }
           }
@@ -168,56 +252,57 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "32bf72037b27597a",
+  "active": "b135238518074866",
   "lastOpenFiles": [
-    "doc/Code/exprstatements.ohm.m4.md",
-    "doc/Expression Statements.md",
-    "doc/Code/symrewrites.ohm.m4.md",
-    "doc/isRewriter.md",
     "doc/Code/exprstatement.rwr.m4.md",
+    "doc/RWR.md",
+    "doc/Expression Statements.md",
+    "doc/Code/exprstatements.ohm.m4.md",
+    "Excalidraw/RWR 2023-10-21 19.30.05.excalidraw.md",
+    "Excalidraw",
+    "doc/Code/symrewrites.ohm.m4.md",
     "doc/Start Here.md",
+    "docwiki/Start Here.md",
+    "doc/Rewriter.md",
+    "doc/screenshots/Rewriter.png",
+    "doc/Lisp-Like Functions for JavaScript.md",
+    "doc/M4.md",
+    "doc/Transpiler.md",
+    "doc/Fake Pipe.md",
+    "doc/isRewriter.md",
+    "doc/screenshots/Transpiler.png",
+    "doc/screenshots/top level.png",
+    "doc/Unquote.md",
+    "doc/iRewriter.md",
+    "doc/Rewriter.png",
+    "doc/iRewriter.png",
+    "doc/isRewriter.png",
+    "README.md",
+    "doc/screenshots/iRewriter.png",
+    "doc/screenshots/isRewriter.png",
+    "doc/List Rewrites.md",
+    "doc/OhmJS.md",
+    "doc/Cleanup.md",
+    "doc/Macros.md",
+    "doc/To JavaScript.md",
+    "doc/Symbol Rewrites.md",
     "doc/Character Rewrites.md",
     "doc/Code/Character Rewrites Code.md",
-    "doc/Code/Prolog Ohm Grammar Superclass.md",
-    "doc/ABC.md",
-    "doc/Symbol Rewrites.md",
-    "doc/Code/symrewrites.rwr.mr.md",
-    "doc/Warts.md",
-    "doc/Syntactic vs Lexical Grammar Rules.md",
-    "doc/Untitled.md",
-    "doc/Code",
-    "doc/iRewriter.md",
-    "doc/Transpiler.md",
-    "README.md",
-    "doc/Cleanup.md",
-    "#README.md#",
-    "doc/Macros.md",
-    "doc/List Rewrites.md",
-    "js/#characterrewrites.js#",
-    "doc/screenshots/unquote.png",
-    "doc/Constants.md",
-    "doc/Unquote.md",
-    "doc/Escape Whitespace.md",
-    "doc/Insert Virtual Commas.md",
-    "transpiler",
-    "transpiler.o",
-    "doc/M4.md",
-    "doc/screenshots/prolog.ohm.inc.png",
-    "doc/screenshots/scm.ohm.inc.png",
-    "doc/screenshots/prolog.rwr.inc.png",
-    "doc/screenshots/Rewriter.png",
-    "doc/screenshots/isRewriter.png",
-    "doc/screenshots/cleanup.png",
-    "doc/screenshots/Insert Virtual Commas.png",
-    "doc/screenshots/Escape Whitespace.png",
-    "doc/screenshots/constants.png",
+    "docwiki/Code/Character Rewrites Code.md",
+    "doc/screenshots/All Before4.png",
+    "doc/screenshots/js-All Before 4.drawio.svg",
     "doc/screenshots",
-    "js/support.js",
-    "js/cleanup.js",
-    "js/macro.rwr.m4",
-    "js/macro.ohm.m4"
+    "doc/Code",
+    "doc",
+    "docwiki copy/Code",
+    "docwiki copy/screenshots",
+    "docwiki copy",
+    "js/#cleanup.js#",
+    "process/process.odin~",
+    "process/process.odin"
   ]
 }

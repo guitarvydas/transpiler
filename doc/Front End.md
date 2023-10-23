@@ -1,12 +1,13 @@
 
 Front end consists of 4 components pipelined together.
-![[front end.png]]
+![[docwiki/screenshots/front end.png]]
 ## Virtual Commas
+#virtualcommas
 The first component inserts virtual commas into the incoming text.
 
 This allows us to use Ohm-JS.  We can use lexical grammars early in the process then switch to using the more convenient Syntactic grammar form of Ohm-JS.
 
-The main difference between lexical and syntactic grammar forms is the presence of white space.  Most PEG parsers require explicit handling of all whitespace characters whereas the developers of Ohm-JS designed the Ohm language in a way that allows whitespace to be skipped.  Ohm-JS does not require specification of whitespace characters.  This leaves the more interesting parts of the grammar more easily visible.
+The main difference between lexical and syntactic grammar forms is the presence of white space.  Most PEG parsers require explicit handling of all whitespace characters whereas the developers of Ohm-JS designed the Ohm language in a way that allows whitespace to be skipped.  Ohm-JS does not require specification of whitespace characters.  This make the grammar more readable.
 
 Syntactic grammars easily handle languages like Javascript that require commas, but, syntactic grammars require more care when dealing with comma-less languages like Lisp and Scheme and Racket.  The main issue is that two words separated only by spaces are parsed as a single word.  Insertion of virtual commas - an out-of-band character chosen from the Unicode character space, alleviates the Syntactic grammar issue.  Inserting virtual commas essentially "tokenizes" words so that they can be easily recognized by later passes using only Syntactic grammars.
 
@@ -14,14 +15,16 @@ Virtual commas are deleted at the last moment by the cleanup component.
 
 Ohm-JS's *syntactic grammars* are so convenient to use that this kind of workaround is easily justified.  Using *syntactic grammars* in most of the downstream components makes the overall design of the transpiler easier to incrementally understand.
 ## Escape Whitespace
+#escapewhitespace
 The second component escapes white space in strings and character constants.
 
-If string contains white space, we turn it into HTML compatible URL escapes.
+If a string contains white space, we turn it into HTML compatible URL escapes.
 
 Most modern languages have libraries that can be used to decode escaped strings.
 
 Escaping is required to work around Ohm-JS's space skipping, which deletes whitespace even in constructs such as character strings.
 ## Unquote
+#unquote
 The third component gets rid of the Lisp short hand *quote* `'` and converts quotes back into function-call-like syntax.
 
 The expanded, unquoted, text is more verbose and more difficult for humans to read, but, the machine - the transpiler - doesn't care and gladly works with quotes in function-call-like form.
@@ -31,6 +34,7 @@ In fact, normalizing all text into function-call-like syntax makes the text more
 For example, the `unquote` component converts the list "`'(a b c)`" into "`(quote (a b c))"
 
 ## Constants
+#constants
 The final component of the front end - Constants - handles list constants.
 
 Most programming languages provide a syntax for writing low-level data as in-situ constants.  For example, C provides single-quote syntax for specifying character constants, like `'x'`.

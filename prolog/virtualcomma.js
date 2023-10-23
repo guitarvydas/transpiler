@@ -1,6 +1,6 @@
 // vcomma = "○￮￮₊ₓ˚
 
-vcomma = "ₓ",
+ vcomma = "ₓ",
 
 {
     input : function (cs) { return cs.rwr ().join(''); },

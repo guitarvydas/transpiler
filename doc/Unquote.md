@@ -1,1 +1,2 @@
-![[unquote.png]]
+![[docwiki/screenshots/unquote.png]]
+see #unquote 

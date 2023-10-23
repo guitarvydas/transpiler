@@ -18,3 +18,6 @@ For warm-up reading and thinking, only if needed:
 # Mystery Statistics
 (don't worry if you don't know what this is for...)
 registry statistics: Registry_Stats{nleaves = 74, ncontainers = 20, ninstances = 344}
+
+# TODO
+- [ ] Collapse `iRewriter` and `isRewriter` into a single Component called `Rewriter`.
