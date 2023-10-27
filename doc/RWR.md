@@ -202,44 +202,119 @@ Why did I write a second rule called `more`?  I'm not sure anymore - it's probab
 Deleting a rule from the grammar also means deleting it from the *semantics*. I guess that this consideration caused me to avoid deleting the `more` rule and changing the definition of the `top` rule.  Maybe I'll do this when I do a cleanup...
 
 `  more = name spaces "{" spaces rule* spaces "}" spaces`
-`  rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString -- up`
-`
 
-`  RuleLHS = 
+The `more` rule captures the idea that more than one grammar can be used, hence, more than one set of rewrite rules need to be defined.
+
+In OhmJS, more than one grammar is often used when a grammar inherits from another grammar.
+
+In RWR, this distinction doesn't matter a lot, we need to define a rewrite for every grammar rule.  The `name` and braces are parsed, but, ignored in RWR (that's called *syntactic noise*) to make the rewrite specification look like the grammar(s) that it corresponds to.
+
+As mentioned above, it is probably possible to delete the `more` rule and to use a recursive call to `top` instead, but, historically the grammar was written (evolved) this way and was left alone after it worked.
+
+`  rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString -- up`
+
+This rule - called `rule` - matches the LHS and the RHS of an RWR rule.
+
+The idea of *before* rewrites - called *down* in this grammar - was added later.  I now see a bug in this version of the grammar.  This bug wasn't a bug until *before* strings were added, late in the game.  The bug is that `rule` calls a syntactic rule `RuleLHS` when, in fact, it should call a lexical rule `ruleLHS`.  The syntactic version of RuleLHS skips (deletes) all whitespace.  This space-skipping will alter the *before* string (called *downString*, below) and will delete all whitespace in the *before* string.  If the *before* string contains whitespace, it is intended to be there and should, in general, not be deleted.  That's the bug - space-skipping will change the *before* string.  The fix is to use lexical rules instead of syntactic rules all the way down to the rule `downString`.  We should be excruciatingly explicit about whitespace so that whitespace is not deleted from the *before* string.  This isn't a problem when no `downString` is specified.  This became a problem only when `RuleLHS` was extended with *before* strings (called *downStrings* at the time this grammar was written).
+
+The *Escape Whitespace* idea would have worked here, but, I hadn't thought of it at the time I wrote this code.  Failing that, to fix this would require rewriting the RuleLHS syntactic grammar rule as a lexical rule, which implies that whitespace would have to be handled explicitly.  Such changes to the grammar would, also, affect the *semantics* code - the name of the rule would have to be changed and the arity (the number of parameters) would need to be changed to accommodate the changes in the grammar.
+```
+RuleLHS = 
     | name "[" Param* "]" spaces downString spaces -- down
-    | name "[" Param* "]" -- nodown`
-`
-  rewriteString = "‛" char* "’" spaces`
-`
-  downString = "‛" char* "’"`
-`
-`
-`  char =
+    | name "[" Param* "]" -- nodown
+```
+The rule `RuleLHS` is written as two branches 
+1. with *before* strings (historically called *downStrings* in this version of the grammar)
+2. without *before* strings.
+
+In practice, *before* strings are not used often, so `RuleLHS` will usually match the `nodown` case.
+
+Note, as discussed above, that this rule contains a bug, due to the historical evolution of the code.  
+
+Originally, *before* strings did not exist and `RuleLHS` was written as a syntactic rule.  Later, *before* strings were tacked on to the RWR concept and a new branch - including *before* strings was added. This new branch is tagged *"-- down"* in this version of the grammar.  The bug is in this new branch.  The fact that the rule is syntactic means that the *before* string will have whitespace stripped out of it.  Such stripping is incorrect, but, doesn't seem to affect all uses of this version of the RWR grammar.
+
+```
+  rewriteString = "‛" char* "’" spaces
+```
+The rule `rewriteString` is used to match ("parse") a rewrite string for *after* and *before* strings.
+
+The pattern uses Unicode quotes to bracket a bunch of characters.  In some cases, the characters (`"«...»"`) are *eval*ed and replaced by their value, whereas in most other cases the characters are copied *verbatim* to the final string.  Some escapes are allowed.  See the rule `char` below.
+
+```
+  downString = "‛" char* "’"
+```
+
+The rule `downString` is like the previous rule `rewriteString`, but is tagged with a different name to help the *semantics* code differentiate the two kinds of strings by their position in the RWR specification.  *after* strings appear after the `"="` on the RHS while *before* strings appear before the `"="` in the RWR specification.
+
+It is necessary to look at the *semantics* code for the functions `rewriteString(...)` and `downString(...)` to see the (subtle) differences in how the code is generated.
+
+Using the parser to tag similar rules with different names, allows us to simplify writing *semantics* code and to avoid using `if...then...else` in the corresponding *semantic* code.  We have to use *state* when writing the *semantics* code, but, in this case, we factor out the *state* into the parser.  The parser figures out (by pattern matching) the required *state* information and passes it on to the *semantics* code.  The *semantics* code, hence, does not need to worry about tracking state - that is done by the parser before the *semantics* code is called.  
+```
+char =
     | "«" nonBracketChar* "»" -- eval
     | "\\" "n" -- newline
     | "\\" any -- esc
     | ~"’" ~"]]" any     -- raw
-`
-`
-  nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any`
-`
-  name = nameFirst nameRest*`
-`
-  nameFirst = "_" | letter`
-`
-  nameRest = "_" | alnum`
-``
-`
+```
+
+The rule `char` handles the parsing of characters in *after* and *before* strings.  It allows some escapes (`\n`, and `\` preceding any character) and matches bracketed *eval* items (`"«...»"`).  Any character that isn't a closing string bracket (`"’"` or `"]]"` - the `]]` syntax is matched for historical reasons) is accepted and copied "as is" to the final string.
+
+See the *semantic* function `char_eval(...)` to see how *eval* items are handled.
+
+```
+  nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
+```
+
+The rule `nonBracketChar` is used by the rule `char` above, to match for characters that can legally appear in a rewrite string.  This rule disallows *eval* brackets `"«...»"`.  This rule could have been written to handle recursive uses of *eval* brackets, but, wasn't written that way.
+
+In OhmJS, the prefix operator `"~"` is a negative match.  It succeeds only when the next item is *not* matched.  In this case, we negative match for some literal characters, but, `"~"` can be applied to a wider range of patterns.
+
+Note that the rule `char` tries the various branches in order, i.e. the parsers tries to match the `"-- eval"` branch first, if that fails, it tries to match the `"-- newline"` branch, then, the `"-- esc"` branch, and, finally the `"-- raw"` branch.  If the parser begins by seeing a `"«"` character, it tries to match for a name of a variable to be evaluated.  A name can contain anything except closing brackets - "»", "«", " ]]" -- and the string-closing quote `"’"`.  
+
+Aside: historically, we tried to use ASCII brackets `"[[ ... ]]"` for *eval* variables (this syntax was inspired by Liquid), then, switched to using Unicode brackets `"« ... »"`.  
+
+Aside: we could have written this rule differently, but, didn't.  For example, we could have created a rule that matched brackets - `"[[", "]]", "«", "»"` - and then included a negative match on that single rule in `nonBrackChar`.  We didn't do it this was for arbitrary reasons.
+
+Aside: we wrote `... ~"»" ~"«"...` instead of the more obvious `... ~"«" ~"»" ...` as a sop to "efficiency".  We expect that most valid uses of *eval* variable names would not include the open bracket `"«"`, so we match for the close bracket `"»"` first to avoid extra checking.  In an ideal world, the OhmJS compiler would let us write the more obvious version, then produce optimized code to match for the pattern.  In this case, only the OhmJS programmer knows what might be expected and is expected to manually specify the more-efficient order.  I'm not sure how a compiler could determine this re-ordering optimization, except by using JIT techniques at runtime, maybe blended with AI-like "training".
+
+Aside: note that the `nonBracketChar` does *not* disallow whitespace, or other strange characters, to be used in *eval* names.  In practice, this allows us to use JavaScript expressions inside the *eval* brackets during experimentation and early bootstrapping. In general, we note that the rules for naming variables were invented in the 1950s based on the ASCII alphabet.  In the background, we are also thinking about a skunk-worksian sub-project for experimenting with new ways to name variables.  To this end, there is no reason, yet, to restrict variable names in the usual way, and, the rule `nonBracketChar` is written that way.  Another line of thinking, supported by the wording of this rule, is the idea of mixing the use of various programming languages within the same script.  In this case, specifically, we have created a DSL that augments JavaScript, but, still allows JavaScript to be used in specific places.  This lets us cheat by allowing us to break out to previously-defined programming languages to handle work that we don't wish to re-invent.
+
+```
+  name = nameFirst nameRest*
+```
+
+The rule `name` encodes the customary matching for a variable name, i.e. a letter or underscore, followed by zero or more letters, digits, or underscores.
+
+```
+nameFirst = "_" | letter
+```
+
+The rule `nameFirst` is a helper for the rule `name`, above.  This rule matches for the first legal character of an identifier, i.e. an underscore or a letter. Note that OhmJS provides a builtin pattern for (only) letters, called `letter`.  This builtin matches, both, lower case and upper case letters.
+
+```
+nameRest = "_" | alnum
+```
+The rule `nameRest` is a helper for the rule `name`, above.  This rule matches for any legal follow-characters of an identifier, i.e. an underscore or a letter or a digit.  Note that OhmJS provides a builtin pattern for letters and/or digits, called `alnum`.
+
+
+- [ ] 
+```
   Param =
     | name "+" -- plus
     | name "*" -- star
     | name "?" -- opt
-    | name     -- flat`
-`
-  comment = "//" (~"\n" any)* "\n"`
-`
-  space += comment`
-`
+    | name     -- flat
+```
+
+- [ ] 
+```
+  comment = "//" (~"\n" any)* "\n"
+```
+
+- [ ] 
+```
+  space += comment
+```
 
 ## rwr.sem.js
 ```
